@@ -1,0 +1,71 @@
+<p>Ticket group id: <%=@ticket_group.id%></p>
+<p>group section: <%=@ticket_group.section%></p>
+<p>group row: <%=@ticket_group.row%></p>
+
+
+<table>
+	<tr>
+		<th>  <b>Event:</b>
+		</th>
+		<th><b>Artist:</b>
+		</th>
+		<th><b>Venue:</b>
+		</th>
+		<th>  <b>Cost:</b>
+		</th>
+		<th><b>Bought on:</b>
+		</th>
+		<th>
+			<b>In hand:</b>
+		</th>
+		<th>
+			<b>Kind:</b>
+		</th>
+		<th>Seat:</th>
+		<th><b>Sold:</b>
+	  	</th>
+	  	<th><b>Notes:</b>
+		</th>
+		<th></th><th></th>	
+			
+<%for ticket in @tickets%>
+<tr>
+	<td>
+  <%= link_to ticket.event.name, ticket.event %>
+	</td>
+	<td>
+  <%= ticket.artist.name %>
+	</td>
+	<td>
+  <%= ticket.venue.name %>
+	</td>
+	<td>
+  $<%= ticket.cost %>
+	</td>
+	<td>
+  <%= ticket.bought_on %>
+	</td>
+	<td>
+  <%= ticket.in_hand %>
+	</td>
+	<td>
+  <%= ticket.kind %>
+	</td>
+	<td>
+  <%= ticket.seat_number %>
+	</td>
+	<td>
+  <% if ticket.sold? %>yes<%else%>no<%end%>
+	</td>
+
+	<td>
+  <%= ticket.notes %>
+	</td>
+	<td>
+<%= link_to 'Edit', edit_ticket_path(ticket) %> </td>
+	<td>
+<%= link_to 'Back', tickets_path %>
+	</td>
+</tr>
+<%end%>
+</table>

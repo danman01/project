@@ -1,0 +1,79 @@
+<script type="text/javascript">
+$(function(){
+	var mo=$("#ticket_bought_on_2i");
+	var day=$("#ticket_bought_on_3i");
+	var year=$("#ticket_bought_on_1i");
+	$("#duplicate").click(function(){
+		$("#ticket_in_hand_2i").val(mo.val());
+		$("#ticket_in_hand_3i").val(day.val());
+		$("#ticket_in_hand_1i").val(year.val());
+	});
+	
+	
+});
+</script>
+<% @ticket.build_ticket_group%>
+<%= form_for(@ticket) do |f| %>
+  <% if @ticket.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
+
+      <ul>
+      <% @ticket.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+   <%= f.label :event, 'Event: ' + @ticket.event.name %><br />
+   <%= f.hidden_field :event_id, :value=>@ticket.event.id%>
+  </div>
+  <div class="field">
+    <%= f.label :artist, 'Artist ' + @ticket.event.artist.name%><br />
+   
+   <%= f.hidden_field :artist_id, :value=>@ticket.event.artist.id %> 
+  </div>
+  <div class="field">
+    <%= f.label :venue, 'Venue: '+@ticket.event.venue.name %><br />
+    <%= f.hidden_field :venue_id, :value=>@ticket.event.venue.id%>
+  </div>
+  <div class="field">
+	<%= f.label :seat_number, "Seat Numbers" %><br />
+	<%= f.text_field :seat_number %>
+</div>
+
+ <div class="field">
+    <%= f.label :cost %><br />
+    <%= f.text_field :cost %>
+  </div>
+  <div class="field">
+    <%= f.label :bought_on %><br />
+    <%= f.datetime_select :bought_on, :order=>[:month, :day, :year] %>
+  </div>
+
+  <div class="field">
+    <%= f.label :in_hand %> <a href="javascript:void(0);" id="duplicate">match dates</a><br />
+    <%= f.datetime_select :in_hand, :order=>[:month, :day, :year] %>
+  </div>
+  <div class="field">
+    <%= f.label :kind %><br />
+    <%= select(:ticket, :kind, options =['E Ticket', 'Hard Ticket', 'Will Call'])%>
+  </div>
+  <div class="field">
+    <%= f.label :sold %><br />
+    <%= f.check_box :sold%>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes %>
+  </div>
+<h2>Ticket Group details</h2>
+  <%= render :partial => 'ticket_groups/form',
+             :locals => {:form => f} %>
+
+  <div class="actions">
+    <%= f.submit  %>
+  </div>
+<%end%>

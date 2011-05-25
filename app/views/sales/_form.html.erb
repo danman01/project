@@ -1,0 +1,50 @@
+<p>selling tickets for <%=@artist%> at <%=@venue%></p>
+
+<p>location: <%=@group.section%> row <%=@group.row%></p>
+
+<%= form_for(@sale) do |f| %>
+  <% if @sale.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sale.errors.count, "error") %> prohibited this sale from being saved:</h2>
+
+      <ul>
+      <% @sale.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :date %><br />
+	<%= f.datetime_select :date, :order=>[:month, :day, :year] %>
+  </div>
+  <div class="field">
+    <%= f.label :price, 'sale price' %><br />
+    <%= f.text_field :price %>
+  </div>
+  <div class="field">
+	<%count=0
+	  arr=[]
+	  total=@group.quantity
+	  while count<=total 
+		arr<<count
+		count+=1
+	  end
+	%>
+    <%= f.label :quantity %><br />
+    <%= f.select :quantity, arr.each {|n| puts n} %>
+
+  </div>
+<div class="field">
+    <%= f.label :marketplace, 'market sold in' %><br />
+    <%= f.select :marketplace_id, Marketplace.all.collect {|c| [ c.name, c.id ] }  %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

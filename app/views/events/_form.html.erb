@@ -1,0 +1,57 @@
+<script type="text/javascript">
+jQuery.noConflict()(function($) {
+	artist=$("#event_artist_id");
+	jsArtist=document.getElementById('event_artist_id');
+	venue=$("#event_venue_id");
+	jsVenue=document.getElementById('event_venue_id');
+	
+	theSpan=$(".event-info");
+	$(function(){
+		artist.change(function(){
+		//$("event-info").text($("#ticket_artist").val()+" at "+$("#ticket_venue").val()+" on ")		
+			theSpan.text((jsArtist.options[this.selectedIndex].text)+" at "+(jsVenue.options[jsVenue.selectedIndex].text));
+		});
+	
+		venue.change(function(){
+			theSpan.text((jsArtist.options[jsArtist.selectedIndex].text)+" at "+(jsVenue.options[this.selectedIndex].text));
+		});
+	});
+});
+</script>
+<%= form_for(@event) do |f| %>
+  <% if @event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% @event.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <span class="event-info"></span>
+    <%= f.text_field :name, :class=>"event-info", :readonly=>false %>
+  </div>
+  <div class="field">
+    <%= f.label :date %><br />
+    <%= f.datetime_select :date, :order=>[:month, :day, :year] %>
+  </div>
+  <div class="field">
+	<%= f.label :artist %><br />
+ 	<%= f.select :artist_id, Artist.all.collect {|c| [ c.name, c.id ] } %> or <%=link_to 'add a new one', new_artist_path(:redirect=>true)%>
+  </div>
+  <div class="field">
+    <%= f.label :venue_id %><br />
+    <%= f.select(:venue_id, Venue.find(:all).collect { |l| [l.name, l.id]}, options ={:prompt =>'Select a venue'})%> or <%=link_to 'add a new one', new_venue_path(:redirect=>true)%>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

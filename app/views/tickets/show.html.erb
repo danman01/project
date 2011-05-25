@@ -1,0 +1,53 @@
+
+<p>
+  <b>Event:</b>
+  <%= link_to @ticket.event.name, @ticket.event %>
+</p>
+
+<p>
+  <b>Artist:</b>
+  <%= @ticket.artist.name %>
+</p>
+
+<p>
+  <b>Venue:</b>
+  <%= @ticket.venue.name %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @ticket.ticket_group.quantity %>
+</p>
+<p>
+  <b>Cost:</b>
+  $<%= @ticket.cost %>
+</p>
+
+<p>
+  <b>Bought on:</b>
+  <%= @ticket.bought_on %>
+</p>
+
+<p>
+  <b>In hand:</b>
+  <%= @ticket.in_hand %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @ticket.kind %>
+</p>
+
+<p>
+  <b>Sold:</b>
+  <% if @ticket.sold %>yes<%else%>no<%end%>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%= @ticket.notes %>
+</p>
+
+
+<%= link_to 'Edit', edit_ticket_path(@ticket) %> |
+<%= link_to 'Back', tickets_path %>

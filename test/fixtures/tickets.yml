@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  event: MyText
+  artist: MyText
+  venue: MyText
+  quantity: 1
+  bought_on: MyText
+  in_hand: 1
+  type: MyText
+  sold: 1
+  notes: MyText
+
+two:
+  event: MyText
+  artist: MyText
+  venue: MyText
+  quantity: 1
+  bought_on: MyText
+  in_hand: 1
+  type: MyText
+  sold: 1
+  notes: MyText

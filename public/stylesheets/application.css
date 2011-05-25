@@ -1,0 +1,26 @@
+table
+{
+	border:solid 1px #ccc;
+}
+table th
+{
+	background-color:#444;
+	color:white;
+}
+table tr
+{
+	padding:10px;
+}
+table td
+{
+	padding:10px;
+}
+
+#notice
+{
+	text-align:center;
+	background-color:#ccc;
+	font-size:16px;
+	height:30px;
+	width:auto;
+}

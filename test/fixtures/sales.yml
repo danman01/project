@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: MyText
+  price: 1
+  quantity: 1
+  ticket: 1
+  notes: MyText
+
+two:
+  date: MyText
+  price: 1
+  quantity: 1
+  ticket: 1
+  notes: MyText

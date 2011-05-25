@@ -1,0 +1,67 @@
+
+<%= form_for(@ticket) do |f| %>
+  <% if @ticket.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
+
+      <ul>
+      <% @ticket.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+   <span id="event-info"></span> <%= f.label :event, 'choose event' %><br />
+   <%= f.select :event_id, Event.all.collect {|c| [c.name, c.id]}%>or <%=link_to 'add a new one', new_event_path, :creating_ticket=>true%>
+  </div>
+  <div class="field">
+    <%= f.label :artist,@ticket.event.artist.name%><br />
+   
+   <%= f.hidden_field :artist_id, :value=>@ticket.event.artist.id %> 
+  </div>
+  <div class="field">
+    <%= f.label :venue, @ticket.event.venue.name %><br />
+    <%= f.hidden_field :venue_id, :value=>@ticket.event.venue.id%>
+  </div>
+  <div class="field">
+	<%arr=[]
+	max=30
+	n=0
+	while n<max
+		arr<<n
+	n+=1
+	end
+	%>
+    <%= f.label :quantity %><br />
+    <%= select(:ticket, :quantity, arr.each { |l| puts l}, options ={:prompt =>'Select a quantity'})%>
+  </div>
+ <div class="field">
+    <%= f.label :cost %><br />
+    <%= f.text_field :cost %>
+  </div>
+  <div class="field">
+    <%= f.label :bought_on %><br />
+    <%= f.datetime_select :bought_on, :order=>[:month, :day, :year] %>
+  </div>
+  <div class="field">
+    <%= f.label :in_hand %><br />
+    <%= f.datetime_select :in_hand, :order=>[:month, :day, :year] %>
+  </div>
+  <div class="field">
+    <%= f.label :kind %><br />
+    <%= select(:ticket, :kind, options =['E Ticket', 'Hard Ticket', 'Will Call'])%>
+  </div>
+  <div class="field">
+    <%= f.label :sold %><br />
+    <%= f.check_box :sold%>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<%end%>

@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @marketplace.name %>
+</p>
+
+<p>
+  <b>Commission:</b>
+  <%= @marketplace.commission %>
+</p>
+
+<p>
+  <b>Abbr:</b>
+  <%= @marketplace.abbr %>
+</p>
+
+
+<%= link_to 'Edit', edit_marketplace_path(@marketplace) %> |
+<%= link_to 'Back', marketplaces_path %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyText
+  commission: 1
+  abbr: MyText
+
+two:
+  name: MyText
+  commission: 1
+  abbr: MyText

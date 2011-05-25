@@ -1,0 +1,27 @@
+<h1>Listing marketplaces</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Commission</th>
+    <th>Abbr</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @marketplaces.each do |marketplace| %>
+  <tr>
+    <td><%= marketplace.name %></td>
+    <td><%= marketplace.commission %></td>
+    <td><%= marketplace.abbr %></td>
+    <td><%= link_to 'Show', marketplace %></td>
+    <td><%= link_to 'Edit', edit_marketplace_path(marketplace) %></td>
+    <td><%= link_to 'Destroy', marketplace, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Marketplace', new_marketplace_path %>

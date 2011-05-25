@@ -1,0 +1,29 @@
+<%= form.fields_for :ticket_group do |ticket_group_form| %>
+
+<div class="field">
+	<%arr=[]
+	max=30
+	n=0
+	while n<max
+		arr<<n
+	n+=1
+	end
+	%>
+    <%= ticket_group_form.label :quantity %><br />
+    <%= ticket_group_form.select(:quantity, arr.each { |l| puts l}, options ={:prompt =>'Select a quantity'})%>
+  </div>
+	<div class="field">
+    <%= ticket_group_form.label :section %>
+    <%= ticket_group_form.text_field :section %>
+  </div>
+	<div class="field">
+    <%= ticket_group_form.label :row %>
+    <%= ticket_group_form.text_field :row %>
+  </div>
+<% unless ticket_group_form.object.nil? || ticket_group_form.object.new_record? %>
+    <div class="field">
+      <%= ticket_group_form.label :_destroy, 'Remove:' %>
+      <%= ticket_group_form.check_box :_destroy %>
+    </div>
+  <% end %>
+<%end%>
