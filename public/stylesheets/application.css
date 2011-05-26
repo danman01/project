@@ -1,6 +1,19 @@
+
+
+#notice
+{
+	text-align:center;
+	background-color:#ccc;
+	font-size:16px;
+	height:30px;
+	width:auto;
+}
+
+/* table styles */
 table
 {
 	border:solid 1px #ccc;
+	width:1200px;
 }
 table th
 {
@@ -16,11 +29,15 @@ table td
 	padding:10px;
 }
 
-#notice
+/* headings */
+
+#sold
 {
-	text-align:center;
-	background-color:#ccc;
-	font-size:16px;
-	height:30px;
-	width:auto;
+	width:90px;
+}
+
+/* rows */
+.sold
+{
+	width:60px;
 }

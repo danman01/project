@@ -12,7 +12,7 @@
     <th>Bought on</th>
     <th>In hand</th>
     <th>Kind</th>
-    <th>Sold</th>
+    <th id="sold">Sold</th>
     <th>Notes</th>
     <th></th>
     <th></th>
@@ -32,7 +32,7 @@
     <td><%= info.bought_on.strftime("%a, %b %e %Y") %></td>
     <td><%= info.in_hand.strftime("%a, %b %e %Y") %></td>
     <td><%= info.kind %></td>
-	<td>
+	<td class="sold">
 		<%sold_count=0
 		group.tickets.each do |ticket|
 			if ticket.sold?
