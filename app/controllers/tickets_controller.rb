@@ -43,8 +43,19 @@ class TicketsController < ApplicationController
   def new
     
     if params[:event_id]
+      if params[:ticket_group]
+        @ticket.ticket_group=params[:ticket_group]
+      end
     @ticket = Ticket.new
     @ticket.event=Event.find(params[:event_id]) 
+    
+    @ticket_groups=TicketGroup.find_all_by_event_id(@ticket.event.id)
+    more=Ticket.find_all_by_event_id(@ticket.event.id)
+  
+    more.each do |ticket|
+       @ticket_groups<<ticket.ticket_group
+    end
+    @ticket_groups.uniq!
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @ticket }

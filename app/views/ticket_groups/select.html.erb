@@ -1,0 +1,5 @@
+<%= form_tag('/ticket_groups/use_selected')%>
+<%@ticket_groups.each do |group|%>
+<%=check_box_tag "#{group.id}"%>  <%="#{group.section} - #{group.row}"%>
+<%end%>
+<%=submit_tag%>

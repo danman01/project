@@ -12,7 +12,6 @@ $(function(){
 	
 });
 </script>
-<% @ticket.build_ticket_group%>
 <%= form_for(@ticket) do |f| %>
   <% if @ticket.errors.any? %>
     <div id="error_explanation">
@@ -39,6 +38,13 @@ $(function(){
     <%= f.label :venue, 'Venue: '+@ticket.event.venue.name %><br />
     <%= f.hidden_field :venue_id, :value=>@ticket.event.venue.id%>
   </div>
+<h2>Ticket Group details</h2>
+<%= f.select :ticket_group, @ticket_groups.collect {|c| [ "section: " + c.section + " row: " + c.row, c.id ]} %>
+ <br />
+ or <%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :event_id=>@ticket.event.id)%>
+  <div class="field">
+    <%= label_tag :quantity #TODO show current quantity in ticket group / add quantity to group after submit instead of in same form %><br />
+    <%=number_field_tag 'quantity', nil, :in => 0...30 %>
   <div class="field">
 	<%= f.label :seat_number, "Seat Numbers" %><br />
 	<%= f.text_field :seat_number %>
@@ -69,9 +75,6 @@ $(function(){
     <%= f.label :notes %><br />
     <%= f.text_area :notes %>
   </div>
-<h2>Ticket Group details</h2>
-  <%= render :partial => 'ticket_groups/form',
-             :locals => {:form => f} %>
 
   <div class="actions">
     <%= f.submit  %>

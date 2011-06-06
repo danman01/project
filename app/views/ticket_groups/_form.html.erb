@@ -1,7 +1,9 @@
-<%= form.fields_for :ticket_group do |ticket_group_form| %>
+
+<%=form_for(@ticket_group) do |ticket_group_form|%>
+<%=hidden_field_tag 'event_id', @event_id%>
 
 <div class="field">
-	<%arr=[]
+	<%#arr=[]
 	max=30
 	n=0
 	while n<max
@@ -9,8 +11,8 @@
 	n+=1
 	end
 	%>
-    <%= ticket_group_form.label :quantity %><br />
-    <%= ticket_group_form.select(:quantity, arr.each { |l| puts l}, options ={:prompt =>'Select a quantity'})%>
+    <%#= ticket_group_form.label :quantity %><br />
+    <%#= ticket_group_form.select(:quantity, arr.each { |l| puts l}, options ={:prompt =>'Select a quantity'})%>
   </div>
 	<div class="field">
     <%= ticket_group_form.label :section %>
@@ -26,4 +28,8 @@
       <%= ticket_group_form.check_box :_destroy %>
     </div>
   <% end %>
+
+<div class="actions">
+    <%= ticket_group_form.submit%>
+  </div>
 <%end%>

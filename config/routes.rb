@@ -22,6 +22,7 @@ Tickets::Application.routes.draw do
     resources :tickets
   end
 
+  match 'ticket_groups/select/:event_id'=> 'ticket_groups#select'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

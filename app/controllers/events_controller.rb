@@ -16,9 +16,14 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     	@quantity=0
-			@event.tickets.each do |stack|
+    	groups=[]
+			@event.tickets.each do |t|
+			groups<<t.ticket_group
 			
-			@quantity+=stack.quantity
+		  end
+		  groups.uniq!
+		  groups.each do |g|
+		    @quantity+=g.quantity
 		  end
     respond_to do |format|
       format.html # show.html.erb
