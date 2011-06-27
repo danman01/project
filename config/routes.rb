@@ -1,4 +1,8 @@
 Tickets::Application.routes.draw do
+  resources :invoices
+
+  resources :customers
+
   devise_for :users
 
   resources :marketplaces
@@ -7,7 +11,9 @@ Tickets::Application.routes.draw do
 
   resources :tickets 
 
-  resources :artists
+  resources :artists do 
+    resources :venues
+  end
 
   resources :venues #do
 	#resources :events
@@ -21,8 +27,17 @@ Tickets::Application.routes.draw do
   resources :ticket_groups do
     resources :tickets
   end
+  
+  resources :users do
+    resources :tickets
+    resources :artists
+    resources :events
+    resources :venues
+    resources :sales
+  end
 
   match 'ticket_groups/select/:event_id'=> 'ticket_groups#select'
+  match '/search'=>'search#search'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -78,5 +93,5 @@ Tickets::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
+  match ':controller(/:action(/:id(.:format)))'
 end

@@ -10,12 +10,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110605063110) do
+ActiveRecord::Schema.define(:version => 20110626184325) do
 
   create_table "artists", :force => true do |t|
     t.text     "name"
     t.text     "url"
-    t.integer  "onTour"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "mbid"
+    t.string   "eventsHref"
+    t.datetime "on_tour_until"
+  end
+
+  create_table "customers", :force => true do |t|
+    t.string   "email"
+    t.string   "client_type"
+    t.string   "street"
+    t.string   "city"
+    t.string   "region"
+    t.string   "phone"
+    t.string   "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -28,6 +42,17 @@ ActiveRecord::Schema.define(:version => 20110605063110) do
     t.datetime "updated_at"
     t.integer  "artist_id"
     t.integer  "venue_id"
+    t.datetime "time"
+  end
+
+  create_table "invoices", :force => true do |t|
+    t.string   "sales_ids"
+    t.integer  "customer_id"
+    t.integer  "total"
+    t.integer  "user_id"
+    t.integer  "on_site"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "marketplaces", :force => true do |t|
@@ -45,8 +70,13 @@ ActiveRecord::Schema.define(:version => 20110605063110) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "ticket_ids"
+    t.string   "ticket_ids"
     t.integer  "marketplace_id"
+    t.string   "order_id"
+    t.integer  "shipping"
+    t.string   "shipping_kind"
+    t.integer  "handling"
+    t.string   "invoice_id"
   end
 
   create_table "ticket_groups", :force => true do |t|
@@ -71,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20110605063110) do
     t.integer  "ticket_group_id"
     t.integer  "seat_number"
     t.integer  "sale_id"
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|
@@ -92,6 +123,13 @@ ActiveRecord::Schema.define(:version => 20110605063110) do
     t.datetime "locked_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "street"
+    t.string   "city"
+    t.string   "region"
+    t.string   "country"
+    t.string   "phone"
+    t.string   "notes"
+    t.string   "ticket_ids"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -104,6 +142,11 @@ ActiveRecord::Schema.define(:version => 20110605063110) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "state"
+    t.string   "city"
+    t.string   "region"
+    t.string   "country"
+    t.string   "latitude"
+    t.string   "longitude"
   end
 
 end

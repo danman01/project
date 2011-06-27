@@ -18,6 +18,8 @@ gem 'annotate', :git=>'git://github.com/ctran/annotate_models.git'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 # Bundle the extra gems:
+gem 'irbtools'
+gem 'bandsintown'
 # gem 'bj'
 gem 'nokogiri'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
@@ -34,3 +36,4 @@ gem 'omniauth'
 # group :development, :test do
 #   gem 'webrat'
 # end
+gem "mocha", :group => :test

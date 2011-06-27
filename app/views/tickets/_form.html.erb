@@ -11,6 +11,32 @@ $(function(){
 	
 	
 });
+$(function(){
+	$("#quantity").change(function(){
+		var string=" <p>Enter the seat numbers:</p>"
+		for (i=0;i < this.value;i++)
+		{
+			string+=i+1+". <input class='seats' id='ticket_"+i+"' type='text' /> ";
+			if ((i+1)%4==0){
+				string+="<br /><br />";
+			}
+		}
+		$("#seat_number_tag").html(string);
+	})
+})
+
+$(function(){
+	$("#ticket_submit").click(function(){
+		alert('changed!');
+		var $value=[];
+		$(".seats").each(function(){
+			$value.push($(this).val());
+		})
+		$("#seats").val($value);
+		alert($value);
+		
+	})
+})
 </script>
 <%= form_for(@ticket) do |f| %>
   <% if @ticket.errors.any? %>
@@ -25,29 +51,38 @@ $(function(){
     </div>
   <% end %>
 
-  <div class="field">
+	<%if @ticket.event!=nil%>
    <%= f.label :event, 'Event: ' + @ticket.event.name %><br />
    <%= f.hidden_field :event_id, :value=>@ticket.event.id%>
-  </div>
-  <div class="field">
-    <%= f.label :artist, 'Artist ' + @ticket.event.artist.name%><br />
-   
+
    <%= f.hidden_field :artist_id, :value=>@ticket.event.artist.id %> 
-  </div>
-  <div class="field">
-    <%= f.label :venue, 'Venue: '+@ticket.event.venue.name %><br />
+
     <%= f.hidden_field :venue_id, :value=>@ticket.event.venue.id%>
+	<h2>Ticket Group details</h2>
+	<%= f.select :ticket_group, @ticket_groups.collect {|c| [ "section: " + c.section + " row: " + c.row, c.id ]} %>
+	 <br />
+	 or <%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :event_id=>@ticket.event.id)%>
+	
+	<%else%>
+	
+	<%=f.label :artist_id, 'Type an artist name'%> (or <%=link_to 'add a new artist', new_artist_path(:redirect=>true)%>)
+	<%=f.text_field :artist_id%>
+	<br/>
+	(displayed after choosing an artist) <br/>
+	<%=f.label :event_id, 'Choose an event'%> (or <%=link_to 'create a new event', new_event_path(:redirect=>true)%>)
+	<%=f.text_field :event_id%>
+	<br />
+	(displayed after choosing event) Choose ticket group (or <%#=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :event_id=>@ticket.event.id)%>)
+	
+	<%end%>
+
+  <div class="field">
+    <%= label_tag :quantity %><%#TODO show current quantity in ticket group / add quantity to group after submit instead of in same form%><br />
+    <%=number_field_tag 'quantity', nil, :in => 1...10, :id=>'quantity' %>
   </div>
-<h2>Ticket Group details</h2>
-<%= f.select :ticket_group, @ticket_groups.collect {|c| [ "section: " + c.section + " row: " + c.row, c.id ]} %>
- <br />
- or <%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :event_id=>@ticket.event.id)%>
   <div class="field">
-    <%= label_tag :quantity #TODO show current quantity in ticket group / add quantity to group after submit instead of in same form %><br />
-    <%=number_field_tag 'quantity', nil, :in => 0...30 %>
-  <div class="field">
-	<%= f.label :seat_number, "Seat Numbers" %><br />
-	<%= f.text_field :seat_number %>
+	<p id='seat_number_tag'></p>
+	<%=hidden_field_tag 'seats', ""%>
 </div>
 
  <div class="field">

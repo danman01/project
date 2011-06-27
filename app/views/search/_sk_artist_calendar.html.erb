@@ -1,0 +1,6 @@
+Now get an artists' calendar
+<%=form_tag "/search/sk_artist_calendar", :remote=>true, :method=>"post" do%>
+<%=label_tag "enter artist id"%>
+<%=text_field_tag "id"%>
+<%=submit_tag 'search!'%>
+<%end%>

@@ -1,0 +1,55 @@
+<h1>Listing all tickets</h1>
+
+<table>
+  <tr>
+    <th>Event</th>
+    <th>Artist</th>
+    <th>Venue</th>
+    <th>Quantity</th>
+	<th>Section</th>
+	<th>Row</th>
+    <th>Cost</th>
+    <th>Bought on</th>
+    <th>In hand</th>
+    <th>Kind</th>
+    <th id="sold">Sold</th>
+    <th>Notes</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+<% @ticket_groups.each do |group| %>
+<%info=group.tickets.first%>
+<tr>
+    <td><%= info.event.name rescue 'na' %></td>
+    <td><%= info.artist.name %></td>
+    <td><%= info.venue.name %></td>
+    <td><%= group.quantity %></td>
+    <td><%= group.section %></td>
+
+    <td><%= group.row %></td>
+    <td>$<%= info.cost %></td>
+    <td><%= info.bought_on.strftime("%a, %b %e %Y") %></td>
+    <td><%= info.in_hand.strftime("%a, %b %e %Y") %></td>
+    <td><%= info.kind %></td>
+	<td class="sold">
+		<%sold_count=0
+		group.tickets.each do |ticket|
+			if ticket.sold?
+				sold_count+=1
+			end
+		end%>
+		<%=sold_count%> / <%= group.tickets.size%>
+	</td>
+    <td><%= info.notes %></td>
+    <td><%= link_to 'View Seats', group %></td>
+    <td><%= link_to 'Edit', edit_ticket_group_path(group) %></td>
+    <td><%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<%end%>
+
+</table>
+
+<br />
+
+<%= link_to 'New Ticket', new_ticket_path %>

@@ -1,0 +1,17 @@
+<%=form_tag "/search/sk_artist_search", :remote=>true, :method=>"post" do%>
+<%=label_tag "enter artist name"%>
+<%=text_field_tag "name"%>
+<%=submit_tag 'search!'%>
+<%end%>
+<div id="results">
+</div>
+<br />
+
+<div id="calendar_results">
+</div>
+
+<div id="event_results">
+</div>
+
+<div id="event_info">
+</div>

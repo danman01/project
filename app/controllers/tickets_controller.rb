@@ -5,7 +5,11 @@ class TicketsController < ApplicationController
     groups=[]
     @ticket_groups=[]
     if params[:event_id]
-    @tickets = Ticket.find_all_by_event_id(params[:event_id])
+      if params[:user_id]
+        @tickets = Ticket.find_all_by_event_id(params[:event_id], :conditions=>["user_id=?", params[:user_id]])
+      else
+        @tickets = Ticket.find_all_by_event_id(params[:event_id])
+      end
     
       for ticket in @tickets
         groups<<ticket.ticket_group
@@ -13,7 +17,11 @@ class TicketsController < ApplicationController
       end
       @ticket_groups=groups.uniq!
     else
-    @tickets=Ticket.all 
+      if params[:user_id]
+        @tickets=Ticket.find_all_by_user_id(params[:user_id]) 
+      else
+        @tickets=Ticket.all
+      end
       for ticket in @tickets
         groups<<ticket.ticket_group
    
@@ -41,30 +49,27 @@ class TicketsController < ApplicationController
   # GET /tickets/new
   # GET /tickets/new.xml
   def new
-    
+    @ticket = Ticket.new
     if params[:event_id]
+      @ticket.event=Event.find(params[:event_id]) 
+    
       if params[:ticket_group]
         @ticket.ticket_group=params[:ticket_group]
       end
-    @ticket = Ticket.new
-    @ticket.event=Event.find(params[:event_id]) 
     
-    @ticket_groups=TicketGroup.find_all_by_event_id(@ticket.event.id)
-    more=Ticket.find_all_by_event_id(@ticket.event.id)
-  
-    more.each do |ticket|
-       @ticket_groups<<ticket.ticket_group
-    end
-    @ticket_groups.uniq!
+        @ticket_groups=TicketGroup.find_all_by_event_id(@ticket.event.id)
+        more=Ticket.find_all_by_event_id(@ticket.event.id)
+        more.each do |ticket|
+          @ticket_groups<<ticket.ticket_group
+        end
+        @ticket_groups.uniq!
+      end
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @ticket }
     end
-    else
-      respond_to do |format|
-        format.html {redirect_to new_event_path, :notice=>'first create the event'}
-      end
-    end
+   
   end
 
   # GET /tickets/1/edit
@@ -79,17 +84,18 @@ class TicketsController < ApplicationController
   # POST /tickets
   # POST /tickets.xml
   def create
-    @ticket = Ticket.new(params[:ticket])
+    
     #create new ticket for each seat - @ticket is ticket 0, so start with 1
-    seats=params[:ticket][:seat_number].split(",")
-    n=seats.size
-    c=1
-    while c < n
+    n=params[:quantity].to_i-1
+    seats=params[:seats].split(",")
+    params[:ticket][:ticket_group]=TicketGroup.find(params[:ticket][:ticket_group])
+    while n>=0 #why endless loop??
       t=Ticket.new(params[:ticket])
-      t.seat_number=seats[c]
-      t.ticket_group=@ticket.ticket_group
+      t.seat_number=seats[n]
+      t.user_id=current_user.id rescue 1 #so i dont have to log in during testing
       t.save
-      c+=1
+      n-1
+      logger.info 'ticket created!'
     end 
     respond_to do |format|
       if @ticket.save

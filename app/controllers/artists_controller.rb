@@ -1,6 +1,7 @@
 class ArtistsController < ApplicationController
   # GET /artists
   # GET /artists.xml
+  respond_to :js,:xml,:html
   def index
     @artists = Artist.all
 
@@ -89,4 +90,6 @@ class ArtistsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+    
 end

@@ -1,0 +1,20 @@
+<%=@num%> events found for <%=@artist.name%>
+<%if @events.empty? || @events.nil?%>
+	<%=link_to 'add one!', "/events/new?artist_id=#{@artist.id}"%>
+<%else%>
+
+		<%for event in @events%>
+		<%=form_tag "/events/select_or_create", :method=>'post' do%>
+		
+		<p>
+			<%=radio_button_tag 'name', event['displayName'] %> <%=label_tag event['displayName']%>
+			<%=hidden_field_tag 'time', event.xpath('start').first['time'] %> 
+			<%=hidden_field_tag 'date', event.xpath('start').first['date']%>
+			<%=hidden_field_tag 'venue', event.xpath('venue').first['displayName']%>
+			<%=hidden_field_tag "artist_id", @artist.id%>
+		</p>
+		<%=submit_tag 'choose!'%>
+		
+		<%end%>
+	<%end%>
+<%end%>
