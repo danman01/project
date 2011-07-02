@@ -1,29 +1,46 @@
-<p id="notice"><%= notice %></p>
+<h1>Listing sales</h1>
 
-<p>
-  <b>Date:</b>
-  <%= @sale.date %>
-</p>
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>section</th>
+    <th>row</th>
+	<th>Marketplace</th>
+    <th>Notes</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+<tr>
+    <td><%= @sale.date %></td>
+    <td><%= @sale.price %></td>
+    <td><%= @sale.quantity %></td>
+	<td><%=@group.section%></td>
+	<td><%=@group.row%></td>
+	<td><%=@sale.marketplace.name%></td>
+    <td><%= @sale.notes %></td>
+    <td><%= link_to 'Show', @sale %></td>
+    <td><%= link_to 'Edit', edit_sale_path(@sale) %></td>
+    <td><%= link_to 'Destroy', @sale, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% @sale.tickets.each do |ticket| %>
+  <tr>
+  
+    <td>ticket ids:<%= ticket.id %></td>
+  
 
-<p>
-  <b>Price:</b>
-  <%= @sale.price %>
-</p>
+  </tr>
+<% end %>
+	<tr>
+		<td>Total price: <%=@sale.price*@sale.quantity%></td>
+	</tr>
+</table>
 
-<p>
-  <b>Quantity:</b>
-  <%= @sale.quantity %>
-</p>
+<br />
 
-<p>
-  <b>Ticket:</b>
-  <%= @sale.ticket %>
-</p>
-
-<p>
-  <b>Notes:</b>
-  <%= @sale.notes %>
-</p>
+<%= link_to 'New Sale', new_sale_path %>
 
 
 <%= link_to 'Edit', edit_sale_path(@sale) %> |

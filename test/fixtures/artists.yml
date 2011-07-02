@@ -3,9 +3,9 @@
 one:
   name: MyText
   url: MyText
-  onTour: 1
+  on_tour_until: 1
 
 two:
   name: MyText
   url: MyText
-  onTour: 1
+  on_tour_until: 1

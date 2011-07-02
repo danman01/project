@@ -55,7 +55,7 @@
   <%= ticket.seat_number %>
 	</td>
 	<td>
-  <% if ticket.sold? %>yes<%else%>no<%end%>
+  <% if ticket.sold? %><%=link_to 'yes', "/sales/show?id=#{ticket.id}"%><%else%><%=link_to 'no', "/sales/new?ticket_id=#{ticket.id}"%><%end%>
 	</td>
 
 	<td>

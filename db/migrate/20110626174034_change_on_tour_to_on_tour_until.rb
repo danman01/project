@@ -1,11 +1,11 @@
-class ChangeOnTourToOnTourUntil < ActiveRecord::Migration
+class Changeon_tour_untilToon_tour_untilUntil < ActiveRecord::Migration
   def self.up
-	remove_column :artists, :onTour
+	remove_column :artists, :on_tour_until
 	add_column :artists, :on_tour_until, :datetime
   end
 
   def self.down
-	add_column :artists, :onTour, :integer
+	add_column :artists, :on_tour_until, :integer
 	remove_column :artists, :on_tour_until
   end
 end

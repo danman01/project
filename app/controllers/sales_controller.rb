@@ -1,6 +1,5 @@
 class SalesController < ApplicationController
-  # GET /sales
-  # GET /sales.xml
+  respond_to :html, :js, :xml
   def index
     @sales = Sale.all
 
@@ -14,7 +13,7 @@ class SalesController < ApplicationController
   # GET /sales/1.xml
   def show
     @sale = Sale.find(params[:id])
-
+    @group=TicketGroup.find(@sale.ticket_group_id)
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @sale }
@@ -46,15 +45,14 @@ class SalesController < ApplicationController
   def create
     @sale = Sale.new(params[:sale])
     # TODO decrement seat #s
-    respond_to do |format|
-      if @sale.save
-        format.html { redirect_to(@sale, :notice => 'Sale was successfully created.') }
-        format.xml  { render :xml => @sale, :status => :created, :location => @sale }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @sale.errors, :status => :unprocessable_entity }
-      end
-    end
+    quantity=@sale.quantity
+    group=TicketGroup.find(params[:ticket_group_id])
+    @sale.ticket_group_id=group.id
+    tickets=Ticket.find_all_by_ticket_group_id(group.id, :limit=>quantity, :conditions=>["sold=?", 0])
+    @sale.tickets=tickets
+    @sale.save
+    logger.info @sale.tickets
+    respond_with(@sale)
   end
 
   # PUT /sales/1

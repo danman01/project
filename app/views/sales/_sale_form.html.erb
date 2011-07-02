@@ -1,12 +1,3 @@
-<script type="text/javascript">
-$(function(){
-	$("#sale_quantity").change(function(){
-		var $val=$(this).val();
-		alert($val);
-	})
-})
-</script>
-
 <p>selling tickets for <%=@artist%> at <%=@venue%></p>
 
 <p>location: <%=@group.section%> row <%=@group.row%></p>
@@ -45,7 +36,9 @@ $(function(){
     <%= f.select :quantity, arr.each {|n| puts n} %>
 
   </div>
-
+<div class="field">
+	<%=f.label :ticket_ids%><br/>
+	<%=f.text_field :ticket_ids, :value=>params[:ticket_id]%>
 <div class="field">
     <%= f.label :marketplace, 'market sold in' %><br />
     <%= f.select :marketplace_id, Marketplace.all.collect {|c| [ c.name, c.id ] }  %>
@@ -54,7 +47,6 @@ $(function(){
     <%= f.label :notes %><br />
     <%= f.text_area :notes %>
   </div>
-	<%=hidden_field_tag :ticket_group_id, @ticket.ticket_group.id%>
   <div class="actions">
     <%= f.submit %>
   </div>

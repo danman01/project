@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110626184325) do
+ActiveRecord::Schema.define(:version => 20110628162308) do
 
   create_table "artists", :force => true do |t|
     t.text     "name"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20110626184325) do
     t.string   "shipping_kind"
     t.integer  "handling"
     t.string   "invoice_id"
+    t.integer  "ticket_group_id"
   end
 
   create_table "ticket_groups", :force => true do |t|
@@ -130,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20110626184325) do
     t.string   "phone"
     t.string   "notes"
     t.string   "ticket_ids"
+    t.string   "event_ids"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

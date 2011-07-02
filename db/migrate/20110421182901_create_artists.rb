@@ -3,7 +3,7 @@ class CreateArtists < ActiveRecord::Migration
     create_table :artists do |t|
       t.text :name
       t.text :url
-      t.integer :onTour
+      t.integer :on_tour_until
 
       t.timestamps
     end

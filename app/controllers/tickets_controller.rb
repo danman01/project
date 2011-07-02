@@ -1,6 +1,5 @@
 class TicketsController < ApplicationController
-  # GET /tickets
-  # GET /tickets.xml
+  respond_to :html, :js, :xml
   def index
     groups=[]
     @ticket_groups=[]
@@ -86,31 +85,25 @@ class TicketsController < ApplicationController
   def create
     
     #create new ticket for each seat - @ticket is ticket 0, so start with 1
-    n=params[:quantity].to_i-1
+    q=params[:quantity].to_i
+    n=0
     seats=params[:seats].split(",")
-    params[:ticket][:ticket_group]=TicketGroup.find(params[:ticket][:ticket_group])
-    while n>=0 #why endless loop??
+    @ticket_group=TicketGroup.find(params[:ticket][:ticket_group])
+    if @ticket_group.quantity.nil? #initialize quantity
+      @ticket_group.quantity=0
+    end
+    params[:ticket][:ticket_group]=@ticket_group
+    while n < q 
       t=Ticket.new(params[:ticket])
       t.seat_number=seats[n]
       t.user_id=current_user.id rescue 1 #so i dont have to log in during testing
       t.save
-      n-1
-      logger.info 'ticket created!'
+      n+=1
+      @ticket_group.quantity+=1
+      logger.info 'ticket created! ' +n.to_s
     end 
-    respond_to do |format|
-      if @ticket.save
-        if @ticket.sold==1
-          format.html { redirect_to new_sale_path(:ticket_id=>@ticket.id), :notice => 'Ticket was successfully created. Now fill in sale info' }
-          format.xml  { render :xml => @ticket, :status => :created, :location => @ticket }
-        else
-          format.html { redirect_to(@ticket, :notice => 'Ticket was successfully created.') }
-          format.xml  { render :xml => @ticket, :status => :created, :location => @ticket }
-        end
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @ticket.errors, :status => :unprocessable_entity }
-      end
-    end
+    @ticket_group.save
+    respond_with(@ticket_group)
   end
 
   # PUT /tickets/1
