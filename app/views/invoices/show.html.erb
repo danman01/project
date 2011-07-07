@@ -1,9 +1,37 @@
 <% title "Invoice" %>
+<h1>Sale complete!</h1>
+<h2><%=@invoice.sales.first.tickets.first.event.name%></h2>
+<table>
+<thead>
+  <tr>
+    <td>Date</td>
+    <td>Sale Price</td>
+    <td>Quantity</td>
+    <td>section</td>
+    <td>row</td>
+	<td>ids</td>
+	<td>total price</td>
+  </tr>
+</thead>
+<%for sale in @invoice.sales%>
+<%group=TicketGroup.find(sale.ticket_group_id)%>
+<tr>
+    <td><%= sale.date %></td>
+    <td><%= sale.price %></td>
+    <td><%= sale.quantity %></td>
+	<td><%= group.section%></td>
+	<td><%= group.row%></td>
+	<td>
+<% sale.tickets.each do |ticket| %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @invoice.name %>
-</p>
+  
+     <%= ticket.id %> 
+<%end%>
+	</td>
+	<td><%=@invoice.total%></td>
+<% end %>
+</tr>
+</table>
 
 <p>
   <%= link_to "Edit", edit_invoice_path(@invoice) %> |

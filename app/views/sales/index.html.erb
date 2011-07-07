@@ -17,7 +17,9 @@
     <td><%= sale.date %></td>
     <td><%= sale.price %></td>
     <td><%= sale.quantity %></td>
-    <td><%= sale.ticket %></td>
+	<td><%sale.tickets.each do |ticket|%>
+     <%= link_to ticket.id, "/tickets/#{ticket.id}" %> 
+	<%end%></td>
     <td><%= sale.notes %></td>
     <td><%= link_to 'Show', sale %></td>
     <td><%= link_to 'Edit', edit_sale_path(sale) %></td>

@@ -43,6 +43,7 @@ class SalesController < ApplicationController
   # POST /sales
   # POST /sales.xml
   def create
+    @user=User.find(1) #should find current user
     @sale = Sale.new(params[:sale])
     # TODO decrement seat #s
     quantity=@sale.quantity
@@ -51,8 +52,9 @@ class SalesController < ApplicationController
     tickets=Ticket.find_all_by_ticket_group_id(group.id, :limit=>quantity, :conditions=>["sold=?", 0])
     @sale.tickets=tickets
     @sale.save
-    logger.info @sale.tickets
-    respond_with(@sale)
+    respond_with(@sale) do |format|
+      format.html{redirect_to new_invoice_path(:sales=>[@sale], :user=>@user)}
+    end
   end
 
   # PUT /sales/1

@@ -1,8 +1,25 @@
+<% content_for :javascript do %>
+<script type="text/javascript">
+$(function(){
+	var $total=0;
+	$total=$(".totals").text();
+	$("#invoice_total").val($total);
+})
+</script>
+<%end%>
+
 <%= form_for @invoice do |f| %>
   <%= f.error_messages %>
   <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.label :customer_id %><br />
+    <%= f.select :customer_id, Customer.all.collect {|c| [ "name: " + c.fname, c.id ]} %>
+	
   </p>
+	<p>
+		<%= f.label :total %><br />
+	    <%= f.text_field :total%>
+	</p>
+	<%=hidden_field_tag :sales_ids, params[:sales]%>
+	
   <p><%= f.submit %></p>
 <% end %>

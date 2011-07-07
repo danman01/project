@@ -1,4 +1,35 @@
 <% title "New Invoice" %>
+<table>
+<thead>
+  <tr>
+    <td>Date</td>
+    <td>Price</td>
+    <td>Quantity</td>
+    <td>section</td>
+    <td>row</td>
+	<td>ids</td>
+	<td>total price</td>
+  </tr>
+</thead>
+<%for sale in @sales%>
+<%group=TicketGroup.find(sale.ticket_group_id)%>
+<tr>
+    <td><%= sale.date %></td>
+    <td><%= sale.price %></td>
+    <td><%= sale.quantity %></td>
+	<td><%= group.section%></td>
+	<td><%= group.row%></td>
+	<td>
+<% sale.tickets.each do |ticket| %>
+
+  
+     <%= ticket.id %> 
+<%end%>
+	</td>
+	<td class="totals"><%=sale.price*sale.quantity%></td>
+<% end %>
+</tr>
+</table>
 
 <%= render 'form' %>
 
