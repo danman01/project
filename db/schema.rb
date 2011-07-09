@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110704034606) do
+ActiveRecord::Schema.define(:version => 20110709191254) do
 
   create_table "artists", :force => true do |t|
     t.text     "name"
@@ -20,6 +20,12 @@ ActiveRecord::Schema.define(:version => 20110704034606) do
     t.string   "mbid"
     t.string   "eventsHref"
     t.datetime "on_tour_until"
+  end
+
+  create_table "commissions", :force => true do |t|
+    t.float   "commission"
+    t.integer "user_id"
+    t.integer "marketplace_id"
   end
 
   create_table "customers", :force => true do |t|
@@ -48,7 +54,7 @@ ActiveRecord::Schema.define(:version => 20110704034606) do
   end
 
   create_table "invoices", :force => true do |t|
-    t.string   "sales_ids"
+    t.string   "sale_ids"
     t.integer  "customer_id"
     t.integer  "total"
     t.integer  "user_id"
@@ -63,6 +69,17 @@ ActiveRecord::Schema.define(:version => 20110704034606) do
     t.text     "abbr"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "role_id"
+    t.integer "user_id"
   end
 
   create_table "sales", :force => true do |t|
@@ -108,8 +125,8 @@ ActiveRecord::Schema.define(:version => 20110704034606) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                 :default => "", :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
+    t.string   "email",                                 :default => "",    :null => false
+    t.string   "encrypted_password",     :limit => 128, :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -134,6 +151,8 @@ ActiveRecord::Schema.define(:version => 20110704034606) do
     t.string   "notes"
     t.string   "ticket_ids"
     t.string   "event_ids"
+    t.string   "role_ids"
+    t.boolean  "complete",                              :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -151,6 +170,7 @@ ActiveRecord::Schema.define(:version => 20110704034606) do
     t.string   "country"
     t.string   "latitude"
     t.string   "longitude"
+    t.integer  "skid"
   end
 
 end

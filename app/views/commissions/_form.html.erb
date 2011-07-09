@@ -1,0 +1,24 @@
+<%= form_for(@commission) do |f| %>
+  <% if @commission.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@commission.errors.count, "error") %> prohibited this commission from being saved:</h2>
+
+      <ul>
+      <% @commission.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :marketplace_id, @commission.marketplace.name %><br />
+  </div>
+  <div class="field">
+    <%= f.label :commission %><br />
+    <%= f.text_field :commission %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

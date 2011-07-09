@@ -25,12 +25,13 @@
 		</td>
 		<td>
 			<%=@quantity%>
-			<br /><%=link_to 'Add Tickets', {:controller=>'tickets', :action=>'new', :event_id=>@event.id, :artist_id=>@event.artist.id,:venue_id=>@event.venue.id}%>
+			<br /><%=link_to_or((can? :create, @event.tickets), (link_to('Add', '#', :onclick=>'javascript:alert("you must be logged in!");')), 'Add Tickets', {:controller=>'tickets', :action=>'new', :event_id=>@event.id, :artist_id=>@event.artist.id,:venue_id=>@event.venue.id})%>
 		</td>
     </tr>
    </tbody>
 </table>
 
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to_or((can? :update, @event), "", 'Edit', edit_event_path(@event)) %> |
+
 <%= link_to 'Back', events_path %>

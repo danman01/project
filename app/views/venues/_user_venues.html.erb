@@ -1,0 +1,32 @@
+<table>
+	<thead>
+		<tr>
+			<td>ID</td>
+			<td>Name</td>
+			<td>Capacity</td>
+			<td>City</td>
+			<td>Region</td>
+			<td>Country</td>
+			<td>Lat</td>
+			<td>Longitude</td>
+			
+			
+		</tr>
+	</thead>
+	<tbody>
+		<%for venue in @venues%>
+		<tr>
+			<td><%=venue.id%></td>
+			<td><%=venue.name%></td>
+			<td><%=venue.capacity%></td>
+			<td><%=link_to venue.city, "/venues/city/#{venue.city}"%></td>
+			<td><%=link_to venue.region, "/venues/region/#{venue.region}"%></td>
+			<td><%=link_to venue.country, "/venues/region/#{venue.region}"%></td>
+			<td><%=link_to venue.latitude, "/venues/map/#{venue.latitude}/#{venue.longitude}"%></td>
+			<td><%=link_to venue.longitude, "/venues/map/#{venue.latitude}/#{venue.longitude}"%></td>
+			
+			
+		</tr>
+		<%end%>
+	</tbody>
+</table>

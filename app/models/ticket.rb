@@ -1,3 +1,25 @@
+# == Schema Information
+#
+# Table name: tickets
+#
+#  id              :integer         not null, primary key
+#  cost            :integer
+#  bought_on       :datetime
+#  in_hand         :datetime
+#  kind            :text
+#  sold            :integer
+#  notes           :text
+#  created_at      :datetime
+#  updated_at      :datetime
+#  event_id        :integer
+#  artist_id       :integer
+#  venue_id        :integer
+#  ticket_group_id :integer
+#  seat_number     :integer
+#  sale_id         :integer
+#  user_id         :integer
+#
+
 class Ticket < ActiveRecord::Base
 	belongs_to :venue
 	belongs_to :event
@@ -11,4 +33,9 @@ class Ticket < ActiveRecord::Base
       
   validates_presence_of :seat_number, :ticket_group, :cost, :event_id, :artist_id, :venue_id, :user_id
   
+  def is_sold?
+    if self.sold==1
+    return self
+    end
+  end
 end

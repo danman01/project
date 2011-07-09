@@ -7,14 +7,21 @@
 
 <p>
   <b>Commission:</b>
+  <%if user_signed_in?%>
+		<%if m=current_user.commissions.find_by_marketplace_id(@marketplace.id)%>
+			<%=link_to ((m.commission)*100).to_s + "%", "/commissions/edit/#{m.id}"%>
+		<%end%>
+  <%else%>
   <%= @marketplace.commission %>
+  <%end%>
 </p>
 
 <p>
   <b>Abbr:</b>
   <%= @marketplace.abbr %>
 </p>
-
-
-<%= link_to 'Edit', edit_marketplace_path(@marketplace) %> |
+<%if @invoices%>
+<%=render :partial=>"invoices/user_invoices"%>
+<%end%>
+<%= link_to_or((can? :edit, @marketplace), '', 'Edit', edit_marketplace_path(@marketplace)) %> |
 <%= link_to 'Back', marketplaces_path %>

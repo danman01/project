@@ -1,5 +1,17 @@
-<h1>Listing tickets for user <%=params[:user_id]%></h1>
+<% content_for :javascript do %>
+<script type="text/javascript">
+$(function(){
+	$(".view_seats").click(function(){
+		var $id=$(this).attr("id");
+		$("."+$id).toggle("slow");
+	})
+})
+</script>
+<%end%>
 
+<h1><%if params[:user_id]%>Listing tickets for user <%=params[:user_id]%>
+<%end%>
+</h1>
 <table>
   <tr>
     <th>Event</th>
@@ -21,7 +33,7 @@
 <% @ticket_groups.each do |group| %>
 <%info=group.tickets.first%>
 <tr>
-    <td><%= info.event.name rescue 'na' %></td>
+    <td><%= info.event.date.strftime("%m/%d/%Y") rescue 'na' %></td>
     <td><%= info.artist.name %></td>
     <td><%= info.venue.name %></td>
     <td><%= group.quantity %></td>
@@ -42,10 +54,11 @@
 		<%=sold_count%> / <%= group.tickets.size%>
 	</td>
     <td><%= info.notes %></td>
-    <td><%= link_to 'View Seats', group %></td>
+    <td><%= link_to 'View Seats', "javascript:void(0);", :id=>"#{group.id}", :class=>"view_seats" %></td>
     <td><%= link_to 'Edit', edit_ticket_group_path(group) %></td>
     <td><%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
+<tr class="<%=group.id%>" style="display:none;"><%=render :partial=>"ticket_groups/view_seats", :locals=>{:tickets=>group.tickets}%></tr>
 <%end%>
 
 </table>

@@ -34,17 +34,23 @@ class EventsController < ApplicationController
   # GET /events/new
   # GET /events/new.xml
   def select_or_create(name=params[:name], date=params[:date], time=params[:time], venue=params[:venue], artist_id=params[:artist_id])
-    venue=Venue.find_by_name(venue) rescue nil
-    logger.info "\n\n venue: #{venue} \n \n"
-    if @event=Event.find_by_name(name)
-    else
-      @event=Event.new(:name=>name,:artist_id=>artist_id, :venue=>venue)
-      @event.time=(date+" " + time).to_datetime unless time==""
-      @event.date=date.to_datetime unless date==""
-      @event.save
-      logger.info 'new event!' + "\n #{@event.name}"
-    end
-    respond_with(@event)
+     venue=Venue.find_by_name(venue) rescue nil
+      logger.info "\n\n venue: #{venue} \n \n"
+      if @event=Event.find_by_name(name)
+      else
+        @event=Event.new(:name=>name,:artist_id=>artist_id, :venue=>venue)
+        if date.nil?
+          date=""
+        end
+        if time.nil?
+          time=""
+        end
+        @event.time=(date+" " + time).to_datetime unless time==""
+        @event.date=date.to_datetime unless date==""
+        @event.save
+        logger.info 'new event!' + "\n #{@event.name}"
+      end
+      respond_with(@event)
   end
   
   def new

@@ -35,6 +35,8 @@ Tickets::Application.routes.draw do
     resources :venues
     resources :sales
   end
+  
+  resources :commissions
 
   match 'ticket_groups/select/:event_id'=> 'ticket_groups#select'
   match '/search'=>'search#search'
@@ -93,5 +95,6 @@ Tickets::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
+  match '/events/select_or_create' => 'events#select_or_create'
   match ':controller(/:action(/:id(.:format)))'
 end

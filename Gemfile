@@ -9,6 +9,7 @@ gem 'sqlite3'
 gem 'pg'
 gem 'passenger'
 gem 'annotate', :git=>'git://github.com/ctran/annotate_models.git'
+gem 'cancan'
 # Use unicorn as the web server
 # gem 'unicorn'
 

@@ -1,0 +1,9 @@
+<%for ticket in tickets%>
+
+	<td>
+  Seat #: <%= ticket.seat_number %>
+	</td>
+	<td>
+ sold? <% if ticket.sold? %><%=link_to 'yes', "/sales/show?id=#{ticket.id}"%><%else%><%=link_to 'no', "/sales/new?ticket_id=#{ticket.id}"%><%end%>
+	</td>
+<%end%>

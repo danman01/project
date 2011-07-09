@@ -1,0 +1,73 @@
+<table>
+	<thead>
+		<tr>
+			<td>ID</td>
+			<td>Date</td>
+			<td>Event Name</td>
+			<td>Market Sold In</td>
+			<td>Invoice Total</td>
+		</tr>
+	</thead>
+	<tbody>
+<%@total=0%>
+<%@net_total=0
+@fees=0
+@ticket_costs=0
+@c=current_user.commissions
+@n=0 
+%>
+
+<%for invoice in @invoices%>
+<%@total+=invoice.total
+for entry in @c
+	if entry.marketplace==invoice.sales.first.marketplace
+		commission=entry.commission
+    else
+		commission=invoice.sales.first.marketplace.commission rescue 0
+	end
+end
+@net_total+=invoice.total*(1-commission)
+@fees+=invoice.total*commission
+invoice.sales.each do |sale|
+	sale.tickets.each do |t|
+		@ticket_costs+=t.cost
+		@n+=1
+	end
+end
+%>
+	<tr>
+			<td><%=link_to invoice.id, "/invoices/#{invoice.id}"%></td>
+			<td><%=invoice.created_at.strftime("%m/%d/%Y")%></td>
+			<td><%=invoice.sales.first.tickets.first.event.name%></td>
+			<td><%=link_to invoice.sales.first.marketplace.name, "/marketplaces/#{invoice.sales.first.marketplace.name}"%></td>
+			<td>$<%=invoice.total%></td>
+		</tr>
+<%end%>
+	
+	</tbody>
+</table>
+<br/>
+<p> Totals...</p>
+<table>
+	<thead>
+		<tr>
+			<td>Total Sales</td>
+			<td>Tickets Sold</td>
+			<td>Total Revenue</td>
+			<td>Fees</td>
+			<td>Total Ticket Costs</td>
+			<td>Net Revenue</td>
+		
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><%=@invoices.count%></td>
+			<td><%=@n%></td>
+			<td>$<%=@total%></td>
+			<td>$<%=round_to(@fees, 2)%></td>
+			<td>$<%=@ticket_costs%></td>
+			<td>$<%=round_to(@total - @fees - @ticket_costs, 2)%></td>
+		</tr>
+	</tbody>
+</table>

@@ -1,0 +1,22 @@
+<table>
+	<thead>
+		<tr>
+			<td>ID</td>
+			<td>Date</td>
+			<td>Name</td>
+			<td>Artist</td>
+			<td>Venue</td>
+		</tr>
+	</thead>
+	<tbody>
+		<%for event in @events%>
+		<tr>
+			<td><%=event.id%></td>
+			<td><%=event.date.strftime("%m/%d/%Y")%></td>
+			<td><%=event.name%></td>
+			<td><%=link_to event.artist.name, "/artists/#{event.artist.id}"%></td>
+			<td><%=link_to event.venue.name, "/venues/#{event.venue.id}"%></td>
+		</tr>
+		<%end%>
+	</tbody>
+</table>

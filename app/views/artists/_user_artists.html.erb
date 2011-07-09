@@ -1,0 +1,19 @@
+<table>
+	<thead>
+		<tr>
+			<td>name</td>
+			<td>mbid</td>
+			<td>on tour until</td>
+		</tr>
+	</thead>
+	<tbody>
+		<%for artist in @artists%>
+		<tr>
+			<td><%=artist.name%></td>
+			<td><%=artist.mbid%></td>
+			<td><%if artist.on_tour_until!=nil%><%=artist.on_tour_until.strftime("%m/%d/%Y")%><%end%></td>
+	
+		</tr>
+		<%end%>
+	</tbody>
+</table>

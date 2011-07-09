@@ -3,7 +3,7 @@
 <head>
   <title>Tickets</title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag 'application.js','jquery.min.js','rails.js' %>
+  <%= javascript_include_tag 'jquery.min.js','jquery-ui.min.js','jquery_ujs.js','application.js', %>
 
   <%= csrf_meta_tag %>
 	<%=yield :javascript%>
@@ -24,7 +24,7 @@
 		<%end%>
 	<div id="user_nav">
 		<% if user_signed_in? %>
-			Signed in as <%= current_user.email%>. Not you?
+			Signed in as <%= link_to current_user.email, "/users/#{current_user.id}"%>. Not you?
 			<%= link_to "sign out", destroy_user_session_path%>
 		<%else%>
 			<%= link_to "Sign up", '/users/sign_up' %> or <%=link_to 'Sign in', new_user_session_path %>
@@ -62,6 +62,13 @@
 <p>
 	<%= link_to "View All", venues_path %> / <%= link_to "New", new_venue_path %>
 </p>
+</div>
+<div>
+	<%=form_tag "/search/results", :method=>"post" do%>
+	<%=label_tag "enter artist name"%>
+	<%=text_field_tag "name"%>
+	<%=submit_tag 'search!'%>
+	<%end%>
 </div>
 </div>
 <%= yield %>

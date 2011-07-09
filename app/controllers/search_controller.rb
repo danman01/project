@@ -4,6 +4,38 @@ class SearchController < ApplicationController
   def search
 
   end
+  def results
+    artist=params[:name]
+     if !Artist.find(:all, :conditions=>['name LIKE ? and mbid IS NOT NULL', artist]).empty?
+         @artists=Artist.find(:all, :conditions=>['name LIKE ? and mbid IS NOT NULL', artist])
+      else
+      api_key="O4d25zZpTn7zfxZP"
+      host="api.songkick.com"
+      path="/api/3.0/search/artists.xml"
+      params="?query="+CGI::escape(artist)+"&apikey="+api_key
+      http=Net::HTTP.new(host)
+      headers=
+      {
+        'Content-Type' => 'application/atom+xml',
+        'Host'=> host,
+        'User-Agent'=>"ruby/net::http"
+      }
+      resp, data=http.get(path+params, headers)
+      if resp.code=="200"
+        @artists=[]
+        doc = Nokogiri::XML(data) 
+        doc.xpath('resultsPage/results/artist').each do |artist|
+          @artists<<artist
+          logger.info artist['displayName']
+        end
+        #title=doc.xpath('//xmlns:title').first.children.text
+        #node=doc.xpath('//xmlns:entry')
+      end
+      end
+      respond_with(@artists)
+  
+  end
+  
   def sk_artist_search(artist=params[:name])
     if !Artist.find(:all, :conditions=>['name LIKE ? and mbid IS NOT NULL', artist]).empty?
        @artists=Artist.find(:all, :conditions=>['name LIKE ? and mbid IS NOT NULL', artist])
@@ -21,7 +53,6 @@ class SearchController < ApplicationController
     }
     resp, data=http.get(path+params, headers)
     if resp.code=="200"
-      data
       @artists=[]
       doc = Nokogiri::XML(data) 
       doc.xpath('resultsPage/results/artist').each do |artist|

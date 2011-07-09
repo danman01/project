@@ -13,8 +13,14 @@ class MarketplacesController < ApplicationController
   # GET /marketplaces/1
   # GET /marketplaces/1.xml
   def show
-    @marketplace = Marketplace.find(params[:id])
-
+    @marketplace = Marketplace.find_by_name(params[:id])
+    if current_user
+      invoices=current_user.invoices
+      @invoices=[]
+      for invoice in invoices
+        @invoices<<invoice unless invoice.sales.first.marketplace_id!=@marketplace.id
+      end
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @marketplace }

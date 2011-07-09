@@ -2,22 +2,42 @@
 <%if @events.empty? || @events.nil?%>
 	<%=link_to 'add one!', "/events/new?artist_id=#{@artist.id}"%>
 <%else%>
-	
+	<table>
+		<thead>
+			<tr>
+				<td>Date</td>
+				<td>City</td>
+				<td>Region</td>
+				<td>Name</td>
+				<td></td>
+			</tr>
+		</thead>
+		<tbody>
+			
 		<%for event in @events%>
-		<p>
-		<%=form_tag "/events/select_or_create", :method=>'post' do%>
+		<tr>
 		
-			<%=hidden_field_tag 'date', event.xpath('start').first['date']%> <%=label_tag event.xpath('start').first['date']%> | <%=hidden_field_tag 'name', event['displayName'] %> <%=label_tag event['displayName']%>
+			<td><%=event.xpath('start').first['date']%></td>
+			<td><%=event.xpath('venue/metroArea')[0]['displayName']%></td>
+			<td>
+			<%if event.xpath('venue/metroArea/state')[0]!=nil%>
+				<%=event.xpath('venue/metroArea/state')[0]['displayName']%>
+			<%else%>
+				<%=event.xpath('venue/metroArea/country')[0]['displayName']%>
+			<%end%>
+			</td>
+			<td>
+				<%= event['displayName']%></td>
 			
 			
-			<%=hidden_field_tag 'time', event.xpath('start').first['time'] %> 
-			<%=hidden_field_tag 'venue', event.xpath('venue').first['displayName']%>
-			<%=hidden_field_tag "artist_id", @artist.id%>
 		
+			<td>
 
-		<%=submit_tag 'choose!'%>
-		</p>
+		<%=button_to 'Sell for this event!', "/events/select_or_create?date=#{event.xpath('start').first['date']}&name=#{event['displayName']}&venue=#{event.xpath('venue').first['displayName']}&artist_id=#{@artist.id}"%>
+		</td>
+		</tr>
 		<%end%>
-	
-	<%end%>
+		</tbody>
+	</table>
+
 <%end%>
