@@ -91,5 +91,19 @@ class ArtistsController < ApplicationController
     end
   end
   
-    
+  def user_artists(scope=params[:artist_scope])
+    if scope="upcoming"
+    tmp=current_user.events
+    tmp.reject!{|x|x.date<Time.now}
+    tmp2=[]
+    tmp.each do |event|
+    tmp2<<event.artist unless event.date<Time.now
+    end    
+    @artists=tmp2
+    else
+      @artists=current_user.artists
+    end
+    @artists.uniq!
+    respond_with(@artists)
+  end
 end

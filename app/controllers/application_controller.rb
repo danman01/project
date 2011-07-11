@@ -13,5 +13,6 @@ class ApplicationController < ActionController::Base
     factor = 10.0**decimals
     (self*factor).round / factor
   end
-   
+  
+  
 end

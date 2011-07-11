@@ -12,6 +12,7 @@ $(function(){
 <h1><%if params[:user_id]%>Listing tickets for user <%=params[:user_id]%>
 <%end%>
 </h1>
+<p class="ajax_container"><%=link_to_unless((params[:ticket_scope].nil? || params[:ticket_scope]=='all'),'All my tickets', "/tickets/user_tickets?ticket_scope=all", :remote=>true)%> | <%=link_to_unless(params[:ticket_scope]=="upcoming", 'upcoming tickets', "/tickets/user_tickets?ticket_scope=upcoming", :remote=>true)%></p>
 <table>
   <tr>
     <th>Event</th>

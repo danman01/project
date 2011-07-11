@@ -57,7 +57,7 @@ class SearchController < ApplicationController
       doc = Nokogiri::XML(data) 
       doc.xpath('resultsPage/results/artist').each do |artist|
         @artists<<artist
-        logger.info artist['displayName']
+        #logger.info artist['displayName']
       end
       #title=doc.xpath('//xmlns:title').first.children.text
       #node=doc.xpath('//xmlns:entry')
@@ -71,7 +71,7 @@ class SearchController < ApplicationController
     if @artist=Artist.find_by_mbid(mbid)
       #@artist.eventsHref=eventsHref unless @artist.eventHref!=nil
     else 
-      @artist=Artist.new(:mbid=>mbid, :eventsHref=>eventsHref, :name=>params[:name], :url=>params[:url], :on_tour_until=>params[:on_tour_until])
+      @artist=Artist.new(:mbid=>mbid, :eventsHref=>eventsHref, :name=>artist_name, :url=>params[:url], :on_tour_until=>params[:on_tour_until])
       @artist.save
       logger.info @artist.name +"created!"
     end

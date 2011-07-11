@@ -1,4 +1,5 @@
 class VenuesController < ApplicationController
+  respond_to :js,:xml,:html
   # GET /venues
   # GET /venues.xml
   def index
@@ -88,5 +89,20 @@ class VenuesController < ApplicationController
       format.html { redirect_to(venues_url) }
       format.xml  { head :ok }
     end
+  end
+  def user_venues(scope=params[:venue_scope])
+    if scope=="upcoming"
+      tmp=current_user.events
+      tmp.reject!{|x|x.date<Time.now}
+      tmp2=[]
+      tmp.each do |event|
+        tmp2<<event.venue unless event.date<Time.now
+      end   
+      @venues=tmp2 
+    else
+      @venues=current_user.venues
+    end
+    @venues.uniq!
+    respond_with(@venues)
   end
 end

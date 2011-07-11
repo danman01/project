@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   respond_to :js,:xml,:html
-  
+  load_and_authorize_resource
   def index
     @events = Event.all
 
@@ -117,5 +117,15 @@ class EventsController < ApplicationController
       format.html { redirect_to(events_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  # AJAX from home page
+  def user_events(scope=params[:event_scope])
+    @events=current_user.events
+    if params[:event_scope]=="upcoming"
+      @events.reject!{|x|x.date<Time.now}
+    end
+    @events.uniq!
+    respond_with(@events)
   end
 end

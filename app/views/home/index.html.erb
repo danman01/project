@@ -5,6 +5,11 @@
 	$(function() {
 		$( "#tabs" ).tabs();
 	});
+	$(function(){
+		$(".ajax_container a").click(function(){
+			$(this).parent().text("loading...");
+		})
+	})
 	</script>
 
 
@@ -20,26 +25,30 @@
 		<li><a href="#tabs-5">My Artists</a></li>
 	</ul>
 	<div id="tabs-1">
-		<p>My Sales....</p>
+		<div id="sales">
 		<%=render :partial=>"/invoices/user_invoices"%>
+		</div>
 	</div>
 	<div id="tabs-2">
-		<p>My Events...</p>
+		<div id="events">
 		<%=render :partial=>"/events/user_events"%>
+		</div>
 		
 	</div>
 	<div id="tabs-3">
-		<p>My Tickets...</p>
+		<div id="tickets">
 		<%=render :partial=>'/tickets/users_tickets'%>
+		</div>
 	</div>
 	<div id="tabs-4">
-		<p>My Venues</p>
+		<div id="venues">
 		<%=render :partial=>'/venues/user_venues'%>
+		</div>
 	</div>
 	<div id="tabs-5">
-		<p>My Artists</p>
+		<div id="artists">
 		<%=render :partial=>"/artists/user_artists"%>
-		
+		</div>
 	</div>
 </div>
 

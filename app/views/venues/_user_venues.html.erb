@@ -1,3 +1,4 @@
+<p class="ajax_container"><%=link_to_unless((params[:venue_scope].nil? || params[:venue_scope]=='all'),'All my venues', "/venues/user_venues?venue_scope=all", :remote=>true)%> | <%=link_to_unless(params[:venue_scope]=="upcoming", 'upcoming venues', "/venues/user_venues?venue_scope=upcoming", :remote=>true)%></p>
 <table>
 	<thead>
 		<tr>

@@ -1,59 +1,33 @@
-	<%@artists.each do |artist|%>
-		<%if artist.class==Artist%>
+<%@artists.each do |artist|%>
+	<%if artist.class==Artist%>
 		<%=form_tag "/search/sk_artist_calendar", :remote=>true, :method=>'post' do%>
-	
-	<p>
-		<%=text_field_tag "id", artist.id%> <%=label_tag artist.name%>
-		<%=hidden_field_tag 'mbid', artist.mbid%>
-		<%=hidden_field_tag 'eventsHref', artist.eventsHref%>
-		<%=hidden_field_tag 'name', artist.name%>
-		<%=hidden_field_tag 'on_tour_until', artist.on_tour_until%>
-		<%=hidden_field_tag 'url', artist.url%>
-	</p>
+
+		<p>
+			<%=text_field_tag "id", artist.id%> <%=label_tag artist.name%>
+			<%=hidden_field_tag 'mbid', artist.mbid%>
+			<%=hidden_field_tag 'eventsHref', artist.eventsHref%>
+			<%=hidden_field_tag 'name', artist.name%>
+			<%=hidden_field_tag 'on_tour_until', artist.on_tour_until%>
+			<%=hidden_field_tag 'url', artist.url%>
+		</p>
 		<%=submit_tag 'calendar!'%>
-	
+
 		<%end%>
-		<%=form_tag "/search/sk_events", :remote=>true, :method=>'post' do%>
-	
-	<p>
-		<%=text_field_tag "name", artist.name%> <%=label_tag artist.name%>
-		<%=hidden_field_tag 'mbid', artist.mbid%>
-		<%=hidden_field_tag 'eventsHref', artist.eventsHref%>
-		<%=hidden_field_tag 'on_tour_until', artist.on_tour_until%>
-		<%=hidden_field_tag 'url', artist.url%>
-	</p>
-		<%=submit_tag 'all events!'%>
-	
-		<%end%>
-		<%else #if not in database, look to songkick%>
+	<%else #if not in database, look to songkick%>
 		<%=form_tag "/search/sk_artist_calendar", :remote=>true, :method=>'post' do%>
-	
-	<p>
-		<%=text_field_tag "id", artist['id']%> <%=label_tag artist['displayName']%>
-		<%if artist.children[1]%>
-		<%=hidden_field_tag 'mbid', artist.children[1]['mbid']%>
-		<%=hidden_field_tag 'eventsHref', artist.children[1]['eventsHref']%>
-		<%=hidden_field_tag 'name', artist['displayName']%>
-		<%=hidden_field_tag 'on_tour_until', artist['on_tour_until']%>
-		<%=hidden_field_tag 'url', artist['uri']%>
-		<%end%>
-	</p>
+
+		<p>
+			<%=text_field_tag "id", artist['id']%> <%=label_tag artist['displayName']%>
+			<%if id=artist.xpath('identifier')[0]%>
+			<%=hidden_field_tag 'mbid', id['mbid']%>
+			<%=hidden_field_tag 'eventsHref', id['eventsHref']%>
+			<%=hidden_field_tag 'name', artist['displayName']%>
+			<%=hidden_field_tag 'on_tour_until', artist['onTourUntil']%>
+			<%=hidden_field_tag 'url', artist['uri']%>
+			<%end%>
+		</p>
 		<%=submit_tag 'calendar!'%>
-	
-		<%end%>
-		<%=form_tag "/search/sk_events", :remote=>true, :method=>'post' do%>
-	
-	<p>
-		<%=text_field_tag "name", artist['displayName']%> <%=label_tag artist['displayName']%>
-		<%if artist.children[1]%>
-		<%=hidden_field_tag 'mbid', artist.children[1]['mbid']%>
-		<%=hidden_field_tag 'eventsHref', artist.children[1]['eventsHref']%>
-		<%=hidden_field_tag 'on_tour_until', artist['on_tour_until']%>
-		<%=hidden_field_tag 'url', artist['uri']%>
-		<%end%>
-	</p>
-		<%=submit_tag 'all events!'%>
-	
-		<%end%>
+
 		<%end%>
 	<%end%>
+<%end%>

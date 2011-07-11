@@ -133,4 +133,25 @@ class TicketsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  # AJAX from home page
+  def user_tickets(scope=params[:ticket_scope])
+    @tickets=current_user.tickets
+    if scope=="upcoming"
+    
+    logger.info 'get here?'
+    tmp=[]
+    for ticket in @tickets
+      tmp<<ticket unless ticket.event.date<Time.now
+    end
+    @tickets=tmp
+    end
+    @tickets.uniq!
+    groups=[]
+    for ticket in @tickets
+      groups<<ticket.ticket_group
+    end
+    @ticket_groups=groups.uniq!
+    respond_with(@tickets)
+  end
 end

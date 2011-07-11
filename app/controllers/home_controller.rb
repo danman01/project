@@ -11,7 +11,6 @@ class HomeController < ApplicationController
       @artists<<e.artist
       @venues<<e.venue
     end
-      @tickets=Ticket.find_all_by_user_id(current_user.id) 
       groups=[]
     for ticket in @tickets
       groups<<ticket.ticket_group
