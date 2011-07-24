@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110709191254) do
+ActiveRecord::Schema.define(:version => 20110723043153) do
 
   create_table "artists", :force => true do |t|
     t.text     "name"
@@ -20,12 +20,48 @@ ActiveRecord::Schema.define(:version => 20110709191254) do
     t.string   "mbid"
     t.string   "eventsHref"
     t.datetime "on_tour_until"
+    t.integer  "status",        :default => 1
   end
+
+  create_table "cities", :force => true do |t|
+    t.integer  "region_id"
+    t.integer  "country_id"
+    t.float    "lat"
+    t.float    "lng"
+    t.float    "b_box_north"
+    t.float    "b_box_south"
+    t.float    "b_box_east"
+    t.float    "b_box_west"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "pop"
+    t.string   "venue_ids"
+    t.integer  "status",      :default => 1
+    t.integer  "geonamesid"
+  end
+
+  add_index "cities", ["country_id"], :name => "index_cities_on_country_id"
+  add_index "cities", ["name"], :name => "index_cities_on_name"
+  add_index "cities", ["pop"], :name => "index_cities_on_pop"
+  add_index "cities", ["region_id"], :name => "index_cities_on_region_id"
 
   create_table "commissions", :force => true do |t|
     t.float   "commission"
     t.integer "user_id"
     t.integer "marketplace_id"
+  end
+
+  create_table "countries", :force => true do |t|
+    t.string   "country_code"
+    t.float    "b_box_north"
+    t.float    "b_box_south"
+    t.float    "b_box_east"
+    t.float    "b_box_west"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "status",       :default => 1
   end
 
   create_table "customers", :force => true do |t|
@@ -51,7 +87,13 @@ ActiveRecord::Schema.define(:version => 20110709191254) do
     t.integer  "artist_id"
     t.integer  "venue_id"
     t.datetime "time"
+    t.integer  "user_id"
+    t.integer  "public",     :default => 1
+    t.integer  "status",     :default => 1
   end
+
+  add_index "events", ["artist_id"], :name => "index_events_on_artist_id"
+  add_index "events", ["venue_id"], :name => "index_events_on_venue_id"
 
   create_table "invoices", :force => true do |t|
     t.string   "sale_ids"
@@ -70,6 +112,21 @@ ActiveRecord::Schema.define(:version => 20110709191254) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "regions", :force => true do |t|
+    t.integer  "country_id"
+    t.float    "b_box_north"
+    t.float    "b_box_south"
+    t.float    "b_box_east"
+    t.float    "b_box_west"
+    t.string   "name"
+    t.string   "region_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "status",      :default => 1
+  end
+
+  add_index "regions", ["country_id"], :name => "index_regions_on_country_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -106,6 +163,8 @@ ActiveRecord::Schema.define(:version => 20110709191254) do
     t.integer "event_id"
   end
 
+  add_index "ticket_groups", ["event_id"], :name => "index_ticket_groups_on_event_id"
+
   create_table "tickets", :force => true do |t|
     t.integer  "cost"
     t.datetime "bought_on"
@@ -122,6 +181,18 @@ ActiveRecord::Schema.define(:version => 20110709191254) do
     t.integer  "seat_number"
     t.integer  "sale_id"
     t.integer  "user_id"
+    t.float    "list"
+  end
+
+  add_index "tickets", ["artist_id"], :name => "index_tickets_on_artist_id"
+  add_index "tickets", ["event_id"], :name => "index_tickets_on_event_id"
+  add_index "tickets", ["user_id"], :name => "index_tickets_on_user_id"
+
+  create_table "tours", :force => true do |t|
+    t.integer  "artist_id"
+    t.string   "event_ids"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
@@ -164,13 +235,20 @@ ActiveRecord::Schema.define(:version => 20110709191254) do
     t.text     "url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "state"
-    t.string   "city"
-    t.string   "region"
-    t.string   "country"
+    t.text     "region_name"
+    t.string   "city_name"
+    t.string   "country_name"
     t.string   "latitude"
     t.string   "longitude"
     t.integer  "skid"
+    t.integer  "city_id"
+    t.integer  "country_id"
+    t.integer  "region_id"
+    t.integer  "status",       :default => 1
   end
+
+  add_index "venues", ["city_id"], :name => "index_venues_on_city_id"
+  add_index "venues", ["country_id"], :name => "index_venues_on_country_id"
+  add_index "venues", ["region_id"], :name => "index_venues_on_region_id"
 
 end

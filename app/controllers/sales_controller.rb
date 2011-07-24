@@ -1,5 +1,6 @@
 class SalesController < ApplicationController
   respond_to :html, :js, :xml
+  load_and_authorize_resource
   def index
     @sales = Sale.all
 

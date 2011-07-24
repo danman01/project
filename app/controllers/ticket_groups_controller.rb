@@ -1,5 +1,5 @@
 class TicketGroupsController < ApplicationController
-  
+  load_and_authorize_resource
   def show
     @ticket_group=TicketGroup.find(params[:id])
     @tickets=@ticket_group.tickets
@@ -15,6 +15,22 @@ class TicketGroupsController < ApplicationController
         format.html # new.html.erb
         format.xml  { render :xml => @ticket_group }
       end
+  end
+  
+  def edit_tickets
+      @group=TicketGroup.find(params[:ticket_group_id])
+      tmp=@group.tickets
+      @tickets=[]
+      for each in tmp
+        @tickets<<each.user_id==current_user.id
+      end
+      event_id=@ticket.event_id
+      @ticket_groups=[]
+      tickets=Ticket.find_all_by_event_id(event_id)
+      tickets.each do |t|
+        @ticket_groups<<t.ticket_group
+      end
+      @ticket_groups.uniq!
   end
   
   def edit

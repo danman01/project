@@ -1,32 +1,33 @@
 <%@artists.each do |artist|%>
 	<%if artist.class==Artist%>
-		<%=form_tag "/search/sk_artist_calendar", :remote=>true, :method=>'post' do%>
+		<%=form_tag "/#{artist.name.gsub(/[^a-z1-9]+/i, '-')}/calendar" do%>
 
 		<p>
 			<%=text_field_tag "id", artist.id%> <%=label_tag artist.name%>
 			<%=hidden_field_tag 'mbid', artist.mbid%>
 			<%=hidden_field_tag 'eventsHref', artist.eventsHref%>
-			<%=hidden_field_tag 'name', artist.name%>
+			<%=hidden_field_tag 'artist_name', artist.name%>
 			<%=hidden_field_tag 'on_tour_until', artist.on_tour_until%>
 			<%=hidden_field_tag 'url', artist.url%>
 		</p>
-		<%=submit_tag 'calendar!'%>
+		<%=submit_tag 'View Upcoming Events!'%>
 
 		<%end%>
 	<%else #if not in database, look to songkick%>
-		<%=form_tag "/search/sk_artist_calendar", :remote=>true, :method=>'post' do%>
+		<%=form_tag "/#{artist['displayName'].gsub(/[^a-z1-9]+/i, '-')}/calendar" do%>
 
 		<p>
 			<%=text_field_tag "id", artist['id']%> <%=label_tag artist['displayName']%>
+			<%=hidden_field_tag 'artist_name', artist['displayName']%>
+			<%=hidden_field_tag 'on_tour_until', artist['onTourUntil']%>
+			<%=hidden_field_tag 'url', artist['uri']%>
 			<%if id=artist.xpath('identifier')[0]%>
 			<%=hidden_field_tag 'mbid', id['mbid']%>
 			<%=hidden_field_tag 'eventsHref', id['eventsHref']%>
-			<%=hidden_field_tag 'name', artist['displayName']%>
-			<%=hidden_field_tag 'on_tour_until', artist['onTourUntil']%>
-			<%=hidden_field_tag 'url', artist['uri']%>
 			<%end%>
 		</p>
-		<%=submit_tag 'calendar!'%>
+		<%=submit_tag 'View Upcoming Events!'%>
+		
 
 		<%end%>
 	<%end%>

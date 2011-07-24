@@ -51,6 +51,7 @@ class User < ActiveRecord::Base
   has_many :venues, :through=>:tickets
   has_many :sales, :through=>:invoices
   has_many :commissions
+  
   def role?(role)
     self.roles.find_by_name(role.to_s) ? true : false
   end

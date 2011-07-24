@@ -1,0 +1,126 @@
+<script type="text/javascript">
+$(function(){
+	var mo=$("#ticket_bought_on_2i");
+	var day=$("#ticket_bought_on_3i");
+	var year=$("#ticket_bought_on_1i");
+	$("#duplicate").click(function(){
+		$("#ticket_in_hand_2i").val(mo.val());
+		$("#ticket_in_hand_3i").val(day.val());
+		$("#ticket_in_hand_1i").val(year.val());
+	});
+	
+	
+});
+$(function(){
+	$("#quantity").change(function(){
+		var string=" <p>Enter the seat numbers:</p>"
+		for (i=0;i < this.value;i++)
+		{
+			string+=i+1+". <input class='seats' id='ticket_"+i+"' type='text' /> ";
+			if ((i+1)%4==0){
+				string+="<br /><br />";
+			}
+		}
+		$("#seat_number_tag").html(string);
+	})
+})
+
+$(function(){
+	$("#ticket_submit").click(function(){
+		alert('changed!');
+		var $value=[];
+		$(".seats").each(function(){
+			$value.push($(this).val());
+		})
+		$("#seats").val($value);
+		alert($value);
+		
+	})
+})
+</script>
+<% if group=params[:ticket_group_id]%>
+section: <%=TicketGroup.find(group).section%>
+row: <%=TicketGroup.find(group).row%>
+<%end%>
+
+<%= form_tag("/ticket_groups/edit_tickets") do |f| %>
+  <% if @ticket.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
+
+      <ul>
+      <% @ticket.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<%if @ticket.event!=nil%>
+   <%= f.label :event, 'Event: ' + @ticket.event.name %><br />
+   <%= f.hidden_field :event_id, :value=>@ticket.event.id%>
+
+   <%= f.hidden_field :artist_id, :value=>@ticket.event.artist.id %> 
+
+    <%= f.hidden_field :venue_id, :value=>@ticket.event.venue.id%>
+	<h2>Ticket Group details</h2>
+	<%= f.select :ticket_group_id, @ticket_groups.collect {|c| [ "section: " + c.section + " row: " + c.row, c.id ]} %>
+	 <br />
+	 or <%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :event_id=>@ticket.event.id)%>
+	
+	<%else%>
+	
+	<%=f.label :artist_id, 'Type an artist name'%> (or <%=link_to 'add a new artist', new_artist_path(:redirect=>true)%>)
+	<%=f.text_field :artist_id%>
+	<br/>
+	(displayed after choosing an artist) <br/>
+	<%=f.label :event_id, 'Choose an event'%> (or <%=link_to 'create a new event', new_event_path(:redirect=>true)%>)
+	<%=f.text_field :event_id%>
+	<br />
+	(displayed after choosing event) Choose ticket group (or <%#=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :event_id=>@ticket.event.id)%>)
+	
+	<%end%>
+
+  <div class="field">
+    <%= label_tag :quantity %><%#TODO show current quantity in ticket group / add quantity to group after submit instead of in same form%><br />
+    <%=number_field_tag 'quantity', nil, :in => 1...10, :id=>'quantity' %>
+  </div>
+  <div class="field">
+	<p id='seat_number_tag'></p>
+	<%=hidden_field_tag 'seats', ""%>
+</div>
+
+ <div class="field">
+    <%= f.label :cost, 'Bought price (price you paid for each ticket)' %><br />
+    <%= f.text_field :cost %>
+  </div>
+<div class="field">
+    <%= f.label :list, 'List price (price to sell each ticket. Type 0 to not list in the marketplace)' %><br />
+    <%= f.text_field :list %>
+  </div>
+  <div class="field">
+    <%= f.label :bought_on %><br />
+    <%= f.datetime_select :bought_on, :order=>[:month, :day, :year] %>
+  </div>
+
+  <div class="field">
+    <%= f.label :in_hand %> <a href="javascript:void(0);" id="duplicate">match dates</a><br />
+    <%= f.datetime_select :in_hand, :order=>[:month, :day, :year] %>
+  </div>
+  <div class="field">
+    <%= f.label :kind %><br />
+    <%= select(:ticket, :kind, options =['E Ticket', 'Hard Ticket', 'Will Call'])%>
+  </div>
+  <div class="field">
+    <%= f.label :sold %><br />
+    <%= f.check_box :sold%>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit  %>
+  </div>
+<%end%>

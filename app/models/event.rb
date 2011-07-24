@@ -18,6 +18,17 @@ class Event < ActiveRecord::Base
 	belongs_to :artist
 	has_many :tickets
 	has_many :ticket_groups
+	belongs_to :user
 	
 	validates :name, :presence=>true, :uniqueness=>true
+	
+	def to_param
+      "#{id}-#{name.gsub(/[^a-z1-9]+/i, '-')}"
+   end
+   
+   def upcoming
+     if self.date>Time.now
+       return self
+     end
+   end
 end

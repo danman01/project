@@ -38,8 +38,12 @@
     <%= select(:ticket, :quantity, arr.each { |l| puts l}, options ={:prompt =>'Select a quantity'})%>
   </div>
  <div class="field">
-    <%= f.label :cost %><br />
+    <%= f.label :cost, 'Bought price' %><br />
     <%= f.text_field :cost %>
+  </div>
+<div class="field">
+    <%= f.label :list, 'Sell price' %><br />
+    <%= f.text_field :list %>
   </div>
   <div class="field">
     <%= f.label :bought_on %><br />

@@ -1,7 +1,8 @@
 class HomeController < ApplicationController
   def index
+    if current_user
     @invoices=current_user.invoices
-    @invoices.reject!{|x|x.sales.empty?}
+    @invoices.reject!{|x|x.sales.empty?} 
     @events=current_user.events
     @tickets=current_user.tickets
     @artists=[]
@@ -17,6 +18,7 @@ class HomeController < ApplicationController
  
     end
     @ticket_groups=groups.uniq!
+    end
   end
 
 end

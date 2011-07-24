@@ -38,6 +38,11 @@ $(function(){
 	})
 })
 </script>
+<% if group=params[:ticket_group_id]%>
+section: <%=TicketGroup.find(group).section%>
+row: <%=TicketGroup.find(group).row%>
+<%end%>
+
 <%= form_for(@ticket) do |f| %>
   <% if @ticket.errors.any? %>
     <div id="error_explanation">
@@ -59,7 +64,7 @@ $(function(){
 
     <%= f.hidden_field :venue_id, :value=>@ticket.event.venue.id%>
 	<h2>Ticket Group details</h2>
-	<%= f.select :ticket_group, @ticket_groups.collect {|c| [ "section: " + c.section + " row: " + c.row, c.id ]} %>
+	<%= f.select :ticket_group_id, @ticket_groups.collect {|c| [ "section: " + c.section + " row: " + c.row, c.id ]} %>
 	 <br />
 	 or <%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :event_id=>@ticket.event.id)%>
 	
@@ -86,8 +91,12 @@ $(function(){
 </div>
 
  <div class="field">
-    <%= f.label :cost %><br />
+    <%= f.label :cost, 'Bought price (price you paid for each ticket)' %><br />
     <%= f.text_field :cost %>
+  </div>
+<div class="field">
+    <%= f.label :list, 'List price (price to sell each ticket. Type 0 to not list in the marketplace)' %><br />
+    <%= f.text_field :list %>
   </div>
   <div class="field">
     <%= f.label :bought_on %><br />

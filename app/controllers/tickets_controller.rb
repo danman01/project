@@ -1,5 +1,7 @@
 class TicketsController < ApplicationController
   respond_to :html, :js, :xml
+  load_and_authorize_resource
+  
   def index
     groups=[]
     @ticket_groups=[]
@@ -32,6 +34,42 @@ class TicketsController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @tickets }
     end
+  end
+  
+  def market
+    groups=[]
+    @ticket_groups=[]
+    if params[:event]
+      @event=Event.find(params[:event])
+      if params[:user_id]
+        @tickets = Ticket.find_all_by_event_id(params[:event_id], :conditions=>["user_id=?", params[:user_id]])
+      else
+        @tickets = Ticket.find_all_by_event_id(params[:event])
+        	unsold_tickets=[]
+    				for ticket in @tickets
+    					unsold_tickets<<ticket unless ticket.sold? || ticket.list==0.0
+    				end
+      end
+    
+      for ticket in unsold_tickets
+        groups<<ticket.ticket_group
+       
+      end
+      @ticket_groups=groups.uniq!
+    else
+      if params[:user_id]
+        @tickets=Ticket.find_all_by_user_id(params[:user_id]) 
+      else
+        @tickets=Ticket.all
+      end
+      for ticket in @tickets
+        groups<<ticket.ticket_group
+   
+      end
+      @ticket_groups=groups.uniq!
+    end
+
+    respond_with(@ticket_groups)
   end
 
   # GET /tickets/1
@@ -74,7 +112,13 @@ class TicketsController < ApplicationController
   # GET /tickets/1/edit
   def edit
     @ticket = Ticket.find(params[:id])
-    
+      event_id=@ticket.event_id
+      @ticket_groups=[]
+      tickets=Ticket.find_all_by_event_id(event_id)
+      tickets.each do |t|
+        @ticket_groups<<t.ticket_group
+      end
+      @ticket_groups.uniq!
   end
   def select_group
     @event_id=params[:event_id]
@@ -88,13 +132,14 @@ class TicketsController < ApplicationController
     q=params[:quantity].to_i
     n=0
     seats=params[:seats].split(",")
-    @ticket_group=TicketGroup.find(params[:ticket][:ticket_group])
+    @ticket_group=TicketGroup.find(params[:ticket][:ticket_group_id])
     if @ticket_group.quantity.nil? #initialize quantity
       @ticket_group.quantity=0
     end
-    params[:ticket][:ticket_group]=@ticket_group
+    #params[:ticket][:ticket_group]=@ticket_group
     while n < q 
       t=Ticket.new(params[:ticket])
+      #t.ticket_group=@ticket_group
       t.seat_number=seats[n]
       t.user_id=current_user.id rescue 1 #so i dont have to log in during testing
       t.save
@@ -103,7 +148,9 @@ class TicketsController < ApplicationController
       logger.info 'ticket created! ' +n.to_s
     end 
     @ticket_group.save
-    respond_with(@ticket_group)
+    respond_with(@ticket_group) do |format|
+      format.html {redirect_to "/home#tabs-3"}
+    end
   end
 
   # PUT /tickets/1
@@ -137,14 +184,18 @@ class TicketsController < ApplicationController
   # AJAX from home page
   def user_tickets(scope=params[:ticket_scope])
     @tickets=current_user.tickets
-    if scope=="upcoming"
-    
-    logger.info 'get here?'
-    tmp=[]
-    for ticket in @tickets
-      tmp<<ticket unless ticket.event.date<Time.now
-    end
-    @tickets=tmp
+    if scope=="unsold"
+      tmp=[]
+      for ticket in @tickets
+        tmp<<ticket unless ticket.sold?
+      end
+      @tickets=tmp
+    elsif scope=='upcoming'
+      tmp=[]
+      for ticket in @tickets
+        tmp<<ticket unless ticket.event.date<Time.now
+      end
+      @tickets=tmp
     end
     @tickets.uniq!
     groups=[]

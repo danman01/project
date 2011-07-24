@@ -22,6 +22,21 @@
 		</div>
 		
 		<%end%>
+		<%if flash[:error]%>
+		<div id="notice">
+		
+		<%=flash[:error]%>
+		</div>
+		
+		<%end%>
+		<%if flash[:alert]%>
+		<div id="notice">
+		
+		<%=flash[:alert]%>
+		</div>
+		
+		<%end%>
+		
 	<div id="user_nav">
 		<% if user_signed_in? %>
 			Signed in as <%= link_to current_user.email, "/users/#{current_user.id}"%>. Not you?
@@ -67,6 +82,12 @@
 	<%=form_tag "/search/results", :method=>"post" do%>
 	<%=label_tag "enter artist name"%>
 	<%=text_field_tag "name"%>
+	<%=submit_tag 'search!'%>
+	<%end%>
+   ~*~*~*~*~
+	<%=form_tag "/search/location_calendar", :method=>"post" do%>
+	<%=label_tag "enter city name"%>
+	<%=text_field_tag "city"%>
 	<%=submit_tag 'search!'%>
 	<%end%>
 </div>

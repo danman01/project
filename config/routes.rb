@@ -1,46 +1,16 @@
 Tickets::Application.routes.draw do
-  match ':controller(/:action(/:id(.:format)))'
   
-  resources :invoices
+  resources :regions
 
-  resources :customers
+  resources :countries
+
+  resources :cities
 
   devise_for :users
-
-  resources :marketplaces
-
-  resources :sales
-
-  resources :tickets 
-
-  resources :artists do 
-    resources :venues
-  end
-
-  resources :venues #do
-	#resources :events
-  #end
-  get "home/index"
-
-  resources :events do
-    resources :tickets
-  end
   
-  resources :ticket_groups do
-    resources :tickets
-  end
-  
-  resources :users do
-    resources :tickets
-    resources :artists
-    resources :events
-    resources :venues
-    resources :sales
-  end
-  
-  resources :commissions
-
   match 'ticket_groups/select/:event_id'=> 'ticket_groups#select'
+  
+  match '/:name/calendar'=>'search#sk_artist_calendar'
   match '/search'=>'search#search'
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -93,10 +63,61 @@ Tickets::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => "home#index"
 
+ 
+  
+  resources :tours
+
+  #match ':controller(/:action)' unless :action.class==Integer
+  
+  resources :invoices
+
+  resources :customers
+
+  resources :marketplaces
+
+  resources :sales
+
+  resources :tickets do
+    collection do
+      get :market
+    end
+  end
+
+  resources :artists do 
+    resources :venues
+  end
+
+  resources :venues #do
+	#resources :events
+  #end
+  get "home/index"
+
+  resources :events do
+    resources :tickets
+  end
+  
+  resources :ticket_groups do
+    resources :tickets
+  end
+  
+  resources :users do
+    resources :tickets
+    resources :artists
+    resources :events
+    resources :venues
+    resources :sales
+  end
+  
+  resources :commissions
+  
   # See how all your routes lay out with "rake routes"
 
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  match '/events/select_or_create' => 'events#select_or_create'
-  match ':controller(/:action(/:id(.:format)))'
+   # This is a legacy wild controller route that's not recommended for RESTful applications.
+   # Note: This route will make all actions in every controller accessible via GET requests.
+   match '/events/select_or_create' => 'events#select_or_create'
+   match '/events/:action' => 'events#/[a-z_]+/i'
+   match '/tickets/:action' => 'tickets#/[a-z_]+/i'
+
+   match ':controller(/:action(/:id(.:format)))'
+   
 end

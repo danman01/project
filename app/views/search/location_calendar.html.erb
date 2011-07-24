@@ -1,0 +1,40 @@
+<%=@events.count%> events found for 
+<%@cities.each do |city|%><%=city.name%>, 
+	<%if city.country_id==482%>
+		<%=city.region.region_code%>
+	<%else%> 
+		<%=city.country.name%>
+	<%end%> /
+<%end%> 
+<%if @events.empty? || @events.nil?%>
+	<%=link_to 'add one!', "/events/new"%>
+<%else%>
+	<table>
+		<thead>
+			<tr>
+				<td>Date</td>
+				<td>Name</td>
+				<td># tickets available</td>
+			</tr>
+		</thead>
+		<tbody>
+			
+		<%for event in @events%>
+		<tr>
+		
+			<td><%=event.date%></td>
+			<td><%=event.name%></td>
+			<td><%tickets=event.tickets
+			unsold_tickets=[]
+				for ticket in tickets
+					unsold_tickets<<ticket unless ticket.sold? || ticket.list==0.0
+				end%>
+				<%=link_to unsold_tickets.count, "/tickets/market?event=#{event.id}"%>
+			</td>
+		</td>
+		</tr>
+		<%end%>
+		</tbody>
+	</table>
+
+<%end%>

@@ -1,12 +1,7 @@
+<%if @artists%>
 <%=render :partial=>"artist_results"%>
-
+<%elsif @cities%>
+<%=render :partial=>"city_results"%>
+<%end%>
 <br />
 
-<div id="calendar_results">
-</div>
-
-<div id="event_results">
-</div>
-
-<div id="event_info">
-</div>

@@ -1,5 +1,7 @@
 class VenuesController < ApplicationController
   respond_to :js,:xml,:html
+  load_and_authorize_resource
+  
   # GET /venues
   # GET /venues.xml
   def index

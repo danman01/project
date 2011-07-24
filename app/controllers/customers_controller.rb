@@ -1,4 +1,6 @@
 class CustomersController < ApplicationController
+  load_and_authorize_resource
+  
   def index
     @customers = Customer.all
   end

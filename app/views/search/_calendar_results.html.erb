@@ -1,4 +1,4 @@
-<%=@num%> events found for <%=@artist.name%>
+<%=@num%> events found for <%=@artist.name%> | <%=link_to "Snipe 'em!", "/tours/select_or_create/#{@artist.id}?snipe=true"%>
 <%if @events.empty? || @events.nil?%>
 	<%=link_to 'add one!', "/events/new?artist_id=#{@artist.id}"%>
 <%else%>
@@ -32,7 +32,7 @@
 			
 		
 			<td>
-
+<%=link_to 'buy!', "#{event['uri']}", :target=>"_new"%> 
 		<%=button_to 'Sell for this event!', "/events/select_or_create?date=#{event.xpath('start').first['date']}&name=#{event['displayName']}&venue=#{event.xpath('venue').first['displayName']}&artist_id=#{@artist.id}"%>
 		</td>
 		</tr>

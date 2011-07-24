@@ -1,0 +1,30 @@
+<%@cities.each do |city|%>
+	<%if @songkick.nil?%>
+		<%=form_tag "/search/location_calendar" do%>
+
+		<p>
+			<%=text_field_tag "city", city%> <%=label_tag city%>
+		
+		</p>
+		<%=submit_tag 'View by city!'%>
+
+		<%end%>
+	<%else #look to songkick%>
+		<%=form_tag "/#{artist['displayName'].gsub(/[^a-z1-9]+/i, '-')}/calendar" do%>
+
+		<p>
+			<%=text_field_tag "id", artist['id']%> <%=label_tag artist['displayName']%>
+			<%=hidden_field_tag 'artist_name', artist['displayName']%>
+			<%=hidden_field_tag 'on_tour_until', artist['onTourUntil']%>
+			<%=hidden_field_tag 'url', artist['uri']%>
+			<%if id=artist.xpath('identifier')[0]%>
+			<%=hidden_field_tag 'mbid', id['mbid']%>
+			<%=hidden_field_tag 'eventsHref', id['eventsHref']%>
+			<%end%>
+		</p>
+		<%=submit_tag 'View Upcoming Events!'%>
+		
+
+		<%end%>
+	<%end%>
+<%end%>

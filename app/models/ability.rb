@@ -26,6 +26,7 @@ class Ability
         can :manage, Event do |event|
           event.try(:user) == user
         end
+        can :create, Ticket
         can :manage, Ticket do |ticket|
           ticket.try(:user) == user
         end

@@ -11,12 +11,7 @@
 		</th>
 		<th><b>Venue:</b>
 		</th>
-		<th>  <b>Cost:</b>
-		</th>
-		<th><b>Bought on:</b>
-		</th>
-		<th>
-			<b>In hand:</b>
+		<th><b>Price:</b>
 		</th>
 		<th>
 			<b>Kind:</b>
@@ -24,9 +19,7 @@
 		<th>Seat:</th>
 		<th><b>Sold:</b>
 	  	</th>
-	  	<th><b>Notes:</b>
-		</th>
-		<th></th><th></th>	
+	
 			
 <%for ticket in @tickets%>
 <tr>
@@ -40,13 +33,7 @@
   <%= ticket.venue.name %>
 	</td>
 	<td>
-  $<%= ticket.cost %>
-	</td>
-	<td>
-  <%= ticket.bought_on %>
-	</td>
-	<td>
-  <%= ticket.in_hand %>
+  $<%= ticket.list %>
 	</td>
 	<td>
   <%= ticket.kind %>
@@ -55,17 +42,14 @@
   <%= ticket.seat_number %>
 	</td>
 	<td>
-  <% if ticket.sold? %><%=link_to 'yes', "/sales/show?id=#{ticket.id}"%><%else%><%=link_to 'no', "/sales/new?ticket_id=#{ticket.id}"%><%end%>
+  <% if ticket.sold? %><%=link_to_or((can? :edit, ticket),"yes", 'yes', "/sales/show?id=#{ticket.id}")%><%else%><%=link_to_or((can? :edit, ticket),"no", 'no', "/sales/new?ticket_id=#{ticket.id}")%><%end%>
 	</td>
 
 	<td>
-  <%= ticket.notes %>
-	</td>
+<%= link_to_or((can? :edit, ticket),"", 'Edit', edit_ticket_path(ticket)) %> </td>
 	<td>
-<%= link_to 'Edit', edit_ticket_path(ticket) %> </td>
-	<td>
-<%= link_to 'Back', tickets_path %>
 	</td>
 </tr>
 <%end%>
 </table>
+<%= link_to 'Back', tickets_path %>

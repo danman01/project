@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Artist:</b>
+  <%= @tour.artist_id %>
+</p>
+
+<p>
+  <b>Event ids:</b>
+  <%= @tour.event_ids %>
+</p>
+
+
+<%= link_to 'Edit', edit_tour_path(@tour) %> |
+<%= link_to 'Back', tours_path %>

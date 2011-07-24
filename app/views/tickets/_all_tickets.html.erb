@@ -9,6 +9,7 @@
 	<th>Section</th>
 	<th>Row</th>
     <th>Cost</th>
+	<th>Price</th>
     <th>Bought on</th>
     <th>In hand</th>
     <th>Kind</th>
@@ -29,6 +30,7 @@
 
     <td><%= group.row %></td>
     <td>$<%= info.cost %></td>
+	<td>$<%= info.list%></td>
     <td><%= info.bought_on.strftime("%a, %b %e %Y") %></td>
     <td><%= info.in_hand.strftime("%a, %b %e %Y") %></td>
     <td><%= info.kind %></td>

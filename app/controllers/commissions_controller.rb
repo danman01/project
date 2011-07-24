@@ -1,5 +1,6 @@
 class CommissionsController < ApplicationController
 	load_and_authorize_resource
+	
   def index
     @commissions = Commission.all
   end

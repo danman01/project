@@ -21,4 +21,7 @@ class Venue < ActiveRecord::Base
 	has_many :events
 	has_many :tickets
 	has_many :artists, :through=>:events
+	belongs_to :city
+	belongs_to :region
+	belongs_to :country
 end

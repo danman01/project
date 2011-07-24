@@ -1,4 +1,5 @@
 class InvoicesController < ApplicationController
+  load_and_authorize_resource
   def index
     @invoices = Invoice.all
   end

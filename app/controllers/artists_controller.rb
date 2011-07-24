@@ -2,6 +2,8 @@ class ArtistsController < ApplicationController
   # GET /artists
   # GET /artists.xml
   respond_to :js,:xml,:html
+  load_and_authorize_resource
+  
   def index
     @artists = Artist.all
 

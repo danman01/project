@@ -1,0 +1,37 @@
+<h1>Listing all tickets for <%=@event.name%></h1>
+
+<table>
+  <tr>
+    <th>Event</th>
+    <th>Artist</th>
+    <th>Venue</th>
+    <th>Quantity</th>
+	<th>Section</th>
+	<th>Row</th>
+	<th>Price</th>
+    <th>Kind</th>
+    <th></th>
+  </tr>
+<% if !@ticket_groups.nil?%>
+<% @ticket_groups.each do |group| %>
+<%info=group.tickets.first%>
+<tr>
+    <td><%= info.event.name rescue 'na' %></td>
+    <td><%= info.artist.name %></td>
+    <td><%= info.venue.name %></td>
+    <td><%= group.quantity %></td>
+    <td><%= group.section %></td>
+    <td><%= group.row %></td>
+	<td>$<%= info.list%></td>
+    <td><%= info.kind %></td>
+    <td><%= link_to_or((can? :read, @ticket_groups),"", 'View Seats', group) %></td>
+  </tr>
+<%end%>
+<%else%>
+<tr><td>No tickets available. <%=link_to_or((can? :create, @tickets),"Sign in to sell yours!", 'Have some for sale?', "/tickets/new?event_id=#{@event.id}") %></td></tr>
+<%end%>
+</table>
+
+<br />
+
+<%= link_to_or((can? :create, @tickets),"", 'New Ticket', new_ticket_path) %>

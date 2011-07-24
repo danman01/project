@@ -9,10 +9,7 @@ $(function(){
 </script>
 <%end%>
 
-<h1><%if params[:user_id]%>Listing tickets for user <%=params[:user_id]%>
-<%end%>
-</h1>
-<p class="ajax_container"><%=link_to_unless((params[:ticket_scope].nil? || params[:ticket_scope]=='all'),'All my tickets', "/tickets/user_tickets?ticket_scope=all", :remote=>true)%> | <%=link_to_unless(params[:ticket_scope]=="upcoming", 'upcoming tickets', "/tickets/user_tickets?ticket_scope=upcoming", :remote=>true)%></p>
+<p class="ajax_container"><%=link_to_unless((params[:ticket_scope].nil? || params[:ticket_scope]=='all'),'All my tickets', "/tickets/user_tickets?ticket_scope=all", :remote=>true)%> | <%=link_to_unless(params[:ticket_scope]=="unsold", 'unsold tickets', "/tickets/user_tickets?ticket_scope=unsold", :remote=>true)%></p>
 <table>
   <tr>
     <th>Event</th>
@@ -22,15 +19,16 @@ $(function(){
 	<th>Section</th>
 	<th>Row</th>
     <th>Cost</th>
-    <th>Bought on</th>
-    <th>In hand</th>
+    <th style="width:90px;">Bought on</th>
+    <th style="width:90px;">In hand</th>
     <th>Kind</th>
-    <th id="sold">Sold</th>
+    <th style="width:90px;">Sold</th>
     <th>Notes</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
+<%if @ticket_groups%>
 <% @ticket_groups.each do |group| %>
 <%info=group.tickets.first%>
 <tr>
@@ -42,8 +40,8 @@ $(function(){
 
     <td><%= group.row %></td>
     <td>$<%= info.cost %></td>
-    <td><%= info.bought_on.strftime("%a, %b %e %Y") %></td>
-    <td><%= info.in_hand.strftime("%a, %b %e %Y") %></td>
+    <td><%= info.bought_on.strftime("%m/%d/%Y") %></td>
+    <td><%= info.in_hand.strftime("%m/%d/%Y") %></td>
     <td><%= info.kind %></td>
 	<td class="sold">
 		<%sold_count=0
@@ -56,12 +54,14 @@ $(function(){
 	</td>
     <td><%= info.notes %></td>
     <td><%= link_to 'View Seats', "javascript:void(0);", :id=>"#{group.id}", :class=>"view_seats" %></td>
-    <td><%= link_to 'Edit', edit_ticket_group_path(group) %></td>
+    <td><%= link_to 'Edit', "/tickets/edit?ticket_group_id=#{group.id}" %></td>
     <td><%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <tr class="<%=group.id%>" style="display:none;"><%=render :partial=>"ticket_groups/view_seats", :locals=>{:tickets=>group.tickets}%></tr>
 <%end%>
-
+<%else%>
+<tr><td>no tickets yet!</td></tr>
+<%end%>
 </table>
 
 <br />
