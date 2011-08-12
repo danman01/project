@@ -1,11 +1,9 @@
 <% content_for :javascript do %>
 <script type="text/javascript">
-$(function(){
-	$(".view_seats").click(function(){
-		var $id=$(this).attr("id");
-		$("."+$id).toggle("slow");
-	})
-})
+function view_seats(id)
+{
+	$("#"+id).toggle("slow");
+}
 </script>
 <%end%>
 
@@ -53,11 +51,11 @@ $(function(){
 		<%=sold_count%> / <%= group.tickets.size%>
 	</td>
     <td><%= info.notes %></td>
-    <td><%= link_to 'View Seats', "javascript:void(0);", :id=>"#{group.id}", :class=>"view_seats" %></td>
+    <td><%= link_to 'View Seats', "javascript:void(0);", :onclick=>"view_seats(#{group.id});" %></td>
     <td><%= link_to 'Edit', "/tickets/edit?ticket_group_id=#{group.id}" %></td>
     <td><%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
-<tr class="<%=group.id%>" style="display:none;"><%=render :partial=>"ticket_groups/view_seats", :locals=>{:tickets=>group.tickets}%></tr>
+<tr id="<%=group.id%>" style="display:none;"><%=render :partial=>"ticket_groups/view_seats", :locals=>{:tickets=>group.tickets}%></tr>
 <%end%>
 <%else%>
 <tr><td>no tickets yet!</td></tr>

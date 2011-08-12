@@ -13,7 +13,7 @@ class Ability
         can :manage, :all
         can :see_timestamps, :all
       elsif user.role? :moderator
-        #can :manage, [Bibs, Questions]
+
         can :manage, User, :id=>user.id
         can :see_timestamps, User, :id=>user.id
         
@@ -31,6 +31,10 @@ class Ability
           ticket.try(:user) == user
         end
         can :create, Sale 
+        can :manage, Sale do |sale|
+          sale.invoice.try(:user) == user
+        end
+        can :create, Invoice
         can :manage, Invoice do |invoice|
           invoice.try(:user) == user
         end
@@ -39,6 +43,7 @@ class Ability
         can :manage, Commission do |c|
           c.try(:user) == user
         end
+        
         can :see_timestamps, User, :id => user.id
       end
       if user.role? :venue

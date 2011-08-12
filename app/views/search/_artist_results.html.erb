@@ -9,6 +9,7 @@
 			<%=hidden_field_tag 'artist_name', artist.name%>
 			<%=hidden_field_tag 'on_tour_until', artist.on_tour_until%>
 			<%=hidden_field_tag 'url', artist.url%>
+			<%=hidden_field_tag 'skid', artist.skid%>
 		</p>
 		<%=submit_tag 'View Upcoming Events!'%>
 
@@ -25,6 +26,7 @@
 			<%=hidden_field_tag 'mbid', id['mbid']%>
 			<%=hidden_field_tag 'eventsHref', id['eventsHref']%>
 			<%end%>
+			<%=hidden_field_tag 'skid', artist['id']%>
 		</p>
 		<%=submit_tag 'View Upcoming Events!'%>
 		

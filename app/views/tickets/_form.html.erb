@@ -12,7 +12,7 @@ $(function(){
 	
 });
 $(function(){
-	$("#quantity").change(function(){
+	$("#quantity").keyup(function(){
 		var string=" <p>Enter the seat numbers:</p>"
 		for (i=0;i < this.value;i++)
 		{
@@ -27,13 +27,11 @@ $(function(){
 
 $(function(){
 	$("#ticket_submit").click(function(){
-		alert('changed!');
 		var $value=[];
 		$(".seats").each(function(){
 			$value.push($(this).val());
 		})
 		$("#seats").val($value);
-		alert($value);
 		
 	})
 })

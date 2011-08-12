@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110723043153) do
+ActiveRecord::Schema.define(:version => 20110807161844) do
 
   create_table "artists", :force => true do |t|
     t.text     "name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20110723043153) do
     t.string   "eventsHref"
     t.datetime "on_tour_until"
     t.integer  "status",        :default => 1
+    t.string   "skid"
   end
 
   create_table "cities", :force => true do |t|
@@ -154,6 +155,7 @@ ActiveRecord::Schema.define(:version => 20110723043153) do
     t.integer  "handling"
     t.string   "invoice_id"
     t.integer  "ticket_group_id"
+    t.string   "paypal_payment_id"
   end
 
   create_table "ticket_groups", :force => true do |t|

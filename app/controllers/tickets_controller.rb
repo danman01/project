@@ -143,13 +143,19 @@ class TicketsController < ApplicationController
       t.seat_number=seats[n]
       t.user_id=current_user.id rescue 1 #so i dont have to log in during testing
       t.save
+      @tid=t.id
       n+=1
       @ticket_group.quantity+=1
       logger.info 'ticket created! ' +n.to_s
     end 
     @ticket_group.save
+    if params[:ticket][:sold]==1
+      redirect="/sales/new?ticket_id=#{@tid}"
+    else
+      redirect="/home#tabs-3"
+    end
     respond_with(@ticket_group) do |format|
-      format.html {redirect_to "/home#tabs-3"}
+      format.html {redirect_to redirect}
     end
   end
 
@@ -182,7 +188,8 @@ class TicketsController < ApplicationController
   end
   
   # AJAX from home page
-  def user_tickets(scope=params[:ticket_scope])
+  def user_tickets(scope=params[:ticket_scope] || 'unsold')
+   logger.info scope+"\n\n"
     @tickets=current_user.tickets
     if scope=="unsold"
       tmp=[]

@@ -12,7 +12,7 @@ $(function(){
   <%= f.error_messages %>
   <p>
     <%= f.label :customer_id %><br />
-    <%= f.select :customer_id, Customer.all.collect {|c| [ "name: " + c.fname, c.id ]} %>
+    <%= f.select :customer_id, Customer.all.collect {|c| [ c.fname, c.id ]} %>
 	
   </p>
 	<p>

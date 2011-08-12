@@ -1,8 +1,75 @@
+<% content_for :javascript do %>
+<script type="text/javascript">
+$(function(){
+	$("#sale_quantity").change(function(){
+		$("#invoice_total").val(($("#sale_quantity").val())*($("#sale_price").val()));
+	})
+	
+	$("#sale_price").change(function(){
+		$("#invoice_total").val(($("#sale_quantity").val())*($("#sale_price").val()));
+	})
+})
+</script>
+<%end%>
 <% title "Edit Invoice" %>
+<h2><%=@invoice.sales.first.tickets.first.event.name%></h2>
 
-<%= render 'form' %>
+<table>
+<thead>
+  <tr>
+    <td>Date</td>
+<td>Marketplace</td>
+    <td>Sale Price</td>
+    <td>Quantity</td>
+    <td>section</td>
+    <td>row</td>
+	<td>seats</td>
+	<td>Order Id</td>
+	<td>paypal Payment Id</td>
+
+  </tr>
+</thead>
+<%for sale in @invoice.sales%>
+<%group=TicketGroup.find(sale.ticket_group_id)%>
+<%= form_for sale do |s|%>
+<tr id="sale">
+    <td><%= s.date_select :date %></td>
+    <td><%= s.label :marketplace, 'market sold in' %><br />
+    <%= s.select :marketplace_id, Marketplace.all.collect {|c| [ c.name, c.id ] }  %></td>
+    <td><%= s.text_field :price %></td>
+    <td><%= s.number_field :quantity, :min=>1, :max=>(TicketGroup.find(sale.ticket_group_id).quantity)+sale.quantity %><%= s.submit%></td>
+
+	<td><%= group.section%></td>
+	<td><%= group.row%></td>
+	<td>
+<% sale.tickets.each do |ticket| %>
+     <%= link_to ticket.seat_number, "/tickets/#{ticket.id}" %> 
+<%end%>
+	</td>
+	<td><%= s.text_field :order_id%></td>
+	<td><%=s.text_field :paypal_payment_id, :hint=>'enter this once paypal sends receipt of payment email'%></td>
+		<%end%>
+	</tr>
+<% end %>
+</table>
+<table>
+<thead>
+  <tr>
+	<td>total price</td>
+	<td>paypal payment id</td>
+  </tr>
+</thead>
+	<tr id="invoice">
+	<%= form_for @invoice do |f| %>
+	<td><%=f.text_field :total, :readonly=>true%></td>
+	<td>
+	<p><%= f.submit %></p></td>
+	<% end %>
+
+</tr>
+</table>
 
 <p>
   <%= link_to "Show", @invoice %> |
-  <%= link_to "View All", invoices_path %>
+  
 </p>

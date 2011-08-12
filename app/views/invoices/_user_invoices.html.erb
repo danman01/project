@@ -5,49 +5,70 @@
 			<td>Date</td>
 			<td>Event Name</td>
 			<td>Market Sold In</td>
-			<td>Invoice Total</td>
+			<td>Total Rev</td>
+			<td>Net Rev</td>
+			<td>Payment Id</td>
 		</tr>
 	</thead>
 	<tbody>
-<%@total=0%>
-<%@net_total=0
-@fees=0
-@ticket_costs=0
-@c=current_user.commissions
-@n=0 
-%>
+	<%@total=0%>
+	<%@net_total=0
+	@fees=0
+	@ticket_costs=0
+	@c=current_user.commissions
+	@n=0 
+	%>
 
-<%for invoice in @invoices%>
-<%@total+=invoice.total
-for entry in @c
-	if entry.marketplace==invoice.sales.first.marketplace
-		commission=entry.commission
-    else
+	<%for invoice in @invoices%>
+	<%@total+=invoice.total
+	if @c!=[]
+	for entry in @c
+		if entry.marketplace==invoice.sales.first.marketplace
+			commission=entry.commission rescue 0
+		else
+			commission=invoice.sales.first.marketplace.commission rescue 0
+		end
+	end
+	else
 		commission=invoice.sales.first.marketplace.commission rescue 0
 	end
-end
-@net_total+=invoice.total*(1-commission)
-@fees+=invoice.total*commission
-invoice.sales.each do |sale|
-	sale.tickets.each do |t|
-		@ticket_costs+=t.cost
-		@n+=1
+	if commission!=nil
+	@net_total+=invoice.total*(1-commission)
+
+	@fees+=invoice.total*commission
 	end
-end
-%>
-	<tr>
-			<td><%=link_to invoice.id, "/invoices/#{invoice.id}"%></td>
-			<td><%=invoice.created_at.strftime("%m/%d/%Y")%></td>
-			<td><%=invoice.sales.first.tickets.first.event.name%></td>
-			<td><%=link_to invoice.sales.first.marketplace.name, "/marketplaces/#{invoice.sales.first.marketplace.name}"%></td>
-			<td>$<%=invoice.total%></td>
-		</tr>
-<%end%>
+	paid=true
+	invoice.sales.each do |sale|
+		if sale.paypal_payment_id.nil?
+		paid=false
+		end
+		sale.tickets.each do |t|
+			@ticket_costs+=t.cost
+			@n+=1
+		end
+	end
+	%>
 	
-	</tbody>
+	<tr>
+		<td><%=link_to invoice.id, "/invoices/#{invoice.id}"%></td>
+		<td><%=invoice.created_at.strftime("%m/%d/%Y")%></td>
+		<td><%=invoice.sales.first.tickets.first.event.name%></td>
+		<td><%=link_to invoice.sales.first.marketplace.name, "/marketplaces/#{invoice.sales.first.marketplace.name}"%></td>
+		<td>$<%=invoice.total%></td>
+		<td>$<%=round_to(invoice.total*(1-commission), 2)%></td>
+		<td>
+		<%if paid==false%>
+		<%=link_to "not yet paid", "/invoices/edit/#{invoice.id}"%>
+		<%else%>
+		<%=link_to "paid!", "/invoices/#{invoice.id}"%>
+		<%end%></td>
+	</tr>
+	<%end%>
+
+</tbody>
 </table>
 <br/>
-<p> Totals...</p>
+<p> Totals (<%=link_to "All Time", "/invoices/user_invoices?scope=all", :remote=>true%> | <%=link_to "All Time", "/invoices/user_invoices?scope=year", :remote=>true%> | <%=link_to "All Time", "/invoices/user_invoices?scope=month", :remote=>true%> |)...</p>
 <table>
 	<thead>
 		<tr>
@@ -57,7 +78,7 @@ end
 			<td>Fees</td>
 			<td>Total Ticket Costs</td>
 			<td>Net Revenue</td>
-		
+
 		</tr>
 	</thead>
 	<tbody>

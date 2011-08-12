@@ -1,4 +1,5 @@
 Tickets::Application.routes.draw do
+  match '/tickets/:action' => 'tickets#/[a-z_]+/i'
   
   resources :regions
 
@@ -116,7 +117,6 @@ Tickets::Application.routes.draw do
    # Note: This route will make all actions in every controller accessible via GET requests.
    match '/events/select_or_create' => 'events#select_or_create'
    match '/events/:action' => 'events#/[a-z_]+/i'
-   match '/tickets/:action' => 'tickets#/[a-z_]+/i'
 
    match ':controller(/:action(/:id(.:format)))'
    

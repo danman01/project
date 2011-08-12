@@ -10,6 +10,7 @@
 #  mbid          :string(255)
 #  eventsHref    :string(255)
 #  on_tour_until :datetime
+#  status        :integer         default(1)
 #
 
 class Artist < ActiveRecord::Base

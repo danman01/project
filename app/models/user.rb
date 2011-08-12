@@ -29,6 +29,8 @@
 #  notes                  :string(255)
 #  ticket_ids             :string(255)
 #  event_ids              :string(255)
+#  role_ids               :string(255)
+#  complete               :boolean         default(FALSE)
 #
 
 class User < ActiveRecord::Base

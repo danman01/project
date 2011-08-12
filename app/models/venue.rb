@@ -2,19 +2,22 @@
 #
 # Table name: venues
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  capacity   :integer
-#  url        :text
-#  created_at :datetime
-#  updated_at :datetime
-#  state      :text
-#  city       :string(255)
-#  region     :string(255)
-#  country    :string(255)
-#  latitude   :string(255)
-#  longitude  :string(255)
-#  skid       :integer
+#  id           :integer         not null, primary key
+#  name         :string(255)
+#  capacity     :integer
+#  url          :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  region_name  :text
+#  city_name    :string(255)
+#  country_name :string(255)
+#  latitude     :string(255)
+#  longitude    :string(255)
+#  skid         :integer
+#  city_id      :integer
+#  country_id   :integer
+#  region_id    :integer
+#  status       :integer         default(1)
 #
 
 class Venue < ActiveRecord::Base

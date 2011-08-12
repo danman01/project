@@ -18,6 +18,7 @@
 #  seat_number     :integer
 #  sale_id         :integer
 #  user_id         :integer
+#  list            :float
 #
 
 class Ticket < ActiveRecord::Base

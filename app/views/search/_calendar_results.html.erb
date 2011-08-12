@@ -13,8 +13,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			
+			<%c=0%>
+			<%@venues=[]%>
 		<%for event in @events%>
+		<%venue_name=event.xpath('venue')[0]['displayName']%>
+		<%v=Venue.find(:all, :conditions=>["name=?", venue_name])
+		v.each do |venue|
+			if venue.city && venue.city.name==event.xpath('venue/metroArea')[0]['displayName']
+				@the_venue=venue
+			else
+				@the_venue=nil
+			end
+		end%>
 		<tr>
 		
 			<td><%=event.xpath('start').first['date']%></td>
@@ -27,17 +37,20 @@
 			<%end%>
 			</td>
 			<td>
-				<%= event['displayName']%></td>
+				<%=link_to event['displayName'], "/venues/"%></td>
 			
-			
+			<%@venues<<event.xpath('venue')[0]['displayName']%>
 		
 			<td>
 <%=link_to 'buy!', "#{event['uri']}", :target=>"_new"%> 
 		<%=button_to 'Sell for this event!', "/events/select_or_create?date=#{event.xpath('start').first['date']}&name=#{event['displayName']}&venue=#{event.xpath('venue').first['displayName']}&artist_id=#{@artist.id}"%>
 		</td>
+		<%if @the_venue!=nil%>
+		<td><%=link_to @the_venue.name, "/venues/#{@the_venue.id}"%></td>
+		<%end%>
 		</tr>
+			<%c+=1%>
 		<%end%>
 		</tbody>
 	</table>
-
 <%end%>

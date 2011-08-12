@@ -100,9 +100,9 @@ class VenuesController < ApplicationController
       tmp.each do |event|
         tmp2<<event.venue unless event.date<Time.now
       end   
-      @venues=tmp2 
+      @venues=tmp2.uniq!
     else
-      @venues=current_user.venues
+      @venues=current_user.venues.uniq!
     end
     @venues.uniq!
     respond_with(@venues)

@@ -15,14 +15,14 @@
 		</tr>
 	</thead>
 	<tbody>
-		<%for venue in @venues%>
+		<%for venue in @venues.uniq!%>
 		<tr>
 			<td><%=venue.id%></td>
 			<td><%=venue.name%></td>
 			<td><%=venue.capacity%></td>
-			<td><%=link_to venue.city, "/venues/city/#{venue.city}"%></td>
-			<td><%=link_to venue.region, "/venues/region/#{venue.region}"%></td>
-			<td><%=link_to venue.country, "/venues/region/#{venue.region}"%></td>
+			<td><%=link_to venue.city.name, "/venues/city/#{venue.city}" unless venue.city.nil?%></td>
+			<td><%=link_to venue.region.region_code, "/venues/region/#{venue.region}" unless venue.region.nil?%></td>
+			<td><%=link_to venue.country.name, "/venues/region/#{venue.region}" unless venue.country.nil?%></td>
 			<td><%=link_to venue.latitude, "/venues/map/#{venue.latitude}/#{venue.longitude}"%></td>
 			<td><%=link_to venue.longitude, "/venues/map/#{venue.latitude}/#{venue.longitude}"%></td>
 			

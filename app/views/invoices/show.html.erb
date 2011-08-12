@@ -1,4 +1,21 @@
 <% title "Invoice" %>
+
+<%@c=current_user.commissions
+@total=@invoice.total
+if @c!=[]
+for entry in @c
+	if entry.marketplace==@invoice.sales.first.marketplace
+		commission=entry.commission rescue 0
+	else
+		commission=@invoice.sales.first.marketplace.commission rescue 0
+	end
+end
+else
+	commission=@invoice.sales.first.marketplace.commission rescue 0
+end
+if commission!=nil
+@net_total=@total*(1-commission)
+end%>
 <h1>Sale complete!</h1>
 <h2><%=@invoice.sales.first.tickets.first.event.name%></h2>
 <table>
@@ -10,7 +27,10 @@
     <td>section</td>
     <td>row</td>
 	<td>ids</td>
-	<td>total price</td>
+	<td>total revenue</td>
+	<td>net rev</td>
+	<td>Order Id</td>
+	<td>paypal payment id</td>
   </tr>
 </thead>
 <%for sale in @invoice.sales%>
@@ -28,7 +48,14 @@
      <%= ticket.id %> 
 <%end%>
 	</td>
-	<td><%=@invoice.total%></td>
+	<td><%=@total%></td>
+	<td><%=@net_total%></td>
+		<td><%=sale.order_id%></td>
+	<td><%if p=sale.paypal_payment_id.nil?%>
+	<%=link_to 'add payment id', "/invoices/edit/#{@invoice.id}"%>
+	<%else%>
+	<%=sale.paypal_payment_id%>
+	<%end%></td>
 <% end %>
 </tr>
 </table>

@@ -79,4 +79,30 @@ class InvoicesController < ApplicationController
     @invoice.destroy
     redirect_to invoices_url, :notice => "Successfully destroyed invoice."
   end
+  
+  def user_invoices(scope=params[:invoice_scope])
+    @invoices=current_user.invoices
+    @invoices.reject!{|x|x.sales.empty?} 
+    if scope=="all"
+      tmp=[]
+      for invoice in @invoices
+        tmp<<invoice
+      end
+      @invoices=tmp
+    elsif scope=='month'
+      tmp=[]
+      for invoice in @invoices
+        tmp<<invoice if invoice.created_at.year==Time.now.year && invoice.created_at.month==Time.now.month
+      end
+      @invoices=tmp
+    elsif scope=='year'
+      tmp=[]
+      for invoice in @invoices
+        tmp<<invoice if invoice.created_at.year==Time.now.year
+      end
+      @invoices=tmp
+    end
+    @invoices.uniq!
+    respond_with(@invoices)
+  end
 end

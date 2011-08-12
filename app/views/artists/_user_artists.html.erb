@@ -8,7 +8,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<%for artist in @artists%>
+		<%for artist in @artists.uniq!%>
 		<tr>
 			<td><%=artist.name%></td>
 			<td><%=artist.mbid%></td>

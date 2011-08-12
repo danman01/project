@@ -11,6 +11,9 @@
 #  artist_id  :integer
 #  venue_id   :integer
 #  time       :datetime
+#  user_id    :integer
+#  public     :integer         default(1)
+#  status     :integer         default(1)
 #
 
 class Event < ActiveRecord::Base

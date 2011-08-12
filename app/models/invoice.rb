@@ -3,7 +3,7 @@
 # Table name: invoices
 #
 #  id          :integer         not null, primary key
-#  sales_ids   :string(255)
+#  sale_ids    :string(255)
 #  customer_id :integer
 #  total       :integer
 #  user_id     :integer

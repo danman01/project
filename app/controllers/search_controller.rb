@@ -38,8 +38,8 @@ class SearchController < ApplicationController
   end
 
   def sk_artist_search(artist=params[:name])
-    if !Artist.find(:all, :conditions=>['name LIKE ? and mbid IS NOT NULL', artist]).empty?
-      @artists=Artist.find(:all, :conditions=>['name LIKE ? and mbid IS NOT NULL', artist])
+    if !Artist.find(:all, :conditions=>['name LIKE ? and mbid IS NOT NULL', artist]).empty? || !Artist.find(:all, :conditions=>['name LIKE ? and skid IS NOT NULL', artist]).empty?
+      @artists=Artist.find(:all, :conditions=>['name LIKE ?', artist])
     else
       api_key="O4d25zZpTn7zfxZP"
       host="api.songkick.com"
@@ -76,7 +76,7 @@ class SearchController < ApplicationController
       logger.info @artist.name +"created!"
     end
     api_key="O4d25zZpTn7zfxZP"
-    
+
     host="api.songkick.com"
     path="/api/3.0/events.xml"
     params="?apikey="+api_key+"&artist_name="+artist_name
@@ -108,7 +108,7 @@ class SearchController < ApplicationController
     @events=[]
     @venues=[]
     for each in cities
-    @venues=@venues | Venue.find(:all, :conditions=>['city_id LIKE ?', each.id])
+      @venues=@venues | Venue.find(:all, :conditions=>['city_id LIKE ?', each.id])
     end
     if !@venues.nil?
       @venues.each do |venue|
@@ -133,17 +133,22 @@ class SearchController < ApplicationController
     end
     if @artist.nil? #if dont have mbid saved in our db, try searching by name
       if @artist=Artist.find(:first, :conditions=>['name LIKE ?', name])
-        @artist.update_attributes(:mbid=>mbid, :eventsHref=>eventsHref, :name=>name, :url=>params[:url], :on_tour_until=>params[:on_tour_until])
+        @artist.update_attributes(:mbid=>mbid, :eventsHref=>eventsHref, :name=>name, :url=>params[:url], :on_tour_until=>params[:on_tour_until], :skid=>params[:skid])
         logger.info @artist.to_yaml
       else #if no name or mbid, create them in our db.  will be loaded in next attempt 
-        @artist=Artist.new(:mbid=>mbid, :eventsHref=>eventsHref, :name=>name, :url=>params[:url], :on_tour_until=>params[:on_tour_until])
+        @artist=Artist.new(:mbid=>mbid, :eventsHref=>eventsHref, :name=>name, :url=>params[:url], :on_tour_until=>params[:on_tour_until], :skid=>params[:skid])
         @artist.save
       end
 
     end
+    logger.info 'about to search songkick'
     api_key="O4d25zZpTn7zfxZP"
     host="api.songkick.com"
-    path="/api/3.0/artists/mbid:#{mbid}/calendar.xml"
+    if @artist.mbid
+      path="/api/3.0/artists/mbid:#{mbid}/calendar.xml"
+    else
+      path="/api/3.0/artists/#{@artist.skid}/calendar.xml"
+    end
     params="?apikey="+api_key
     http=Net::HTTP.new(host)
     headers=
@@ -153,6 +158,7 @@ class SearchController < ApplicationController
       'User-Agent'=>"ruby/net::http"
     }
     resp, data=http.get(path+params, headers)
+    @venues=[]
     if resp.code=="200"
       @events=[]
       doc = Nokogiri::XML(data) 
@@ -160,41 +166,56 @@ class SearchController < ApplicationController
       doc.xpath('resultsPage/results/event').each do |event|
         @events<<event
         venue=event.xpath('venue') #gets nodeset
-        venue=venue[0] #gets element
-        check_for_venue(venue)
+        @venue=venue[0] #gets element    
+        @venues<<@venue    
+        check_for_venue(@venue)
       end
-
-
     end
-
     respond_with(@events)
   end
 
   def check_for_venue(venue)
-    #uncomment if else, and change update attributes to save to stop updateing each time on search
+    logger.info "checking for venue #{venue}"
     name=venue["displayName"] rescue nil
-    #if 
-      @venue=Venue.find_by_name(name)
-    #else
-    capacity=venue["capacity"] rescue nil
+    loc=venue.xpath('metroArea')[0] rescue nil
+
+    city=loc['displayName']
+    venues=Venue.find_all_by_name(name)
+    for v in venues
+      logger.info v.to_yaml
+      if v.city && v.city.name==city
+
+        return v
+      end
+    end
+    #if @venue!=nil && !@venue.city.nil? && @venue.city.name==city #so we can have mutliple HOBs in dif cities
+    #logger.info "\nreturning venue\n"
+    #elsif @venue && @venue.capacity.nil?
+    # capacity=venue["capacity"] rescue nil
+
+    #if venue city doesnt match returned city, create new venue
+
     longitude=venue['lng'] rescue nil
     latitude=venue['lat'] rescue nil
     url=venue["uri"] rescue nil
-    loc=venue.xpath('metroArea')[0] rescue nil
-    if cn=loc.xpath('country')[0]['displayName']
-    country=Country.find_by_country_code(cn) #US uses US, others use name
-    if !country
-      country=Country.find_by_name(cn)
-    end
+    cn=loc.xpath('country')[0]['displayName']
+    if cn
+      country=Country.find_by_country_code(cn) #US uses US, others use name
+      if !country
+
+        country=Country.find_by_name(cn)
+      end
     end
     if loc.xpath('state')[0]
+
       rg=loc.xpath('state')[0]['displayName'] 
+
       region=Region.find_by_region_code(rg)
       if !region
         region=Region.new(:region_code=>rg,:country=>country)
         region.save
       end
-        
+
     end
     if ct=loc['displayName']
       if region && city=City.find_by_name(ct, :conditions=>["region_id=?", region.id])
@@ -202,15 +223,13 @@ class SearchController < ApplicationController
       elsif region
         city=City.new(:name=>ct, :region=>region,:status=>0)
         city.save
+
       end
     end
     #http://www.geonames.org/export/web-services.html
-      
-    if @venue
-      @venue.update_attributes(:name=>name, :capacity=>capacity, :longitude=>longitude, :latitude=>latitude, :url=>url, :city=>city, :region=>region, :country=>country)
-    else
-      @venue=Venue.new(:name=>name, :capacity=>capacity, :longitude=>longitude, :latitude=>latitude, :url=>url, :city=>city, :region=>region, :country=>country)
-      @venue.save
-    end
+    @venue=Venue.new(:name=>name, :capacity=>venue['capacity'], :longitude=>longitude, :latitude=>latitude, :url=>url, :city=>city, :region=>region, :country=>country)
+    @venue.save
+
+    return @venue
   end
 end
