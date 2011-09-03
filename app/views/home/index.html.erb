@@ -1,89 +1,108 @@
 <h1>Welcome to Stub Lightyear</h1>
 
 <%if current_user%>
-<script>
-	$(function() {
-		$( "#tabs" ).tabs();
-	});
-	$(function(){
-		$(".ajax_container a").click(function(){
-			$(this).parent().text("loading...");
-		})
+<% content_for :javascript do %>
+<script type="text/javascript">
+function view_seats(id)
+{
+	$("#"+id).toggle("slow");
+}
+
+$(function() {
+	$( "#tabs" ).tabs();
+});
+$(function(){
+	$(".ajax_container a").live("click", function(){
+		$(this).parent().text("loading...");
 	})
-	</script>
+	$("#ticket_tab").click(function(){
+		$.ajax({
+			type: "POST",
+			url: "/tickets/user_tickets?ticket_scope=upcoming", 
+			beforeSend: function(xhr, settings) {
+			    if ( settings.dataType == undefined ) {
+			        xhr.setRequestHeader("Accept", "text/javascript, */*; q=0.5");
+			    }
+			    //return fire(element, 'ajax:beforeSend', xhr);
+			}
+		});
+	})
+})
+
+</script>
+<%end%>
 
 
 
 <div class="demo">
 
-<div id="tabs">
-	<ul>
-		<li><a href="#tabs-1">My Sales</a></li>
-		<li><a href="#tabs-2">My Events</a></li>
-		<li><a href="#tabs-3">My Tickets</a></li>
-		<li><a href="#tabs-4">My Venues</a></li>
-		<li><a href="#tabs-5">My Artists</a></li>
-	</ul>
-	<div id="tabs-1">
-		<div id="sales">
-		<%=render :partial=>"/invoices/user_invoices"%>
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-1">My Sales</a></li>
+			<li><a href="#tabs-2">My Events</a></li>
+			<li><a href="#tabs-3" id="ticket_tab">My Tickets</a></li>
+			<li><a href="#tabs-4">My Venues</a></li>
+			<li><a href="#tabs-5">My Artists</a></li>
+		</ul>
+		<div id="tabs-1">
+			<div id="sales">
+				<%=render :partial=>"/invoices/user_invoices"%>
+			</div>
+		</div>
+		<div id="tabs-2">
+			<div id="events">
+				<%=render :partial=>"/events/user_events"%>
+			</div>
+
+		</div>
+		<div id="tabs-3">
+			<div id="tickets">
+				
+			</div>
+		</div>
+		<div id="tabs-4">
+			<div id="venues">
+				<%=render :partial=>'/venues/user_venues'%>
+			</div>
+		</div>
+		<div id="tabs-5">
+			<div id="artists">
+				<%=render :partial=>"/artists/user_artists"%>
+			</div>
 		</div>
 	</div>
-	<div id="tabs-2">
-		<div id="events">
-		<%=render :partial=>"/events/user_events"%>
-		</div>
-		
-	</div>
-	<div id="tabs-3">
-		<div id="tickets">
-		<%=render :partial=>'/tickets/users_tickets'%>
-		</div>
-	</div>
-	<div id="tabs-4">
-		<div id="venues">
-		<%=render :partial=>'/venues/user_venues'%>
-		</div>
-	</div>
-	<div id="tabs-5">
-		<div id="artists">
-		<%=render :partial=>"/artists/user_artists"%>
-		</div>
-	</div>
-</div>
 
 </div><!-- End demo -->
 
 
 <%else%>
-<div>
-	Events
+<div id="home_new" class="tdash bdash">
+	<div id="sign_up" class="">
+		<h3>New user? <span style="margin-left:5px"><a href="/users/sign_up">Sign up now!</a></span></h3>
+		<div>I want to <%=link_to "buy tickets","/users/sign_up"%></div>
+		<div>I want to <%=link_to "sell tickets",  "/users/sign_up?type=seller"%></div>
+		<div>I own a venue and want to <%=link_to "manage my tickets", "/users/sign_up?type=venue"%></div><div>Or just look around:</div><div>View tickets for sale <%=link_to "Near you", ""%> | <%=link_to "By city", ""%> | <%=link_to "All tickets", ""%>
+			</div>
+	</div>
+	<div style="float:left; width:5px;" class="rline"></div>
+			<div class="aside"><h3>Existing users</h3>
+				<div >
+					<h2>Sign in</h2>
+
+					<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+					<p><%= f.label :email %><br />
+						<%= f.email_field :email %></p>
+
+						<p><%= f.label :password %><br />
+							<%= f.password_field :password %></p>
+
+							<% if devise_mapping.rememberable? -%>
+							<p><%= f.check_box :remember_me %> <%= f.label :remember_me %></p>
+							<% end -%>
+
+							<p><%= f.submit "Sign in", :class=>'newbutton blue' %></p>
+							<% end %>
+						</div>
+					</div>
 </div>
-<p>
-<%= link_to "View All", events_path %> / 	<%= link_to "New", new_event_path %> 
-</p>
-<div>
-	Artists
-<p>
-	<%= link_to "View All", artists_path %> / <%= link_to "New", new_artist_path %>
-</p>
-</div>
-<div>
-	Tickets
-<p>
-	<%= link_to "View All", tickets_path %> / <%= link_to "New", new_ticket_path %>
-</p>
-</div>
-<div>
-	Sales
-<p>
-	<%= link_to "View All", sales_path %> / <%= link_to "New", new_sale_path %>
-</p>
-</div>
-<div>
-	Venues
-<p>
-	<%= link_to "View All", venues_path %> / <%= link_to "New", new_venue_path %>
-</p>
-</div>
-<%end%>
+				<%end%>

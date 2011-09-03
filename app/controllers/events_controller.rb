@@ -75,11 +75,12 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.xml
   def create
+    #used for user created events
     @event = Event.new(params[:event])
    if @event.name==''
      @event.name=@event.artist.name + ' at ' + @event.venue.name + " (#{@event.date.strftime("%a, %b %e %Y")})"
   end
-
+  @event.created_by=current_user.id
     respond_to do |format|
       if @event.save
         format.html { redirect_to(@event, :notice => 'Event was successfully created.') }

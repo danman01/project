@@ -1,5 +1,6 @@
+
 <%=@num%> events found for <%=@artist.name%> | <%=link_to "Snipe 'em!", "/tours/select_or_create/#{@artist.id}?snipe=true"%>
-<%if @events.empty? || @events.nil?%>
+<%if (@events.nil?) && (@user_events.nil?)%>
 	<%=link_to 'add one!', "/events/new?artist_id=#{@artist.id}"%>
 <%else%>
 	<table>
@@ -9,21 +10,27 @@
 				<td>City</td>
 				<td>Region</td>
 				<td>Name</td>
-				<td></td>
+				<td>action</td>
+				<td>venue</td>
+				<td>capacity</td>
 			</tr>
 		</thead>
 		<tbody>
 			<%c=0%>
 			<%@venues=[]%>
 		<%for event in @events%>
-		<%venue_name=event.xpath('venue')[0]['displayName']%>
-		<%v=Venue.find(:all, :conditions=>["name=?", venue_name])
+
+		<%if @the_venue=Venue.find_by_latitude_and_longitude(event.xpath('venue')[0]['lat'], event.xpath('venue')[0]['lng'])
+		else
+			venue_name=event.xpath('venue')[0]['displayName']
+			v=Venue.find(:all, :conditions=>["name=?", venue_name])
 		v.each do |venue|
 			if venue.city && venue.city.name==event.xpath('venue/metroArea')[0]['displayName']
 				@the_venue=venue
 			else
 				@the_venue=nil
 			end
+		end
 		end%>
 		<tr>
 		
@@ -46,11 +53,52 @@
 		<%=button_to 'Sell for this event!', "/events/select_or_create?date=#{event.xpath('start').first['date']}&name=#{event['displayName']}&venue=#{event.xpath('venue').first['displayName']}&artist_id=#{@artist.id}"%>
 		</td>
 		<%if @the_venue!=nil%>
-		<td><%=link_to @the_venue.name, "/venues/#{@the_venue.id}"%></td>
+		<td><%=link_to @the_venue.name, "/venues/#{@the_venue.id}", :target=>"_blank"%></td>
+		<td>
+		<%if @the_venue.capacity%>
+		<%=@the_venue.capacity%>
+			<%else%>
+			<%=@the_venue.capacity_notes%>
+			<%end%>
+			</td>
 		<%end%>
 		</tr>
 			<%c+=1%>
 		<%end%>
+		
+		<%# START USER CREATED EVENTS %>
+		
+		<%for event in @user_events %>
+		 <%if !(event.nil?)%>
+		
+		<tr>
+		
+			<td><%=event.date%></td>
+			<td><%=event.venue.city.name%></td>
+			<td>
+			<%if event.venue.region.name!=nil%>
+				<%=event.venue.region.name%>
+			<%else%>
+				<%=event.venue.region.region_code%>
+			<%end%>
+			</td>
+			<td>
+				<%=event.name%></td>		
+			<td>
+<%=link_to 'buy!', "/tickets/", :target=>"_new"%> 
+		<%=button_to 'Sell for this event!', "/tickets/new?event_id=#{event.id}"%>
+		</td>
+		<td><%=link_to event.venue.name, "/venues/#{event.venue.id}", :target=>"_blank"%></td>
+		<td>
+		<%if event.venue.capacity%>
+		<%=event.venue.capacity%>
+			<%else%>
+			<%=event.venue.capacity_notes%>
+			<%end%>
+			</td>
+		<%end%>
+		</tr>
+		<%end%>
+		<%end%>
 		</tbody>
 	</table>
-<%end%>

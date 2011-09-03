@@ -8,6 +8,7 @@
 		</tr>
 	</thead>
 	<tbody>
+		<%if @artists.size>0%>
 		<%for artist in @artists.uniq!%>
 		<tr>
 			<td><%=artist.name%></td>
@@ -15,6 +16,7 @@
 			<td><%if artist.on_tour_until!=nil%><%=artist.on_tour_until.strftime("%m/%d/%Y")%><%end%></td>
 	
 		</tr>
+		<%end%>
 		<%end%>
 	</tbody>
 </table>

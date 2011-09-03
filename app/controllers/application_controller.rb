@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  
+  before_filter :authenticate_user!, :only =>[:create, :update]
+  rescue_from CanCan::AccessDenied do |exception|
+      redirect_to :back, :alert => exception.message
+  end
+    
   def encode(data)
       ActiveSupport::Base64.encode64(Marshal.dump(data))
    end
@@ -12,6 +16,13 @@ class ApplicationController < ActionController::Base
   def round_to( decimals=0 )
     factor = 10.0**decimals
     (self*factor).round / factor
+  end
+  
+  def store_location
+    if request.get? && request.format.html? && !request.xhr? &&
+  !devise_controller?
+      session[:"scope_return_to"] = request.request_uri
+    end
   end
   
   

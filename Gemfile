@@ -5,7 +5,7 @@ gem 'rails', '3.0.9'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem "rake", "0.8.7"
+#gem "rake", "0.8.7"
 gem 'sqlite3'
 gem 'pg'
 gem 'passenger'
@@ -32,7 +32,7 @@ gem "jquery-rails"
 gem 'devise'
 gem 'nifty-generators'
 gem 'omniauth'
-
+gem 'geocoder' #http://www.rubygeocoder.com/
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators

@@ -43,6 +43,7 @@ class Ability
         can :manage, Commission do |c|
           c.try(:user) == user
         end
+        can :manage, Customer
         
         can :see_timestamps, User, :id => user.id
       end

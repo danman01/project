@@ -11,12 +11,17 @@ class CustomersController < ApplicationController
 
   def new
     @customer = Customer.new
+    @sales=params[:sales]
   end
 
   def create
     @customer = Customer.new(params[:customer])
     if @customer.save
+      if params[:sales]
+        redirect_to new_invoice_path(:sales=>params[:sales], :user=>current_user.id)
+      else
       redirect_to @customer, :notice => "Successfully created customer."
+      end
     else
       render :action => 'new'
     end

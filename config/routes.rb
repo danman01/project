@@ -7,7 +7,7 @@ Tickets::Application.routes.draw do
 
   resources :cities
 
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "custom_devise/registrations" } 
   
   match 'ticket_groups/select/:event_id'=> 'ticket_groups#select'
   

@@ -1,0 +1,38 @@
+<div id="home_new" class="tdash bdash">
+	<div id="sign_up" class="">
+		<h3>New user? <span style="margin-left:5px"><a href="/users/sign_up">Sign up as a ticket seller!</a></span></h3>
+
+		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+		<%= devise_error_messages! %>
+
+		<p><%= f.label :email %><br />
+			<%= f.email_field :email %></p>
+
+			<p><%= f.label :password %><br />
+				<%= f.password_field :password %></p>
+
+				<p><%= f.label :password_confirmation %><br />
+					<%= f.password_field :password_confirmation %></p>
+<%=hidden_field_tag :role, "5"%>
+					<p><%= f.submit "Sign up", :class=>"newbutton blue" %></p>
+					<% end %>
+
+					<%= render :partial => "devise/shared/links" %>
+				</div>
+	
+			<div style="float:left; width:5px;" class="rline"></div>
+
+			<div class="aside">
+
+				<h2>Manage your sales in one bad ass program</h2>
+				<ul>
+
+					<li>Last minute sales <span class="list_child">List your inventory in the marketplace so you can sell up to the time of the event, and beyond!</span></li>
+					<li>Inventory insight: <span class="list_child">Stay organized and get key statistics for each of your events</span></li>
+					<li>Easy to start <span class="list_child">Get all the benefits of an inventory management system</span></li>
+					<li>It's free! <span class="list_child">No need to pay thousands of dollars for features you will never use</span></li>
+				</ul>
+			</div>
+
+</div>
+

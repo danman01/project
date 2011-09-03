@@ -30,6 +30,7 @@ class SalesController < ApplicationController
     @venue=@ticket.venue.name
     @event=@ticket.event
     @group=@ticket.ticket_group
+   
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @sale }

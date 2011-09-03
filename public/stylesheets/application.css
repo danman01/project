@@ -1,5 +1,31 @@
+/*document*/
+body{
+	font-family: helvetica,arial,sans-serif;
+	color: #222;
+}
+h1, h2, h3, h4, h5, h6, p, ol, ul, dl, section {
+	margin-bottom: 20px;
+	margin-top:20px;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
 
-
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+h1
+{
+	font-size:200%;
+}
+a {
+	color: #005BF2;
+	text-decoration: none;
+}
+a:hover
+{
+	text-decoration:underline;
+}
 #notice
 {
 	text-align:center;
@@ -10,8 +36,8 @@
 }
 .submit > div:hover
 {
-background-color:#ccc;
-cursor:pointer;	
+	background-color:#ccc;
+	cursor:pointer;	
 }
 /* table styles */
 table
@@ -44,4 +70,112 @@ table td
 .sold
 {
 	width:60px;
+}
+/*forms */
+#sign_up h3
+{
+	color: #F82D02;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 13px;
+	margin-bottom: 0;
+	text-transform: uppercase;
+}
+#aside h3
+{
+	color: inherit;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 13px;
+	margin-bottom: 0;
+	text-transform: uppercase;
+}
+.tdash
+{
+	border-top: 1px dashed #CCC;
+	padding: 19px;
+}
+.bdash
+{
+	border-bottom: 1px dashed #CCC;
+}
+.rline
+{
+	border-right: 2px solid #CCCCCC;
+	height: 150px;
+	margin-left: 25px;
+	margin-right: 45px;
+	margin-top: 50px;
+	padding: 14px;
+}
+/* buttons */
+.newbutton.blue:hover {
+	background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#0a76f5),color-stop(100%,#5bb3f8));
+	background-image: -webkit-linear-gradient(#0a76f5,#5bb3f8);
+	background-image: -moz-linear-gradient(#0a76f5,#5bb3f8);
+	background-image: -o-linear-gradient(#0a76f5,#5bb3f8);
+	background-image: -ms-linear-gradient(#0a76f5,#5bb3f8);
+	background-image: linear-gradient(#0a76f5,#5bb3f8);
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#0a76f5,EndColorStr=#5bb3f8);
+	background-color: #0A76F5;
+}
+.auth_form .newbutton {
+	margin-bottom: 0;
+}
+.newbutton.blue {
+	background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#5bb3f8),color-stop(100%,#0a76f5));
+	background-image: -webkit-linear-gradient(#5bb3f8,#0a76f5);
+	background-image: -moz-linear-gradient(#5bb3f8,#0a76f5);
+	background-image: -o-linear-gradient(#5bb3f8,#0a76f5);
+	background-image: -ms-linear-gradient(#5bb3f8,#0a76f5);
+	background-image: linear-gradient(#5bb3f8,#0a76f5);
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#5bb3f8,EndColorStr=#0a76f5);
+	background-color: #5BB3F8;
+	border: #62A0EB 1px solid;
+}
+.newbutton:hover {
+	text-decoration: none;
+	text-shadow: rgba(0, 0, 0, 0.3) 0 1px 0;
+}
+input.newbutton {
+	font-family: "Helvetica",arial,sans-serif;
+	line-height: 20px;
+}
+.newbutton {
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-o-border-radius: 4px;
+	-ms-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: white 1px 1px 0,white -1px -1px 0,white -1px 1px 0,white 1px -1px 0;
+	-webkit-box-shadow: white 1px 1px 0,white -1px -1px 0,white -1px 1px 0,white 1px -1px 0;
+	-o-box-shadow: white 1px 1px 0,white -1px -1px 0,white -1px 1px 0,white 1px -1px 0;
+	box-shadow: white 1px 1px 0,white -1px -1px 0,white -1px 1px 0,white 1px -1px 0;
+	color: white;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 3px 13px;
+	text-align: center;
+	text-decoration: none;
+	text-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0;
+	text-transform: uppercase;
+}
+/*Home page*/
+#home_new
+{
+	overflow-y:auto;
+	width:960px;
+	margin:0 auto;
+}
+#home_new #sign_up
+{
+	float:left;
+	width:350px;
+}
+#home_new .aside
+{
+	float:left;
+	width:350px;
+	margin-left:35px;
 }

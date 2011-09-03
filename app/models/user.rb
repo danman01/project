@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :street, :city, :region, :phone, :country, :remember_me
   
-  before_create :set_role
+  #before_create :set_role
   
   has_many :tickets
   has_many :invoices
@@ -58,6 +58,6 @@ class User < ActiveRecord::Base
     self.roles.find_by_name(role.to_s) ? true : false
   end
   def set_role
-     self.roles=[Role.find_by_name("basic")]
+
    end
 end

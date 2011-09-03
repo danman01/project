@@ -188,28 +188,31 @@ class TicketsController < ApplicationController
   end
   
   # AJAX from home page
-  def user_tickets(scope=params[:ticket_scope] || 'unsold')
-   logger.info scope+"\n\n"
+  def user_tickets(scope=params[:ticket_scope])
     @tickets=current_user.tickets
-    if scope=="unsold"
       tmp=[]
+    if scope=="all"
       for ticket in @tickets
-        tmp<<ticket unless ticket.sold?
+        tmp<<ticket 
       end
       @tickets=tmp
     elsif scope=='upcoming'
-      tmp=[]
       for ticket in @tickets
-        tmp<<ticket unless ticket.event.date<Time.now
+        tmp<<ticket unless (ticket.event.date<Time.now || ticket.sold?)
+      end
+      @tickets=tmp
+    elsif scope=="expired"
+      for ticket in @tickets
+        tmp<<ticket unless (ticket.event.date>Time.now || ticket.sold?)
       end
       @tickets=tmp
     end
-    @tickets.uniq!
+    #@tickets.sort_by{|t| t.event.date}.uniq!
     groups=[]
     for ticket in @tickets
       groups<<ticket.ticket_group
     end
-    @ticket_groups=groups.uniq!
+    @ticket_groups=groups.sort_by{|g| g.tickets.first.event.date}.uniq!
     respond_with(@tickets)
   end
 end

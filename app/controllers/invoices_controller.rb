@@ -10,8 +10,22 @@ class InvoicesController < ApplicationController
 
   def new
     @invoice = Invoice.new
+     invoices=current_user.invoices
+      @top_customers=[]
+      customers=[]
+      for each in invoices
+        customers<<each.customer_id
+      end
+      idx = {}
+      ids=[]
+      customers.each { |i| idx.include?(i) ? idx[i] += 1 : idx[i] = 1} #indexer
+      idx.each {|k, v| ids<<k unless v < 2} # get customers with more than 1 invoice for this user
+      @top_customers=Customer.find(ids)
     @sales=[]
-    for each in params[:sales]
+    if params[:sales].class!=Array
+      params[:sales]=[params[:sales]]
+    end
+    for each in params[:sales] #changing to array for now...
       sale=Sale.find(each)
       @sales<<sale
     end
@@ -21,7 +35,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new(params[:invoice])
     @invoice.user=current_user
     
-    @invoice.sales=[Sale.find(params[:sales_ids].to_i)] # need to change for multiple sales
+    @invoice.sales=[Sale.find(params[:sales_ids].to_i)] # TODO need to change for multiple sales
     if @invoice.save
       sales=@invoice.sales
       sales.each do |sale|

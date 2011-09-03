@@ -171,18 +171,19 @@ class SearchController < ApplicationController
         check_for_venue(@venue)
       end
     end
+    @user_events=Event.find(:all, :conditions=>['artist_id=? AND created_by IS NOT NULL',@artist.id]) #gets user cretaed events
+    
     respond_with(@events)
   end
 
   def check_for_venue(venue)
     logger.info "checking for venue #{venue}"
-    name=venue["displayName"] rescue nil
+    name=venue["displayName"].strip rescue nil
     loc=venue.xpath('metroArea')[0] rescue nil
 
     city=loc['displayName']
     venues=Venue.find_all_by_name(name)
     for v in venues
-      logger.info v.to_yaml
       if v.city && v.city.name==city
 
         return v
@@ -231,5 +232,9 @@ class SearchController < ApplicationController
     @venue.save
 
     return @venue
+  end
+  
+  def customer_search(fname=params[:fname], lname=params[:lname], email=params[:email], phone=params[:phone])
+   @results = Customer.find(:all, :conditions => ["fname LIKE ? OR lname LIKE ? OR phone LIKE ? OR email LIKE ?",fname, lname, phone, email])
   end
 end

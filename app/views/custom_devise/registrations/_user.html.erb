@@ -1,0 +1,43 @@
+<div id="home_new" class="tdash bdash">
+	<div id="sign_up" class="">
+		<h3 style="color:#005BF2;">Register now to use the marketplace!</h3>
+
+		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+		<%= devise_error_messages! %>
+
+		<p><%= f.label :role_ids, "I am a..." %><br />(check all that apply)<br />
+			<%=check_box('role','basic')%> fan and want to buy tickets<br />
+			<%=check_box('role','seller')%> fan and want to sell tickets<br />
+			<%=check_box('role','venue')%> venue, promotion company, or ticket company
+		</p>
+			
+		<p><%= f.label :email %><br />
+			<%= f.email_field :email %></p>
+
+			<p><%= f.label :password %><br />
+				<%= f.password_field :password %></p>
+
+				<p><%= f.label :password_confirmation %><br />
+					<%= f.password_field :password_confirmation %></p>
+					<%#=hidden_field_tag :role, "2"%>
+					<p><%= f.submit "Sign up", :class=>"newbutton blue" %></p>
+					<% end %>
+
+					<%= render :partial => "devise/shared/links" %>
+				</div>
+	
+			<div style="float:left; width:5px;" class="rline"></div>
+
+			<div class="aside">
+
+				<h2>Change the way you buy and sell tickets!</h2>
+				<ul>
+					<li>No more unused tickets: <span class="list_child">Buy from actual attendees with extra tickets, or from venues and brokers with last minute deals</span></li>
+					<li>No middle man: <span class="list_child">Avoid centralized marketplaces and fees</span></li>
+					<li>No unfair pricing: <span class="list_child">View real time data on current ticket prices so you don't get ripped off</span></li>
+				</ul>
+			</div>
+
+</div>
+
+

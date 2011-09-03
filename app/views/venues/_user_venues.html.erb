@@ -15,6 +15,7 @@
 		</tr>
 	</thead>
 	<tbody>
+		<%if @venues.size>0%>
 		<%for venue in @venues.uniq!%>
 		<tr>
 			<td><%=venue.id%></td>
@@ -28,6 +29,7 @@
 			
 			
 		</tr>
+		<%end%>
 		<%end%>
 	</tbody>
 </table>

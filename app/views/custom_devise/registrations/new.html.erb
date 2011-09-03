@@ -1,0 +1,14 @@
+<h1>Sign Up</h1>
+<%if params[:type]%>
+<%case params[:type]%>
+<%when "venue"%>
+	<%=render :partial=>"venue"%>
+<%when "user" || nil || ""%>
+	<%=render :partial=>"user"%>
+<%when "seller"%>
+	<%=render :partial=>"seller"%>
+
+<%end%>
+<%else%>
+<%=render :partial=>"user"%>
+<%end%>

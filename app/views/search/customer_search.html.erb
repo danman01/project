@@ -1,0 +1,17 @@
+results:
+<table>
+	<thead>
+		<th>first name</th>
+		<th>last name</th>
+		<th>phone</th>
+		<th>email</th>
+		
+<%@results.each do |result|%>
+	<tr>
+	<td><%=result.fname%></td>
+		<td><%=result.lname%></td>
+			<td><%=result.phone%></td>
+				<td><%=result.email%></td>
+				<td><%=link_to "Select!", ""%></td>
+	</tr>
+<%end%>

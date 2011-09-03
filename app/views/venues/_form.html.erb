@@ -20,10 +20,17 @@
     <%= f.text_field :capacity %>
   </div>
 <div class="field">
-	<%states=['AL','AK','AZ','AR','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','N','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY']
-	%>
-    <%= f.label :state %><br />
-    <%= select(:venue, :state, states.each { |l| puts l}, options ={:prompt =>'Select a state'})%>
+    <%= f.label :country %><br />
+    <%= f.select :country_id, Country.all.collect { |l| [l.name, l.id]}, :prompt =>'Select a country'%>
+  </div>
+<div class="field">
+
+    <%= f.label :region %><br />
+    <%= f.select :region_id, Region.find(:all, :conditions=>["country_id=?", 482], :order=>"region_code").collect { |l| [l.name, l.id]}, :prompt =>'Select a Region'%>
+  </div>
+<div class="field">
+    <%= f.label :city %><br />
+    <%= f.select :city_id, City.find(:all, :conditions=>["country_id=?", 482], :order=>"name").collect { |l| [l.name, l.id]}, :prompt =>'Select a city (currently just US)'%>
   </div>
   <div class="field">
     <%= f.label :url %><br />

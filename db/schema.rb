@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110807161844) do
+ActiveRecord::Schema.define(:version => 20110822140748) do
 
   create_table "artists", :force => true do |t|
     t.text     "name"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20110807161844) do
     t.datetime "updated_at"
     t.string   "fname"
     t.string   "lname"
+    t.string   "invoice_ids"
   end
 
   create_table "events", :force => true do |t|
@@ -91,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20110807161844) do
     t.integer  "user_id"
     t.integer  "public",     :default => 1
     t.integer  "status",     :default => 1
+    t.integer  "created_by"
   end
 
   add_index "events", ["artist_id"], :name => "index_events_on_artist_id"
@@ -180,7 +182,7 @@ ActiveRecord::Schema.define(:version => 20110807161844) do
     t.integer  "artist_id"
     t.integer  "venue_id"
     t.integer  "ticket_group_id"
-    t.integer  "seat_number"
+    t.string   "seat_number"
     t.integer  "sale_id"
     t.integer  "user_id"
     t.float    "list"
@@ -246,7 +248,8 @@ ActiveRecord::Schema.define(:version => 20110807161844) do
     t.integer  "city_id"
     t.integer  "country_id"
     t.integer  "region_id"
-    t.integer  "status",       :default => 1
+    t.integer  "status",         :default => 1
+    t.string   "capacity_notes"
   end
 
   add_index "venues", ["city_id"], :name => "index_venues_on_city_id"

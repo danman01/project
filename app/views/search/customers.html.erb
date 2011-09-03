@@ -1,0 +1,11 @@
+<h1>Customer search</h1><%=form_tag "/search/customer_search" do%>
+<%=label_tag "first name"%>
+<%=text_field_tag "fname"%>
+<%=label_tag "last name"%>
+<%=text_field_tag "lname"%>
+<%=label_tag "email"%>
+<%=text_field_tag "email"%>
+<%=label_tag "phone #"%>
+<%=text_field_tag "phone"%>
+<%=submit_tag 'search!'%>
+<%end%>

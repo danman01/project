@@ -13,7 +13,7 @@ class MarketplacesController < ApplicationController
   # GET /marketplaces/1
   # GET /marketplaces/1.xml
   def show
-    @marketplace = Marketplace.find_by_name(params[:id])
+    @marketplace = Marketplace.find_by_name(params[:id]) || Marketplace.find(params[:id])
     if current_user
       invoices=current_user.invoices
       @invoices=[]

@@ -45,7 +45,17 @@ class VenuesController < ApplicationController
   # POST /venues
   # POST /venues.xml
   def create
-    @venue = Venue.new(params[:venue])
+    #params[:venue][:country]=Country.find(params[:venue][:country])
+    #params[:venue][:region]=Region.find(params[:venue][:region])
+    #params[:venue][:city]=City.find(params[:venue][:city])
+    
+    @venue = Venue.new
+    @venue.name=params[:venue][:name]
+    @venue.capacity=params[:venue][:capacity]
+    @venue.country=Country.find(params[:venue][:country_id])
+    @venue.region=Region.find(params[:venue][:region_id])
+    @venue.city=City.find(params[:venue][:city_id])
+    @venue.url=params[:venue][:url]
 
     respond_to do |format|
       if @venue.save
@@ -93,6 +103,7 @@ class VenuesController < ApplicationController
     end
   end
   def user_venues(scope=params[:venue_scope])
+    @venues=[]
     if scope=="upcoming"
       tmp=current_user.events
       tmp.reject!{|x|x.date<Time.now}

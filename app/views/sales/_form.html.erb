@@ -49,6 +49,7 @@ $(function(){
 <div class="field">
     <%= f.label :marketplace, 'market sold in' %><br />
     <%= f.select :marketplace_id, Marketplace.all.collect {|c| [ c.name, c.id ] }  %>
+or <%=link_to "Add a new one", new_marketplace_path%>
   </div>
 <div class="field">
     <%= f.label :order, 'Order ID' %><br />

@@ -1,19 +1,38 @@
-<p id="notice"><%= notice %></p>
 
 <p>
   <b>Name:</b>
-  <%= @venue.name %>
+  <%= @venue.name %>, <%=@venue.city.name unless !@venue.city%> <%=@venue.region.name unless !@venue.region%>, <%=@venue.country.name unless !@venue.country%>
 </p>
+<%= form_for(@venue) do |f| %>
+  <% if @venue.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@venue.errors.count, "error") %> prohibited this venue from being saved:</h2>
 
-<p>
-  <b>Capacity:</b>
-  <%= @venue.capacity %>
-</p>
+      <ul>
+      <% @venue.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :capacity, "capacity (number)" %><br />
+    <%= f.text_field :capacity %>
+  </div>
+<div class="field">
+    <%= f.label :capacity_notes, "capacity (text field)" %><br />
+    <%= f.text_field :capacity_notes %>
+  </div>
 
-<p>
-  <b>Url:</b>
-  <%= @venue.url %>
-</p>
+  <div class="field">
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
 
 	<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?q=<%=@venue.latitude%>,+<%=@venue.longitude%>+(<%=@venue.name.gsub(/[^a-z1-9]+/i, '+')%>)&amp;hl=en&amp;ie=UTF8&amp;ll=<%=@venue.latitude%>,<%=@venue.longitude%>&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
 	<br />

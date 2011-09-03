@@ -5,6 +5,9 @@ $(function(){
 	$total=$(".totals").text();
 	$("#invoice_total").val($total);
 })
+$("#new_cust").click(function(){
+	$("#new_cust_form").show()
+})
 </script>
 <%end%>
 
@@ -12,7 +15,8 @@ $(function(){
   <%= f.error_messages %>
   <p>
     <%= f.label :customer_id %><br />
-    <%= f.select :customer_id, Customer.all.collect {|c| [ c.fname, c.id ]} %>
+    <%= f.select :customer_id, @top_customers.collect {|c| [ c.fname, c.id ]} %>
+or <%=link_to "Search", "/search/customers"%> | <%=link_to "Add a new one", new_customer_path(:sales=>params[:sales]), :id=>'new_cust'%>
 	
   </p>
 	<p>
@@ -23,3 +27,4 @@ $(function(){
 	
   <p><%= f.submit %></p>
 <% end %>
+<iframe id="new_cust_form" style="display:none;" src='/customers/new'></iframe>
