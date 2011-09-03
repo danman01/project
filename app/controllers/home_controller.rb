@@ -4,7 +4,8 @@ class HomeController < ApplicationController
     @invoices=current_user.invoices
     #@invoices.reject!{|x|x.sales[0].nil?} 
     @invoices.each do |x|
-      if x.sales.empty?
+      b=0
+      if Sale.find_all_by_invoice_id(x.id.to_s).nil?
         b=1
       end
       if b==1
