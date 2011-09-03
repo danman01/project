@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   def index
     if current_user
     @invoices=current_user.invoices
-    @invoices.reject!{|x|x.sales[0].nil?} 
+    #@invoices.reject!{|x|x.sales[0].nil?} 
     @invoices.each do |x|
       @invoices.delete_if x.sales.empty?
     end    
