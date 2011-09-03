@@ -3,6 +3,9 @@ class HomeController < ApplicationController
     if current_user
     @invoices=current_user.invoices
     @invoices.reject!{|x|x.sales[0].nil?} 
+    @invoices.each do |x|
+      @invoices.delete_if x.sales.empty?
+    end    
     @events=current_user.events
    
     @artists=[]
