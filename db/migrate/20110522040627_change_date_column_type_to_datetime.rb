@@ -1,6 +1,7 @@
 class ChangeDateColumnTypeToDatetime < ActiveRecord::Migration
   def self.up
-    change_column :sales, :date, :datetime
+    remove_column :sales, :date
+    add_column :sales, :date, :datetime
   end
 
   def self.down
