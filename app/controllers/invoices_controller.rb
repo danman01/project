@@ -1,5 +1,7 @@
 class InvoicesController < ApplicationController
   load_and_authorize_resource
+  layout "sale_flow"
+  
   def index
     @invoices = Invoice.all
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110822140748) do
+ActiveRecord::Schema.define(:version => 20110908155007) do
 
   create_table "artists", :force => true do |t|
     t.text     "name"
@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(:version => 20110822140748) do
     t.integer  "shipping"
     t.string   "shipping_kind"
     t.integer  "handling"
-    t.string   "invoice_id"
+    t.integer  "invoice_id"
     t.integer  "ticket_group_id"
     t.string   "paypal_payment_id"
   end
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20110822140748) do
     t.text    "row"
     t.integer "quantity"
     t.integer "event_id"
+    t.integer "sale_id"
   end
 
   add_index "ticket_groups", ["event_id"], :name => "index_ticket_groups_on_event_id"
@@ -242,14 +243,15 @@ ActiveRecord::Schema.define(:version => 20110822140748) do
     t.text     "region_name"
     t.string   "city_name"
     t.string   "country_name"
-    t.string   "latitude"
-    t.string   "longitude"
+    t.float    "latitude",       :default => 0.0
+    t.float    "longitude"
     t.integer  "skid"
     t.integer  "city_id"
     t.integer  "country_id"
     t.integer  "region_id"
     t.integer  "status",         :default => 1
     t.string   "capacity_notes"
+    t.string   "address"
   end
 
   add_index "venues", ["city_id"], :name => "index_venues_on_city_id"

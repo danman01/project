@@ -1,7 +1,10 @@
 <% title "New Invoice" %>
+<h2>Confirm this information, then press create!</h2>
+<span>If you need to edit anything, use the edit sale button</span>
 <table>
 <thead>
   <tr>
+	<td>Edit</td>
     <td>Date</td>
     <td>Price</td>
     <td>Quantity</td>
@@ -14,6 +17,7 @@
 <%for sale in @sales%>
 <%group=TicketGroup.find(sale.ticket_group_id)%>
 <tr>
+	<td><%=link_to "Edit", edit_sale_path(sale)%></td>
     <td><%= sale.date %></td>
     <td><%= sale.price %></td>
     <td><%= sale.quantity %></td>

@@ -55,7 +55,12 @@ class User < ActiveRecord::Base
   has_many :commissions
   
   def role?(role)
-    self.roles.find_by_name(role.to_s) ? true : false
+    #takes role name or role id
+    #if role.class==String
+    self.roles.find_by_name(role.to_s) ? true : false 
+    #else
+    #self.roles.include?(Role.find(role)) ? true : false
+    #end
   end
   def set_role
 

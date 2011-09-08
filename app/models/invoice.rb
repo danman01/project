@@ -13,7 +13,7 @@
 #
 
 class Invoice < ActiveRecord::Base
-	has_many :sales, :dependent=>:destroy
+	has_many :sales, :dependent=>:destroy #is this right?
 	belongs_to :user #seller
 	has_one :customer #buyer
 end

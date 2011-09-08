@@ -162,6 +162,15 @@ input.newbutton {
 	text-transform: uppercase;
 }
 /*Home page*/
+#welcome
+{
+	margin:0 auto;
+	width:auto;
+}
+#welcome span
+{
+	font-style:italic;
+}
 #home_new
 {
 	overflow-y:auto;
@@ -178,4 +187,10 @@ input.newbutton {
 	float:left;
 	width:350px;
 	margin-left:35px;
+}
+/* footer */
+#footer ul
+{
+	width:100px;
+	float:left;
 }

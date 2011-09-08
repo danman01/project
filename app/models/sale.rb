@@ -23,5 +23,6 @@
 class Sale < ActiveRecord::Base
 	belongs_to :marketplace
 	has_many :tickets
+	has_one :ticket_group
 	belongs_to :invoice
 end

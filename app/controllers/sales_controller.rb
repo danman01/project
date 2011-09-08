@@ -1,6 +1,7 @@
 class SalesController < ApplicationController
   respond_to :html, :js, :xml
   load_and_authorize_resource
+  layout "sale_flow"
   def index
     @sales = Sale.all
 
@@ -40,12 +41,19 @@ class SalesController < ApplicationController
   # GET /sales/1/edit
   def edit
     @sale = Sale.find(params[:id])
+    @group=TicketGroup.find(@sale.ticket_group_id)
+    
+    quantity=@group.quantity
+    @event=@sale.tickets.first.event
+    @venue=@sale.tickets.first.venue.name
+    @artist=@sale.tickets.first.artist.name
+    respond_with(@sale)
   end
 
   # POST /sales
   # POST /sales.xml
   def create
-    @user=User.find(1) #should find current user
+    @user=User.find(current_user) #should find current user
     @sale = Sale.new(params[:sale])
     # TODO decrement seat #s
     quantity=@sale.quantity
@@ -62,17 +70,19 @@ class SalesController < ApplicationController
   # PUT /sales/1
   # PUT /sales/1.xml
   def update
+    @user=User.find(current_user) #should find current user
     @sale = Sale.find(params[:id])
-
-    respond_to do |format|
-      if @sale.update_attributes(params[:sale])
-        format.html { redirect_to(@sale, :notice => 'Sale was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @sale.errors, :status => :unprocessable_entity }
-      end
+    @sale.update_attributes(params[:sale])
+    quantity=@sale.quantity
+    group=TicketGroup.find(params[:ticket_group_id])
+    @sale.ticket_group_id=group.id
+    tickets=Ticket.find_all_by_ticket_group_id(group.id, :limit=>quantity, :conditions=>["sold=?", 0])
+    @sale.tickets=tickets
+    @sale.save
+    respond_with(@sale) do |format|
+      format.html{redirect_to new_invoice_path(:sales=>[@sale], :user=>@user)}
     end
+
   end
 
   # DELETE /sales/1

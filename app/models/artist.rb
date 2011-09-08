@@ -17,4 +17,11 @@ class Artist < ActiveRecord::Base
 	has_many :tickets
 	has_many :events
 	has_many :venues, :through=>:events
+	
+	define_index do
+	  #fields
+	  indexes name, :sortable =>true
+	  #attribtues
+	  has created_at, updated_at
+	end
 end

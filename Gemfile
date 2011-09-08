@@ -33,6 +33,7 @@ gem 'devise'
 gem 'nifty-generators'
 gem 'omniauth'
 gem 'geocoder' #http://www.rubygeocoder.com/
+gem 'thinking-sphinx', '2.0.5'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators

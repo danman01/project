@@ -27,4 +27,14 @@ class Venue < ActiveRecord::Base
 	belongs_to :city
 	belongs_to :region
 	belongs_to :country
+	attr_accessible :latitude, :longitude, :address
+	reverse_geocoded_by :latitude, :longitude #done when model is updated
+	after_validation :geocode, :if=>:latitude_changed? #determins if different
+	
+	define_index do
+	  #fields
+	  indexes name, :sortable =>true
+	  #attribtues
+	  has capacity, country_id, created_at, updated_at
+	end
 end

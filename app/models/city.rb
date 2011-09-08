@@ -24,4 +24,11 @@ class City < ActiveRecord::Base
   belongs_to :region
   belongs_to :country
   has_many :venues
+  
+  define_index do
+	  #fields
+	  indexes name, :sortable =>true
+	  #attribtues
+	  has pop
+	end
 end

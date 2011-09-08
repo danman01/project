@@ -15,27 +15,21 @@
 </style>
 </head>
 <body>
-		<%if flash[:notice]%>
-		<div id="notice">
-		
-		<%=flash[:notice]%>
-		</div>
-		
-		<%end%>
-		<%if flash[:error]%>
-		<div id="notice">
-		
-		<%=flash[:error]%>
-		</div>
-		
-		<%end%>
-		<%if flash[:alert]%>
-		<div id="notice">
-		
-		<%=flash[:alert]%>
-		</div>
-		
-		<%end%>
+	<% unless flash[:notice].blank? %>
+	<div id="flashy" class="notice">	
+		<%= flash[:notice]%>
+	</div>
+	<% end %>
+	<% unless flash[:error].blank? %>
+	<div id="flashy" class="error">	
+		<%= flash[:error]%>
+	</div>	
+	<% end %>
+	<% unless flash[:alert].blank? %>
+	<div id="flashy" class="message">	
+		<%= flash[:alert]%>
+	</div>
+	<% end %>
 		
 	<div id="user_nav">
 		<% if user_signed_in? %>
@@ -48,36 +42,7 @@
 	
 <%=link_to 'home','/'%>
 <div id="header">
-<div>
-	Events
-</div>
-<p>
-<%= link_to "View All", events_path %> / 	<%= link_to "New", new_event_path %> 
-</p>
-<div>
-	Artists
-<p>
-	<%= link_to "View All", artists_path %> / <%= link_to "New", new_artist_path %>
-</p>
-</div>
-<div>
-	Tickets
-<p>
-	<%= link_to "View All", tickets_path %> / <%= link_to "New", new_ticket_path %>
-</p>
-</div>
-<div>
-	Sales
-<p>
-	<%= link_to "View All", sales_path %> / <%= link_to "New", new_sale_path %>
-</p>
-</div>
-<div>
-	Venues
-<p>
-	<%= link_to "View All", venues_path %> / <%= link_to "New", new_venue_path %>
-</p>
-</div>
+
 <div>
 	<%=form_tag "/search/results", :method=>"post" do%>
 	<%=label_tag "enter artist name"%>
@@ -93,6 +58,8 @@
 </div>
 </div>
 <%= yield %>
-
+<div id="footer">
+	<%=render :partial=>'layouts/footer'%>
+</div>
 </body>
 </html>

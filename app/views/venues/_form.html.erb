@@ -32,6 +32,18 @@
     <%= f.label :city %><br />
     <%= f.select :city_id, City.find(:all, :conditions=>["country_id=?", 482], :order=>"name").collect { |l| [l.name, l.id]}, :prompt =>'Select a city (currently just US)'%>
   </div>
+<div class="field">
+    <%= f.label :latitude %><br />
+    <%= f.text_field :latitude%>
+  </div>
+<div class="field">
+    <%= f.label :longitude %><br />
+    <%= f.text_field :longitude%>
+  </div>
+<div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address%>
+  </div>
   <div class="field">
     <%= f.label :url %><br />
     <%= f.text_field :url %>

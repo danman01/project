@@ -1,0 +1,45 @@
+<%if user_signed_in? && current_user.role?("admin")%>
+
+<h2>Admin Area</h2>
+<div  id="admin">
+<ul><div>
+	Events
+</div>
+<li>
+<%= link_to "View All", events_path %> </li><li> 	<%= link_to "New", new_event_path %> 
+</li>
+</ul>
+<ul>
+<div>
+	Artists
+</div>
+<li>
+	<%= link_to "View All", artists_path %> </li><li> <%= link_to "New", new_artist_path %>
+</li>
+</ul>
+<ul>
+<div>
+	Tickets
+</div>
+<li>
+	<%= link_to "View All", tickets_path %> </li><li> <%= link_to "New", new_ticket_path %>
+</li>
+</ul>
+<ul>
+<div>
+	Sales
+</div>
+<li>
+	<%= link_to "View All", sales_path %> </li><li> <%= link_to "New", new_sale_path %>
+</li>
+</ul>
+<ul>
+<div>
+	Venues
+</div>
+<li>
+	<%= link_to "View All", venues_path %> </li><li> <%= link_to "New", new_venue_path %>
+</li>
+</ul>
+</div>
+<%end%>

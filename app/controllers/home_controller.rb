@@ -3,6 +3,7 @@ class HomeController < ApplicationController
     if current_user
     @invoices=current_user.invoices
     #@invoices.reject!{|x|x.sales[0].nil?} 
+    #TODO convert invoice_id to integer in Sale
     @invoices.each do |x|
       b=0
       if Sale.find_all_by_invoice_id(x.id.to_s).nil?
@@ -25,4 +26,7 @@ class HomeController < ApplicationController
     end
   end
 
+  def invite_friends
+  
+  end
 end

@@ -25,6 +25,13 @@ class Event < ActiveRecord::Base
 	
 	validates :name, :presence=>true, :uniqueness=>true
 	
+	define_index do
+	  #fields
+	  indexes name, :sortable =>true
+	  #attribtues
+	  has created_at, updated_at, artist_id, venue_id, date
+	end
+	
 	def to_param
       "#{id}-#{name.gsub(/[^a-z1-9]+/i, '-')}"
    end

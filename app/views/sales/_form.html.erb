@@ -2,7 +2,6 @@
 $(function(){
 	$("#sale_quantity").change(function(){
 		var $val=$(this).val();
-		alert($val);
 	})
 })
 </script>
@@ -62,7 +61,7 @@ or <%=link_to "Add a new one", new_marketplace_path%>
 
   <div class="field">
     <%= f.label :notes %><br />
-    <%= f.text_area :notes %>
+    <%= f.text_area :notes, :size=>"10x20" %>
   </div>
 	<%=hidden_field_tag :ticket_group_id, @ticket.ticket_group.id%>
   <div class="actions">
