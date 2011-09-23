@@ -14,6 +14,7 @@
 #  updated_at  :datetime
 #  fname       :string(255)
 #  lname       :string(255)
+#  invoice_ids :string(255)
 #
 
 class Customer < ActiveRecord::Base

@@ -14,6 +14,7 @@
 #  user_id    :integer
 #  public     :integer         default(1)
 #  status     :integer         default(1)
+#  created_by :integer
 #
 
 class Event < ActiveRecord::Base

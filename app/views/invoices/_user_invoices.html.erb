@@ -1,4 +1,15 @@
-<table>
+<% content_for :javascript do %>
+<script type="text/javascript">
+$(function(){
+$("#stats").prependTo($("#table1"))
+})
+</script>
+<%end%>
+<p> Totals (<%=link_to "All Time", "/invoices/user_invoices?scope=all", :remote=>true%> | <%=link_to "All Time", "/invoices/user_invoices?scope=year", :remote=>true%> | <%=link_to "All Time", "/invoices/user_invoices?scope=month", :remote=>true%> |)...</p>
+<div id="table1"></div>
+<div id="table2">
+	<p>Invoices</p>
+<table id="invoices">
 	<thead>
 		<tr>
 			<td>ID</td>
@@ -67,9 +78,10 @@
 
 </tbody>
 </table>
+</div>
 <br/>
-<p> Totals (<%=link_to "All Time", "/invoices/user_invoices?scope=all", :remote=>true%> | <%=link_to "All Time", "/invoices/user_invoices?scope=year", :remote=>true%> | <%=link_to "All Time", "/invoices/user_invoices?scope=month", :remote=>true%> |)...</p>
-<table>
+
+<table id="stats">
 	<thead>
 		<tr>
 			<td>Total Sales</td>

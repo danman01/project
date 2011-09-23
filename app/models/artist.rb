@@ -11,13 +11,14 @@
 #  eventsHref    :string(255)
 #  on_tour_until :datetime
 #  status        :integer         default(1)
+#  skid          :string(255)
 #
 
 class Artist < ActiveRecord::Base
 	has_many :tickets
 	has_many :events
 	has_many :venues, :through=>:events
-	
+	validates_uniqueness_of :name
 	define_index do
 	  #fields
 	  indexes name, :sortable =>true

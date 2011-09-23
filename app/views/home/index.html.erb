@@ -17,6 +17,7 @@ $(function(){
 	$(".ajax_container a").live("click", function(){
 		$(this).parent().text("loading...");
 	})
+
 	$("#ticket_tab").click(function(){
 		$.ajax({
 			type: "POST",
@@ -29,6 +30,10 @@ $(function(){
 			}
 		});
 	})
+	<%if session[:tab]%>
+	$("#<%=session[:tab]%>").trigger('click');
+	<%session[:tab]=nil%>
+	<%end%>
 })
 
 </script>

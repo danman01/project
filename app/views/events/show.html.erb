@@ -18,14 +18,14 @@
 	  	</td>
 		<td><%= @event.artist.name %>
 	  	</td>
-		<td><%= @event.venue.name %>
+		<td><%= @event.venue.name rescue 'na'%>
 	  	</td>
 		<td>
 			<%= @event.notes %>
 		</td>
 		<td>
 			<%=@quantity%>
-			<br /><%=link_to_or((can? :create, Ticket), (link_to('Add', '#', :onclick=>'javascript:alert("you must be logged in!");')), 'Add Tickets', {:controller=>'tickets', :action=>'new', :event_id=>@event.id, :artist_id=>@event.artist.id,:venue_id=>@event.venue.id})%>
+			<br /><%=link_to_or((can? :create, Ticket), (link_to('Add', '#', :onclick=>'javascript:alert("you must be logged in!");')), 'Add Tickets', {:controller=>'tickets', :action=>'new', :event_id=>@event.id, :artist_id=>@event.artist.id,:venue_id=>(@event.venue.id unless @event.venue.nil?)})%>
 		</td>
     </tr>
    </tbody>

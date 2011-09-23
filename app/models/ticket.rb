@@ -15,7 +15,7 @@
 #  artist_id       :integer
 #  venue_id        :integer
 #  ticket_group_id :integer
-#  seat_number     :integer
+#  seat_number     :string(255)
 #  sale_id         :integer
 #  user_id         :integer
 #  list            :float

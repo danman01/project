@@ -152,7 +152,8 @@ class TicketsController < ApplicationController
     if params[:ticket][:sold]==1
       redirect="/sales/new?ticket_id=#{@tid}"
     else
-      redirect="/home#tabs-3"
+      redirect="/home"
+      session[:tab]="ticket_tab"
     end
     respond_with(@ticket_group) do |format|
       format.html {redirect_to redirect}

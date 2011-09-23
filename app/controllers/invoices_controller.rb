@@ -36,7 +36,7 @@ class InvoicesController < ApplicationController
   def create
     @invoice = Invoice.new(params[:invoice])
     @invoice.user=current_user
-    
+    @invoice.total=params[:total]
     @invoice.sales=[Sale.find(params[:sales_ids].to_i)] # TODO need to change for multiple sales
     if @invoice.save
       sales=@invoice.sales
@@ -75,6 +75,7 @@ class InvoicesController < ApplicationController
   end
 
   def destroy
+    #need to just call sale.destroy?
     @invoice = Invoice.find(params[:id])
     #credit ticket group quantity and turn sold bit to 0 for tickets
      sales=@invoice.sales
@@ -93,7 +94,7 @@ class InvoicesController < ApplicationController
          group.save
       end
     @invoice.destroy
-    redirect_to invoices_url, :notice => "Successfully destroyed invoice."
+    redirect_to "/", :notice => "Successfully destroyed invoice."
   end
   
   def user_invoices(scope=params[:invoice_scope])

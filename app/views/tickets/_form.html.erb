@@ -65,60 +65,53 @@ row: <%=TicketGroup.find(group).row%>
 	<%= f.select :ticket_group_id, @ticket_groups.collect {|c| [ "section: " + c.section + " row: " + c.row, c.id ]} %>
 	 <br />
 	 or <%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :event_id=>@ticket.event.id)%>
-	
+	<div class="field">
+	    <%= label_tag :quantity %><%#TODO show current quantity in ticket group / add quantity to group after submit instead of in same form%><br />
+	    <%=number_field_tag 'quantity', nil, :in => 1...10, :id=>'quantity' %>
+	  </div>
+	  <div class="field">
+		<p id='seat_number_tag'></p>
+		<%=hidden_field_tag 'seats', ""%>
+	</div>
+
+	 <div class="field">
+	    <%= f.label :cost, 'Bought price (price you paid for each ticket)' %><br />
+	    <%= f.text_field :cost %>
+	  </div>
+	<div class="field">
+	    <%= f.label :list, 'List price (price to sell each ticket. Type 0 to not list in the marketplace)' %><br />
+	    <%= f.text_field :list %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :bought_on %><br />
+	    <%= f.datetime_select :bought_on, :order=>[:month, :day, :year] %>
+	  </div>
+
+	  <div class="field">
+	    <%= f.label :in_hand %> <a href="javascript:void(0);" id="duplicate">match dates</a><br />
+	    <%= f.datetime_select :in_hand, :order=>[:month, :day, :year] %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :kind %><br />
+	    <%= select(:ticket, :kind, options =['E Ticket', 'Hard Ticket', 'Will Call'])%>
+	  </div>
+	  <div class="field">
+	    <%= f.label :sold %><br />
+	    <%= f.check_box :sold%>
+	  </div>
+	  <div class="field">
+	    <%= f.label :notes %><br />
+	    <%= f.text_area :notes %>
+	  </div>
+
+	  <div class="actions">
+	    <%= f.submit  %>
+	  </div>
+
 	<%else%>
 	
-	<%=f.label :artist_id, 'Type an artist name'%> (or <%=link_to 'add a new artist', new_artist_path(:redirect=>true)%>)
-	<%=f.text_field :artist_id%>
-	<br/>
-	(displayed after choosing an artist) <br/>
-	<%=f.label :event_id, 'Choose an event'%> (or <%=link_to 'create a new event', new_event_path(:redirect=>true)%>)
-	<%=f.text_field :event_id%>
-	<br />
-	(displayed after choosing event) Choose ticket group (or <%#=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :event_id=>@ticket.event.id)%>)
-	
+	<div id="add_instructions">To add tickets to an event, first search for the artist name. Choose the artist, and then choose the event you want to list tickets for.<br /><br />
+	If you cannot find the event after searching, create the event from the link on the search page.  If you cannot find the artist, </div>
 	<%end%>
 
-  <div class="field">
-    <%= label_tag :quantity %><%#TODO show current quantity in ticket group / add quantity to group after submit instead of in same form%><br />
-    <%=number_field_tag 'quantity', nil, :in => 1...10, :id=>'quantity' %>
-  </div>
-  <div class="field">
-	<p id='seat_number_tag'></p>
-	<%=hidden_field_tag 'seats', ""%>
-</div>
-
- <div class="field">
-    <%= f.label :cost, 'Bought price (price you paid for each ticket)' %><br />
-    <%= f.text_field :cost %>
-  </div>
-<div class="field">
-    <%= f.label :list, 'List price (price to sell each ticket. Type 0 to not list in the marketplace)' %><br />
-    <%= f.text_field :list %>
-  </div>
-  <div class="field">
-    <%= f.label :bought_on %><br />
-    <%= f.datetime_select :bought_on, :order=>[:month, :day, :year] %>
-  </div>
-
-  <div class="field">
-    <%= f.label :in_hand %> <a href="javascript:void(0);" id="duplicate">match dates</a><br />
-    <%= f.datetime_select :in_hand, :order=>[:month, :day, :year] %>
-  </div>
-  <div class="field">
-    <%= f.label :kind %><br />
-    <%= select(:ticket, :kind, options =['E Ticket', 'Hard Ticket', 'Will Call'])%>
-  </div>
-  <div class="field">
-    <%= f.label :sold %><br />
-    <%= f.check_box :sold%>
-  </div>
-  <div class="field">
-    <%= f.label :notes %><br />
-    <%= f.text_area :notes %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit  %>
-  </div>
-<%end%>
+  	<%end%>

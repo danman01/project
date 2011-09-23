@@ -7,6 +7,7 @@
 #  row      :text
 #  quantity :integer
 #  event_id :integer
+#  sale_id  :integer
 #
 
 class TicketGroup < ActiveRecord::Base
