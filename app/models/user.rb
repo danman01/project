@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :street, :city, :region, :phone, :country, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :street, :city, :region, :phone, :country, :remember_me, :role_ids
   
   #before_create :set_role
   
@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   has_many :venues, :through=>:tickets
   has_many :sales, :through=>:invoices
   has_many :commissions
-  
+  after_create :set_role
   def role?(role)
     #takes role name or role id
     #if role.class==String
@@ -63,6 +63,9 @@ class User < ActiveRecord::Base
     #end
   end
   def set_role
-
+    if self.roles.empty?
+      self.roles=Role.find_all_by_name(["basic"])
+      self.save
    end
+  end
 end

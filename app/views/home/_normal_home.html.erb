@@ -1,0 +1,78 @@
+<% content_for :javascript do %>
+<script type="text/javascript">
+function view_seats(id)
+{
+	$("#"+id).toggle("slow");
+}
+
+$(function() {
+	$( "#tabs" ).tabs();
+});
+$(function(){
+	$(".ajax_container a").live("click", function(){
+		$(this).parent().text("loading...");
+	})
+
+	$("#ticket_tab").click(function(){
+		$.ajax({
+			type: "POST",
+			url: "/tickets/user_tickets?ticket_scope=upcoming", 
+			beforeSend: function(xhr, settings) {
+			    if ( settings.dataType == undefined ) {
+			        xhr.setRequestHeader("Accept", "text/javascript, */*; q=0.5");
+			    }
+			    //return fire(element, 'ajax:beforeSend', xhr);
+			}
+		});
+	})
+	<%if session[:tab]%>
+	$("#<%=session[:tab]%>").trigger('click');
+	<%session[:tab]=nil%>
+	<%end%>
+})
+
+</script>
+<%end%>
+
+
+
+<div class="demo">
+
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-1">My Sales</a></li>
+			<li><a href="#tabs-2">My Events</a></li>
+			<li><a href="#tabs-3" id="ticket_tab">My Tickets</a></li>
+			<li><a href="#tabs-4">My Venues</a></li>
+			<li><a href="#tabs-5">My Artists</a></li>
+		</ul>
+		<div id="tabs-1">
+			<div id="sales">
+				<%=render :partial=>"/invoices/user_invoices"%>
+			</div>
+		</div>
+		<div id="tabs-2">
+			<div id="events">
+				<%=render :partial=>"/events/user_events"%>
+			</div>
+
+		</div>
+		<div id="tabs-3">
+			<div id="tickets">
+				
+			</div>
+		</div>
+		<div id="tabs-4">
+			<div id="venues">
+				<%=render :partial=>'/venues/user_venues'%>
+			</div>
+		</div>
+		<div id="tabs-5">
+			<div id="artists">
+				<%=render :partial=>"/artists/user_artists"%>
+			</div>
+		</div>
+	</div>
+
+</div>
+

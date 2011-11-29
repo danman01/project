@@ -1,0 +1,29 @@
+<div id="home_new" class="tdash bdash">
+	<div id="sign_up" class="">
+		<h3>New user? <span style="margin-left:5px"><a href="/users/sign_up">Sign up now!</a></span></h3>
+		<div>I want to <%=link_to "buy tickets","/users/sign_up"%></div>
+		<div>I want to <%=link_to "sell tickets",  "/users/sign_up?type=seller"%></div>
+		<div>I own a venue and want to <%=link_to "manage my tickets", "/users/sign_up?type=venue"%></div><div>Or just look around:</div><div>View tickets for sale <%=link_to "Near you", ""%> | <%=link_to "By city", ""%> | <%=link_to "All tickets", ""%>
+			</div>
+	</div>
+	<div style="float:left; width:5px;" class="rline"></div>
+			<div class="aside"><h3>Existing users</h3>
+				<div >
+					<h2>Sign in</h2>
+
+					<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+					<p><%= f.label :email %><br />
+						<%= f.email_field :email %></p>
+
+						<p><%= f.label :password %><br />
+							<%= f.password_field :password %></p>
+
+							<% if devise_mapping.rememberable? -%>
+							<p><%= f.check_box :remember_me %> <%= f.label :remember_me %></p>
+							<% end -%>
+
+							<p><%= f.submit "Sign in", :class=>'newbutton blue' %></p>
+							<% end %>
+						</div>
+					</div>
+</div>

@@ -5,10 +5,11 @@
 		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
 		<%= devise_error_messages! %>
 
-		<p><%= f.label :role_ids, "I am a..." %><br />(check all that apply)<br />
-			<%=check_box('role','basic')%> fan and want to buy tickets<br />
-			<%=check_box('role','seller')%> fan and want to sell tickets<br />
-			<%=check_box('role','venue')%> venue, promotion company, or ticket company
+		<p><%= label_tag "I am a..." %><br />(check all that apply)<br />
+			<% Role::AVAILABLE_ROLES.collect.each do |key, val|%>
+			
+			 <%= check_box_tag "user[role_ids][]", key, @user.role_ids.include?(key)%> <%=label_tag val%><br />
+			<%end%>
 		</p>
 			
 		<p><%= f.label :email %><br />

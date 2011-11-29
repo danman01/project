@@ -4,6 +4,17 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
       redirect_to :back, :alert => exception.message
   end
+  
+  layout :choose_layout
+
+    def choose_layout
+      if user_signed_in? && current_user.role?("admin")
+        # action_name == 'index'
+        return 'application'
+      else
+        return 'beta'
+      end
+    end
     
   def encode(data)
       ActiveSupport::Base64.encode64(Marshal.dump(data))

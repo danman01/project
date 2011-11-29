@@ -20,15 +20,15 @@ class CustomDevise::RegistrationsController < Devise::RegistrationsController
   #end
   
   def create
-    roles=[]
-    params[:role].each {|key, value| roles<<key if value=="1"}
-    logger.info "roles: #{roles}"
+    #roles=[]
+    #params[:role].each {|key, value| roles<<key if value=="1"}
+    #logger.info "roles: #{roles}"
      build_resource
-     for r in roles
-     resource.roles<<Role.find_by_name(r)
-     logger.info "roles: #{resource.roles}"
+     #for r in roles
+     #resource.roles<<Role.find_by_name(r)
+     #logger.info "roles: #{resource.roles}"
      
-      end
+      #end
         if resource.save
           if resource.active_for_authentication?
             set_flash_message :notice, :signed_up if is_navigational_format?

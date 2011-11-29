@@ -1,0 +1,47 @@
+<head>
+  <title>Ticket Street - Beta</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag 'jquery.min.js','jquery-ui.min.js','jquery_ujs.js','application.js', %>
+
+  <%= csrf_meta_tag %>
+	<%=yield :javascript%>
+<style type="text/css">
+#header div, #header p
+{
+	display:inline;
+}
+</style>
+</head>
+<body>
+	<% unless flash[:notice].blank? %>
+	<div id="flashy" class="notice">	
+		<%= flash[:notice]%>
+	</div>
+	<% end %>
+	<% unless flash[:error].blank? %>
+	<div id="flashy" class="error">	
+		<%= flash[:error]%>
+	</div>	
+	<% end %>
+	<% unless flash[:alert].blank? %>
+	<div id="flashy" class="message">	
+		<%= flash[:alert]%>
+	</div>
+	<% end %>
+		
+	<div id="user_nav">
+		<% if user_signed_in? %>
+			Signed in as <%= link_to current_user.email, "/users/#{current_user.id}"%>. Not you?
+			<%= link_to "sign out", destroy_user_session_path%>
+		<%else%>
+			<%= link_to "Sign up", '/users/sign_up' %> or <%=link_to 'Sign in', new_user_session_path %>
+		<%end%>
+	</div>
+	
+<%=link_to 'home','/'%>
+<div id="header">
+
+<div>
+	
+</div>
+</div>

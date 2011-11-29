@@ -1,0 +1,15 @@
+<%content_for :javascript do%>
+	<script type="text/javascript" src="http://www.plaxo.com/css/m/js/util.js"></script>
+	<script type="text/javascript" src="http://www.plaxo.com/css/m/js/basic.js"></script>
+	<script type="text/javascript" src="http://www.plaxo.com/css/m/js/abc_launcher.js"></script>
+	<script type="text/javascript"><!--
+	function onABCommComplete() {
+	  // OPTIONAL: do something here after the new data has been populated in your text area
+	}
+	//--></script>
+<%end%>
+
+Invite Friends!
+<textarea id="recipient_list" name="recipients"></textarea>
+<a href="#" onclick="showPlaxoABChooser('recipient_list', '/invite_friends.html'); return false"><img src="http://www.plaxo.com/images/abc/buttons/add_button.gif" alt="Add from my address book" /></a>
+<%=link_to "send invite!", "/mail/new"%>
