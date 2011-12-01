@@ -24,6 +24,9 @@ class HomeController < ApplicationController
       end
 
     end
+    
+    #beta stuff
+    @beta_signup = BetaSignup.new
   end
 
   def invite_friends

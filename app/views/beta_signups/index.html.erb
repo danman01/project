@@ -1,0 +1,35 @@
+<h1>Listing beta_signups</h1>
+
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Name</th>
+    <th>Ip address</th>
+    <th>Lat</th>
+    <th>Lng</th>
+    <th>State</th>
+    <th>City</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @beta_signups.each do |beta_signup| %>
+  <tr>
+    <td><%= beta_signup.email %></td>
+    <td><%= beta_signup.name %></td>
+    <td><%= beta_signup.ip_address %></td>
+    <td><%= beta_signup.lat %></td>
+    <td><%= beta_signup.lng %></td>
+    <td><%= beta_signup.region_id %></td>
+    <td><%= beta_signup.city_id %></td>
+    <td><%= link_to 'Show', beta_signup %></td>
+    <td><%= link_to 'Edit', edit_beta_signup_path(beta_signup) %></td>
+    <td><%= link_to 'Destroy', beta_signup, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Beta signup', new_beta_signup_path %>

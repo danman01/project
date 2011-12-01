@@ -8,8 +8,9 @@
 		</tr>
 	</thead>
 	<tbody>
-		<%if @artists.size>0%>
-		<%for artist in @artists.uniq!%>
+		<%@artists.uniq!%>
+		<%if !@artists.empty?%>
+		<%for artist in @artists%>
 		<tr>
 			<td><%=artist.name%></td>
 			<td><%=artist.mbid%></td>

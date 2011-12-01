@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Email:</b>
+  <%= @beta_signup.email %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @beta_signup.name %>
+</p>
+
+<p>
+  <b>Ip address:</b>
+  <%= @beta_signup.ip_address %>
+</p>
+
+<p>
+  <b>Lat:</b>
+  <%= @beta_signup.lat %>
+</p>
+
+<p>
+  <b>Lng:</b>
+  <%= @beta_signup.lng %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @beta_signup.region_id %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @beta_signup.city_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_beta_signup_path(@beta_signup) %> |
+<%= link_to 'Back', beta_signups_path %>

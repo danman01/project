@@ -1,4 +1,6 @@
 Tickets::Application.routes.draw do
+  resources :beta_signups
+
   match '/tickets/:action' => 'tickets#/[a-z_]+/i'
   
   resources :regions

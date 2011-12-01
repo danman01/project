@@ -1,0 +1,45 @@
+<%= form_for(@beta_signup) do |f| %>
+  <% if @beta_signup.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@beta_signup.errors.count, "error") %> prohibited this beta_signup from being saved:</h2>
+
+      <ul>
+      <% @beta_signup.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :ip_address %><br />
+    <%= f.text_field :ip_address %>
+  </div>
+  <div class="field">
+    <%= f.label :lat %><br />
+    <%= f.text_field :lat %>
+  </div>
+  <div class="field">
+    <%= f.label :lng %><br />
+    <%= f.text_field :lng %>
+  </div>
+  <div class="field">
+    <%= f.label :region_id %><br />
+    <%= f.text_field :region_id %>
+  </div>
+  <div class="field">
+    <%= f.label :city_id %><br />
+    <%= f.text_field :city_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

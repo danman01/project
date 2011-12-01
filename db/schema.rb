@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110908155007) do
+ActiveRecord::Schema.define(:version => 20111130225442) do
 
   create_table "artists", :force => true do |t|
     t.text     "name"
@@ -22,6 +22,24 @@ ActiveRecord::Schema.define(:version => 20110908155007) do
     t.datetime "on_tour_until"
     t.integer  "status",        :default => 1
     t.string   "skid"
+  end
+
+  create_table "beta_signups", :force => true do |t|
+    t.string   "email"
+    t.string   "name"
+    t.string   "ip_address"
+    t.float    "lat"
+    t.float    "lng"
+    t.integer  "region_id"
+    t.integer  "city_id"
+    t.boolean  "approved",   :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "beta_signups_roles", :id => false, :force => true do |t|
+    t.integer "beta_signup_id"
+    t.integer "role_id"
   end
 
   create_table "cities", :force => true do |t|

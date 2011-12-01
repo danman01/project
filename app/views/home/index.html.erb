@@ -1,7 +1,10 @@
-<div id="welcome">
-<h1>seatfu!</h1>
+<div class="container_16">
+<div id="welcome" class="grid_16 top_60 center">
+<h1 id="logo"><%=link_to 'T I C K E T S T R E E T','/', :class=>'logo'%></h1>
 <span>Buy and sell tickets up to and beyond event time!</span>
 </div>
+<div class="grid_16 top_50 border_top_1">
+Ticket Street is changing how you buy and sell tickets on the day of the event.  Easily find buyers using your smart phone.  Sellers can simply list their tickets and get their money for their extra tickets. 
 <%if current_user && current_user.role?("admin")%>
 <%=render :partial=>"home/normal_home"%>
 <%elsif current_user%>
@@ -10,3 +13,5 @@
 <%=render :partial=>"home/beta_signup"%>
 <%#=render :partial=>"home/signup"%>
 <%end%>
+</div>
+</div>

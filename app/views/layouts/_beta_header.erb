@@ -1,6 +1,6 @@
 <head>
   <title>Ticket Street - Beta</title>
-  <%= stylesheet_link_tag :all %>
+  <%= stylesheet_link_tag "reset.css", "text.css", "beta.css", "grid.css", "styles.css" %>
   <%= javascript_include_tag 'jquery.min.js','jquery-ui.min.js','jquery_ujs.js','application.js', %>
 
   <%= csrf_meta_tag %>
@@ -11,8 +11,36 @@
 	display:inline;
 }
 </style>
+<script type="text/javascript">
+$(function(){
+if ($("#menu_expanded").is(":visible")) {
+			$("#menu_expanded").hide();
+		}
+})
+function showMenu(){ 
+  	if ($("#menu_expanded").is(":hidden")) {
+			$('#menu_expanded').slideDown('fast');
+			$('#menu_link').removeClass("block").addClass("block active");
+		} else {
+			$('#menu_expanded').slideUp('fast');
+			$('#menu_link').removeClass("block active").addClass("block");
+		}
+	}
+</script>
 </head>
 <body>
+	<div class="full fixed aboveall border_top_10">
+		<div class="container_16 relative">
+			<div class="grid_2 aboslute above top_-10 right_10 right">
+				<a href="javascript:showMenu();" class="block" id="menu_link"><span class="center">Sign In</span></a>
+			</div>
+		</div>
+		<div id="menu_expanded" class="container_16 expanded" style="display:none;">
+			<div class="grid_15 padding_30 bg_red xlarge white align_right" id="menu_view">
+				<%= link_to "Sign up", '/users/sign_up' %> or <%=link_to 'Sign in', new_user_session_path %>
+			</div>
+		</div>
+	</div>
 	<% unless flash[:notice].blank? %>
 	<div id="flashy" class="notice">	
 		<%= flash[:notice]%>
@@ -29,19 +57,14 @@
 	</div>
 	<% end %>
 		
-	<div id="user_nav">
+	<div id="user_nav" class="right right_40">
 		<% if user_signed_in? %>
 			Signed in as <%= link_to current_user.email, "/users/#{current_user.id}"%>. Not you?
 			<%= link_to "sign out", destroy_user_session_path%>
 		<%else%>
-			<%= link_to "Sign up", '/users/sign_up' %> or <%=link_to 'Sign in', new_user_session_path %>
+	
 		<%end%>
 	</div>
 	
-<%=link_to 'home','/'%>
-<div id="header">
 
-<div>
-	
-</div>
-</div>
+

@@ -1,0 +1,55 @@
+	<div class="container_12">
+		<div class="grid_6 left">
+		<h3 style="color:#005BF2;">Register for the Ticket Street Beta</h3>
+
+		<%= form_for(@beta_signup) do |f| %>
+		<% if @beta_signup.errors.any? %>
+		    <div id="error_explanation">
+		      <h2><%= pluralize(@beta_signup.errors.count, "error") %> prohibited this beta_signup from being saved:</h2>
+
+		      <ul>
+		      <% @beta_signup.errors.full_messages.each do |msg| %>
+		        <li><%= msg %></li>
+		      <% end %>
+		      </ul>
+		    </div>
+		  <% end %>
+
+		  <div class="field">
+		    <%= f.label :name %><br />
+		    <%= f.text_field :name %>
+		  </div>
+		 <div class="field">
+		    <%= f.label :email %><br />
+		    <%= f.text_field :email %>
+		  </div>
+		    <%= f.hidden_field :ip_address, :value=>request.remote_ip %>
+		  <div class="field">
+		    <%= f.label :region_id %><br />
+		    <%= f.text_field :region_id %>
+		  </div>
+		  <div class="field">
+		    <%= f.label :city_id %><br />
+		    <%= f.text_field :city_id %>
+		  </div>
+		<p><%= label_tag "I am a..." %><br />(check all that apply)<br />
+			<% Role::AVAILABLE_ROLES.collect.each do |key, val|%>
+			
+			 <%= check_box_tag "beta_signup[role_ids][]", key, @beta_signup.role_ids.include?(key)%> <%=label_tag val%><br />
+			<%end%>
+		</p>
+
+					<p><%= f.submit "Sign up", :class=>"newbutton blue" %></p>
+					<% end %>
+			</div>
+			<div class="aside grid_6 right">
+
+				<h2>Change the way you buy and sell tickets!</h2>
+				<ul>
+					<li>No more unused tickets: <span class="list_child">Buy from actual attendees with extra tickets, or from venues and brokers with last minute deals</span></li>
+					<li>No middle man: <span class="list_child">Avoid centralized marketplaces and fees</span></li>
+					<li>No unfair pricing: <span class="list_child">View real time data on current ticket prices so you don't get ripped off</span></li>
+				</ul>
+			</div>
+
+</div>

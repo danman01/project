@@ -1,0 +1,117 @@
+/*
+  960 Grid System ~ Text CSS.
+  Learn more ~ http://960.gs/
+
+  Licensed under GPL and MIT.
+*/
+
+/* `Basic HTML
+----------------------------------------------------------------------------------------------------*/
+
+body {
+  font: 16px/2 Arial, sans-serif;
+}
+
+pre,
+code {
+  font-family: Courier, monospace;
+}
+
+hr {
+  border: 0 #000 solid;
+  border-top-width: 1px;
+  clear: both;
+  height: 0;
+}
+
+/* `Headings
+----------------------------------------------------------------------------------------------------*/
+
+h1 {
+  font-size: 34px;
+	text-transform:uppercase;
+}
+
+h2 {
+  font-size: 23px;
+}
+
+h3 {
+  font-size: 21px;
+}
+
+h4 {
+  font-size: 19px;
+}
+
+h5 {
+  font-size: 17px;
+}
+
+h6 {
+  font-size: 15px;
+}
+
+/* `Spacing
+----------------------------------------------------------------------------------------------------*/
+
+ol {
+  list-style: decimal;
+}
+
+ul {
+  list-style: disc;
+}
+
+li {
+  margin-left: 30px;
+}
+
+p,
+dl,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+ul,
+pre,
+table,
+address,
+fieldset,
+figure {
+  margin-bottom: 2px;
+}
+
+
+/* TYPOGRAPHY */
+.xlarge {font-size:30px;}
+.large {font-size:23px;}
+.medium {font-size:16px;}
+.small {font-size:11px;}
+.xsmall {font-size:9px;} 
+.bold {font-weight:bold;}
+.caps {text-transform:uppercase;}
+
+.doubled {line-height:150%;}
+.align_left {text-align:left;}
+.align_center {text-align:center;}
+.align_right {text-align:right;}
+
+.white {color:#fff;}
+.grey {color:#999;}
+.black {color:#000;}
+.red, a {color:#d70000;}
+
+/* LINKS */
+a {text-decoration:none;}
+a:hover {text-decoration:underline;}
+
+#menu_expanded a {color:#fff;text-decoration:none;}
+
+.credits { color:#CCC; line-height:1.5em; padding:0 0 30px 0; text-transform:uppercase; text-align:center;}
+.credits1 {background-color:#CCC; color:#FFF; padding:0 3px 0 3px; font-weight:bold;}
+.credits2 {color:#CCC; font-weight:bold;}
