@@ -4,7 +4,9 @@
 <span>Buy and sell tickets up to and beyond event time!</span>
 </div>
 <div class="grid_16 top_50 border_top_1">
-Ticket Street is changing how you buy and sell tickets on the day of the event.  Easily find buyers using your smart phone.  Sellers can simply list their tickets and get their money for their extra tickets. 
+	<p class="top_30 helv">
+<b>Welcome</b> to Ticket Street!  We make it easy to buy and sell your tickets on the day of the event.  Listing tickets is a snap.  Finding buyers couldn't be easier with our GPS enabled map interface. <br /><br />  Looking to go to an event? Check out all the tickets available and contact the buyer directly to avoid any third party hassle.
+ 	</p>
 <%if current_user && current_user.role?("admin")%>
 <%=render :partial=>"home/normal_home"%>
 <%elsif current_user%>

@@ -2,7 +2,7 @@
 		<div class="grid_6 left">
 		<h3 style="color:#005BF2;">Register for the Ticket Street Beta</h3>
 
-		<%= form_for(@beta_signup) do |f| %>
+		<%= form_for(@beta_signup, :html=>{:id=>"form_contact"}) do |f| %>
 		<% if @beta_signup.errors.any? %>
 		    <div id="error_explanation">
 		      <h2><%= pluralize(@beta_signup.errors.count, "error") %> prohibited this beta_signup from being saved:</h2>
@@ -32,14 +32,14 @@
 		    <%= f.label :city_id %><br />
 		    <%= f.text_field :city_id %>
 		  </div>
-		<p><%= label_tag "I am a..." %><br />(check all that apply)<br />
+		<p><%= label_tag "select_role", "I am a...", :class=>'checkbox_label' %><br />(check all that apply)<br />
 			<% Role::AVAILABLE_ROLES.collect.each do |key, val|%>
 			
-			 <%= check_box_tag "beta_signup[role_ids][]", key, @beta_signup.role_ids.include?(key)%> <%=label_tag val%><br />
+			 <%= check_box_tag "beta_signup[role_ids][]", key, @beta_signup.role_ids.include?(key)%> <%=label_tag key, val, :class=>'checkbox_label'%><br />
 			<%end%>
 		</p>
 
-					<p><%= f.submit "Sign up", :class=>"newbutton blue" %></p>
+					<p><%= f.submit "Sign up", :id=>"btn_submit" %></p>
 					<% end %>
 			</div>
 			<div class="aside grid_6 right">
