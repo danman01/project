@@ -1,8 +1,7 @@
 <head>
   <title>Ticket Street - Beta</title>
   <%= stylesheet_link_tag "reset.css", "text.css", "beta.css", "grid.css", "styles.css" %>
-  <%= javascript_include_tag 'jquery.min.js','jquery-ui.min.js','jquery_ujs.js','application.js', %>
-
+  <%= javascript_include_tag 'jquery.min.js','jquery-ui.min.js','jquery_ujs.js','application.js', "autocomplete-rails.js"%>
   <%= csrf_meta_tag %>
 	<%=yield :javascript%>
 <style type="text/css">
@@ -31,7 +30,7 @@ function showMenu(){
 <body>
 	<div class="full fixed aboveall border_top_10">
 		<div class="container_16 relative">
-			<div class="grid_2 aboslute above top_-10 right_10 right">
+			<div class="grid_2 aboslute above top_-10 right_10 right align_center">
 				<a href="javascript:showMenu();" class="block" id="menu_link"><span class="center">Sign In</span></a>
 			</div>
 		</div>

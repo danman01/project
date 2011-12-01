@@ -8,6 +8,8 @@ class CreateBetaSignups < ActiveRecord::Migration
       t.float :lng
       t.integer :region_id
       t.integer :city_id
+      t.integer :zip
+      t.string :notes
       t.boolean :approved, :default=>false
       t.timestamps
     end
@@ -20,5 +22,6 @@ class CreateBetaSignups < ActiveRecord::Migration
 
   def self.down
     drop_table :beta_signups
+    drop_table :beta_signups_roles
   end
 end

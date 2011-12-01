@@ -1,6 +1,9 @@
 class BetaSignupsController < ApplicationController
   # GET /beta_signups
   # GET /beta_signups.xml
+  autocomplete :region, :name, :extra_data=>[:region_code, :id]
+  autocomplete :city, :name, :extra_data=>[:id, :region_id, :country_id]
+  
   def index
     @beta_signups = BetaSignup.all
 

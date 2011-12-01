@@ -1,5 +1,8 @@
 Tickets::Application.routes.draw do
-  resources :beta_signups
+  resources :beta_signups do
+    get :autocomplete_city_name, :on => :collection
+    get :autocomplete_region_name, :on => :collection
+  end
 
   match '/tickets/:action' => 'tickets#/[a-z_]+/i'
   

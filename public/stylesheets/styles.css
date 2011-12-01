@@ -19,6 +19,7 @@ body {background-color:#fff;font-family:Arial, sans-serif;font-size:16px;overflo
 .clear_right {clear:right;}
 .stretch {overflow:hidden;}
 .hidden {display:none;visibility:hidden;}
+.wrap {overflow-y:auto;}
 .relative {position:relative;}
 .absolute {position:absolute;}
 .fixed {position:fixed;}
@@ -78,6 +79,7 @@ body {background-color:#fff;font-family:Arial, sans-serif;font-size:16px;overflo
 
 /* BORDERs */
 .border {border: 1px solid #09F;}
+.border_big {border:10px solid #000; padding:20px;}
 .border_10 {border:10px solid #000;}
 .border_top_10 {border:none;border-top:10px solid #000;}
 .border_top_1 {border:none;border-top:1px solid #000;}
@@ -96,7 +98,7 @@ body {background-color:#fff;font-family:Arial, sans-serif;font-size:16px;overflo
 
 #form_contact ul, #form_contact ul li {list-style: none;}
 #form_contact ul li{width:220px;margin:0 0 5px 0;padding:0;}
-#form_contact input[type=text], #form_contact textarea {border:1px solid #a00000;padding:5px;margin:0;width:208px;color:#999;background:#fff;}
+#form_contact input[type=text], #form_contact textarea {border:1px solid #a00000;padding:5px;margin:0;width:208px;color:black;background:#fff;}
 #form_contact input[type=text].invalid, #form_contact textarea.invalid {border-bottom: 1px solid #000000; border-left:1px solid #000000;background-color:#ddd;}
 #form_contact input[type=text].required, #form_contact textarea.required {color: #000}
 #form_contact textarea{font-family: arial, helvetica, verdana; font-size: 1em;padding:5px;height:80px;width:208px;margin-right:10px;line-height:1.55em;background:#fff;}

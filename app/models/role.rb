@@ -12,5 +12,5 @@ class Role < ActiveRecord::Base
     has_and_belongs_to_many :users
     has_and_belongs_to_many :beta_signups
     
-    AVAILABLE_ROLES = {1 => "fan and want to buy tickets", 3=> "fan and want to sell tickets", 2 => "venue, promotion company, or ticket company" }
+    AVAILABLE_ROLES = {1 => "I'm a fan and want to buy tickets", 3=> "I'm a fan and want to sell tickets", 2 => "I work with a venue, promotion company, or ticket company" }
 end

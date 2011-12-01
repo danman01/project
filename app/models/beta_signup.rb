@@ -14,4 +14,6 @@ class BetaSignup < ActiveRecord::Base
   
   validates :email, :name, :region_id, :city_id, :presence=>true
   validates :email, :uniqueness=>true, :email=>true
+  validates :zip, :presence =>true
+  validates_format_of :zip, :with=>/^[0-9]{5}$/, :message=>"Please enter your 5 digit zip code"
 end

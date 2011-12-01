@@ -2,3 +2,14 @@
 {
 	color:black;
 }
+.ui-autocomplete
+{
+	position:absolute !important;
+	background-color:#222 !important;
+	width:500px !important;
+}
+.iphone-img
+{
+	height:300px;
+	margin-bottom:20px;
+}

@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(:version => 20111130225442) do
     t.float    "lng"
     t.integer  "region_id"
     t.integer  "city_id"
+    t.integer  "zip"
+    t.string   "notes"
     t.boolean  "approved",   :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
