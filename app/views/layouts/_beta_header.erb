@@ -1,7 +1,7 @@
 <head>
   <title>Ticket Street - Beta</title>
-  <%= stylesheet_link_tag "reset.css", "text.css", "beta.css", "grid.css", "styles.css" %>
-  <%= javascript_include_tag 'jquery.min.js','jquery-ui.min.js','jquery_ujs.js','application.js', "autocomplete-rails.js"%>
+  <%= stylesheet_link_tag "reset.css", "text.css", "beta.css", "grid.css", "styles.css", "bootstrap.css" %>
+  <%= javascript_include_tag 'jquery.min.js','jquery-ui.min.js','jquery_ujs.js','application.js', "autocomplete-rails.js", "bootstrap-all.js"%>
   <%= csrf_meta_tag %>
 	<%=yield :javascript%>
 <style type="text/css">
@@ -41,17 +41,17 @@ function showMenu(){
 		</div>
 	</div>
 	<% unless flash[:notice].blank? %>
-	<div id="flashy" class="notice">	
+	<div id="flashy" class="alert-message info">	
 		<%= flash[:notice]%>
 	</div>
 	<% end %>
 	<% unless flash[:error].blank? %>
-	<div id="flashy" class="error">	
+	<div id="flashy" class="alert-message error">	
 		<%= flash[:error]%>
 	</div>	
 	<% end %>
 	<% unless flash[:alert].blank? %>
-	<div id="flashy" class="message">	
+	<div id="flashy" class="alert-message warning">	
 		<%= flash[:alert]%>
 	</div>
 	<% end %>

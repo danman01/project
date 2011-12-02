@@ -1,6 +1,7 @@
 class BetaSignupsController < ApplicationController
   # GET /beta_signups
   # GET /beta_signups.xml
+  load_and_authorize_resource
   autocomplete :region, :name, :extra_data=>[:region_code, :id]
   autocomplete :city, :name, :extra_data=>[:id, :region_id, :country_id]
   
@@ -47,10 +48,14 @@ class BetaSignupsController < ApplicationController
 
     respond_to do |format|
       if @beta_signup.save
-        format.html { redirect_to(@beta_signup, :notice => 'Beta signup was successfully created.') }
+        logger.info "NEW BETA SIGNUP #{@beta_signup.to_yaml}"
+        flash[:notice] = 'You\'ve successfully signed up for the Beta! We\'ll surely be in touch.'
+        flash[:error] = nil
+        format.html { render "/home/index?check_out=events" }
         format.xml  { render :xml => @beta_signup, :status => :created, :location => @beta_signup }
       else
-        format.html { render :action => "new" }
+        flash[:error] = "There was an error."
+        format.html { render "/home/index" }
         format.xml  { render :xml => @beta_signup.errors, :status => :unprocessable_entity }
       end
     end

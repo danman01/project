@@ -1,0 +1,71 @@
+<script type="text/javascript">
+$(function() {
+	$("table").tablesorter({ sortList: [[1,0]] });
+})
+</script>
+<div class="container_16 top_30">
+<p>
+  <b>Name:</b>
+  <%= @custom_event.name %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @custom_event.date %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%= @custom_event.notes %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @custom_event.user_id %>
+</p>
+
+<p>
+  <b>Scope:</b>
+  <%= @custom_event.scope %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @custom_event.status %>
+</p>
+
+<p>
+  <b>Venue:</b>
+  <%= @custom_event.venue_id %>
+</p>
+
+<p>
+	<%= image_tag @custom_event.image.url %>
+	<%= image_tag @custom_event.image.url(:medium) %>
+	<%= image_tag @custom_event.image.url(:thumb) %>
+</p>
+
+<table class="zebra-striped">
+	<thead>
+		<tr>
+			<th>Section</th>
+			<th>Row</th>
+			<th>Quantity</th>
+			<th>Price</th>
+			<th>Buy</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%for ticket in @tickets do %>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<%end%>
+	</tbody>
+</table>
+<%= link_to "Sell tickets for this event", "/tickets/beta_sell?custom_event_id=#{@custom_event.id}"%>
+</div>

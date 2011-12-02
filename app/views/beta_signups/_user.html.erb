@@ -12,23 +12,23 @@ $(function(){
 
 		<%= form_for(@beta_signup, :html=>{:id=>"form_contact"}) do |f| %>
 		<% if @beta_signup.errors.any? %>
-		    <div id="error_explanation">
-		      <h2><%= pluralize(@beta_signup.errors.count, "error") %> prohibited this beta_signup from being saved:</h2>
+	    <div id="error_explanation">
+	      <h2><%= pluralize(@beta_signup.errors.count, "error") %> prohibited this beta_signup from being saved:</h2>
 
-		      <ul>
-		      <% @beta_signup.errors.full_messages.each do |msg| %>
-		        <li><%= msg %></li>
-		      <% end %>
-		      </ul>
-		    </div>
-		  <% end %>
+	      <ul>
+	      <% @beta_signup.errors.full_messages.each do |msg| %>
+	        <li><%= msg %></li>
+	      <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
 
 		  <div class="field">
 		    <%= f.label :name, "What's your name?" %><br />
 		    <%= f.text_field :name %>
 		  </div>
 		 <div class="field">
-		    <%= f.label :email, "Where can you be reached?" %><br />
+		    <%= f.label :email, "What's a good email address to reach you at?" %><br />
 		    <%= f.text_field :email %>
 		  </div>
 		<div class="field">

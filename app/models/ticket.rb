@@ -24,6 +24,7 @@
 class Ticket < ActiveRecord::Base
 	belongs_to :venue
 	belongs_to :event
+	belongs_to :custom_event
 	belongs_to :artist
 	belongs_to :ticket_group
 	belongs_to :sale
@@ -31,8 +32,11 @@ class Ticket < ActiveRecord::Base
 	belongs_to :venue
 	accepts_nested_attributes_for :ticket_group, :allow_destroy => :true,
       :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
-      
-  validates_presence_of :seat_number, :ticket_group, :cost, :event_id, :artist_id, :venue_id, :user_id
+  validates_presence_of :seat_number, :ticket_group, :cost
+  validates_presence_of :event_id, :artist_id, :venue_id, :user_id, :unless=> :is_custom_event
+  validates_presence_of :custom_event_id, :unless => :is_normal_event
+  
+  attr_accessor :normal_event, :custom_event
   
   def is_sold?
     if self.sold==1

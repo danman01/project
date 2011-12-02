@@ -1,0 +1,43 @@
+<h1>Listing custom_events</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Date</th>
+    <th>Notes</th>
+    <th>User</th>
+    <th>Scope</th>
+    <th>Status</th>
+    <th>Venue</th>
+    <th>Image file name</th>
+    <th>Image content type</th>
+    <th>Image file size</th>
+    <th>Image updated at</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @custom_events.each do |custom_event| %>
+  <tr>
+    <td><%= custom_event.name %></td>
+    <td><%= custom_event.date %></td>
+    <td><%= custom_event.notes %></td>
+    <td><%= custom_event.user_id %></td>
+    <td><%= custom_event.scope %></td>
+    <td><%= custom_event.status %></td>
+    <td><%= custom_event.venue_id %></td>
+    <td><%= custom_event.image_file_name %></td>
+    <td><%= custom_event.image_content_type %></td>
+    <td><%= custom_event.image_file_size %></td>
+    <td><%= custom_event.image_updated_at %></td>
+    <td><%= link_to 'Show', custom_event %></td>
+    <td><%= link_to 'Edit', edit_custom_event_path(custom_event) %></td>
+    <td><%= link_to 'Destroy', custom_event, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Custom event', new_custom_event_path %>

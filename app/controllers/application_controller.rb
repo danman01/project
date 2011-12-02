@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :authenticate_user!, :only =>[:create, :update]
+  #before_filter :authenticate_user!, :only =>[:create, :update]
   rescue_from CanCan::AccessDenied do |exception|
-      redirect_to :back, :alert => exception.message
+      redirect_to '/', :alert => exception.message
   end
   
   layout :choose_layout

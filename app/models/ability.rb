@@ -3,12 +3,15 @@ class Ability
 
     def initialize(user)
       user ||= User.new # guest user
-        can :read, :all
+        #can :read, :all
         can :create, Venue
         can :edit, Venue
         can :create, TicketGroup
         can :create, Artist
         can :edit, Artist
+        can :create, BetaSignup
+        can :beta_sell, Ticket
+        can :beta_create, Ticket
       if user.role? :admin
         can :manage, :all
         can :see_timestamps, :all

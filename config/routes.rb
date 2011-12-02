@@ -1,4 +1,6 @@
 Tickets::Application.routes.draw do
+  resources :custom_events
+
   resources :beta_signups do
     get :autocomplete_city_name, :on => :collection
     get :autocomplete_region_name, :on => :collection

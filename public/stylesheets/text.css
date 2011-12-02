@@ -117,6 +117,7 @@ a:hover {text-decoration:underline;}
 .credits2 {color:#CCC; font-weight:bold;}
 
 /*FONTS */
+.future {font-family:"futura-CondensedMedium", 'futura', 'helvetica'}
 .helv {font-family:helvetica;}
 .georgia {font-family:Georgia;}
 .museo {font-family:"museo-sans-rounded", "lucida grande", "sans-serif";}

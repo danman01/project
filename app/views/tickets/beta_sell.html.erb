@@ -1,0 +1,121 @@
+<script type="text/javascript">
+$(function(){
+	var mo=$("#ticket_bought_on_2i");
+	var day=$("#ticket_bought_on_3i");
+	var year=$("#ticket_bought_on_1i");
+	$("#duplicate").click(function(){
+		$("#ticket_in_hand_2i").val(mo.val());
+		$("#ticket_in_hand_3i").val(day.val());
+		$("#ticket_in_hand_1i").val(year.val());
+	});
+	
+	
+});
+$(function(){
+	$("#quantity").keyup(function(){
+		var string=" <p>Enter the seat numbers:</p>"
+		for (i=0;i < this.value;i++)
+		{
+			string+=i+1+". <input class='seats' id='ticket_"+i+"' type='text' /> ";
+			if ((i+1)%4==0){
+				string+="<br /><br />";
+			}
+		}
+		$("#seat_number_tag").html(string);
+	})
+})
+
+$(function(){
+	$("#ticket_submit").click(function(){
+		var $value=[];
+		$(".seats").each(function(){
+			$value.push($(this).val());
+		})
+		$("#seats").val($value);
+		
+	})
+})
+</script>
+<div class="container_16 top_30">
+<% if group=params[:ticket_group_id]%>
+section: <%=TicketGroup.find(group).section%>
+row: <%=TicketGroup.find(group).row%>
+<%end%>
+
+<%= form_for(@ticket, :html=>{:id=>"form_contact"}) do |f| %>
+  <% if @ticket.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
+
+      <ul>
+      <% @ticket.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<%if @ticket.custom_event!=nil%>
+   <h2><%= f.label :custom_event, @ticket.custom_event.name + " - List Your Tickets"%></h2><br />
+   <%= f.hidden_field :custom_event_id, :value=>@ticket.custom_event.id%>
+   
+    <%= f.hidden_field :venue_id, :value=>@ticket.event.venue.id rescue nil%>
+	<p>Ticket Group details<p>
+	<%if @ticket_groups.empty?%>
+	<%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :custom_event_id=>@ticket.custom_event.id)%>
+	<%else%>
+	<%= f.select :ticket_group_id, @ticket_groups.collect {|c| [ "section: " + c.section + " row: " + c.row, c.id ]} %>
+	 <br />
+	 or <%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :custom_event_id=>@ticket.custom_event.id)%>
+	<%end%>
+	<div class="field">
+	    <%= label_tag :quantity %><%#TODO show current quantity in ticket group / add quantity to group after submit instead of in same form%><br />
+	    <%=number_field_tag 'quantity', nil, :in => 1...10, :id=>'quantity' %>
+	  </div>
+	  <div class="field">
+		<p id='seat_number_tag'></p>
+		<%=hidden_field_tag 'seats', ""%>
+	</div>
+
+	 <div class="field">
+	    <%= f.label :cost, 'Bought price' %> (The price you paid for each ticket <b>*Note* for your records only - will not be displayed publicly</b>)<br />
+	    <%= f.text_field :cost %>
+	  </div>
+	<div class="field">
+	    <%= f.label :list, 'List price' %> (The price to sell each ticket in the marketplace <b>*Note* Buyers will contact you asking for this price!</b>)<br />
+	    <%= f.text_field :list %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :bought_on %><br />
+	    <%= f.datetime_select :bought_on, :order=>[:month, :day, :year] %>
+	  </div>
+
+	  <div class="field">
+	    <%= f.label :in_hand %> <a href="javascript:void(0);" id="duplicate">match dates</a><br />
+	    <%= f.datetime_select :in_hand, :order=>[:month, :day, :year] %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :kind %><br />
+	    <%= select(:ticket, :kind, options =['E Ticket', 'Hard Ticket', 'Will Call'])%>
+	  </div>
+	  <div class="field">
+	    <%= f.label :sold %><br />
+	    <%= f.check_box :sold%>
+	  </div>
+	  <div class="field">
+	    <%= f.label :notes %><br />
+	    <%= f.text_area :notes %>
+	  </div>
+
+	  <div class="actions">
+	    <%= f.submit "List on Ticket Street!", :id=>"btn_submit"%>
+	  </div>
+
+	<%else%>
+	
+	<div id="add_instructions">First step is to click the 'Sell tickets' link on the event page.  <br /> To add tickets to an event, fill out the form and click 'List on Ticket Street!'<br /><br />
+	When we find a buyer, we'll contact you or simply direct the buyer to your locale.</div>
+	<%end%>
+
+  	<%end%>
+</div>

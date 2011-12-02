@@ -8,6 +8,7 @@ class TicketGroupsController < ApplicationController
   def new
     @ticket_group=TicketGroup.new
     @event_id=params[:event_id]
+    @custom_event_id=params[:custom_event_id]
     if params[:redirect]
    session[:redirect]=true
     end
@@ -43,14 +44,24 @@ class TicketGroupsController < ApplicationController
   
   def create
     @group = TicketGroup.new(params[:ticket_group])
+    if params[:event_id]
      event=Event.find(params[:event_id])
      @group.event=event
-     artist=event.artist
-     venue=event.venue
+      artist=event.artist
+      venue=event.venue
+      if session[:redirect]
+          redirect="/tickets/new?artist_id#{artist.id}&venue_id=#{venue.id}&event_id=#{event.id}"
+      end
+    elsif params[:custom_event_id]
+      event=CustomEvent.find(params[:custom_event_id])
+       @group.custom_event=event
+        if session[:redirect]
+          redirect="/tickets/beta_sell?custom_event_id=#{event.id}"
+        end
+    end
     respond_to do |format|
       if @group.save
-        if session[:redirect]
-            redirect="/tickets/new?artist_id#{artist.id}&venue_id=#{venue.id}&event_id=#{event.id}"
+        if redirect
             session[:redirect]=nil
             format.html { redirect_to(redirect, :notice => 'group was successfully created.') }
         else

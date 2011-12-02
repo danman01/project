@@ -1,6 +1,56 @@
 class TicketsController < ApplicationController
   respond_to :html, :js, :xml
   load_and_authorize_resource
+  layout 'beta', :only=>['beta_sell']
+  def beta_sell
+    #from custom_event
+      @ticket = Ticket.new
+      if params[:custom_event_id]
+        @ticket.custom_event=CustomEvent.find(params[:custom_event_id]) 
+
+        if params[:ticket_group]
+          @ticket.ticket_group=params[:ticket_group]
+        end
+
+          @ticket_groups=TicketGroup.find_all_by_custom_event_id(@ticket.custom_event.id)
+          more=Ticket.find_all_by_custom_event_id(@ticket.custom_event.id)
+          more.each do |ticket|
+            @ticket_groups<<ticket.ticket_group
+          end
+          @ticket_groups.uniq!
+        end
+
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @ticket }
+      end
+  end
+  
+  def beta_create
+    @seller=Seller.find(params[:ticket][:seller])
+    #create new ticket for each seat - @ticket is ticket 0, so start with 1
+    q=params[:quantity].to_i
+    n=0
+    seats=params[:seats].split(",")
+    @ticket_group=TicketGroup.find(params[:ticket][:ticket_group_id])
+    if @ticket_group.quantity.nil? #initialize quantity
+      @ticket_group.quantity=0
+    end
+    #params[:ticket][:ticket_group]=@ticket_group
+    while n < q 
+      t=Ticket.new(params[:ticket])
+      #t.ticket_group=@ticket_group
+      t.seat_number=seats[n]
+      #t.user_id=current_user.id rescue 1 #so i dont have to log in during testing
+      t.save
+      @tid=t.id
+      n+=1
+      @ticket_group.quantity+=1
+      logger.info 'ticket created! ' +n.to_s
+    end 
+    @ticket_group.save
+    respond_with(@seller)
+  end
   
   def index
     groups=[]
@@ -108,6 +158,8 @@ class TicketsController < ApplicationController
     end
    
   end
+  
+  
 
   # GET /tickets/1/edit
   def edit
@@ -159,6 +211,8 @@ class TicketsController < ApplicationController
       format.html {redirect_to redirect}
     end
   end
+  
+  
 
   # PUT /tickets/1
   # PUT /tickets/1.xml

@@ -56,6 +56,7 @@ GEM
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
     clipboard (0.9.9)
+    cocaine (0.2.0)
     coderay (0.9.8)
     daemon_controller (0.2.6)
     devise (1.4.2)
@@ -163,6 +164,11 @@ GEM
     ori (0.1.0)
     orm_adapter (0.0.5)
     paint (0.8.3)
+    paperclip (2.4.5)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
+      cocaine (>= 0.0.2)
+      mime-types
     passenger (3.0.8)
       daemon_controller (>= 0.2.5)
       fastthread (>= 1.0.1)
@@ -250,6 +256,7 @@ DEPENDENCIES
   nifty-generators
   nokogiri
   omniauth
+  paperclip (~> 2.4)
   passenger
   pg
   rails (= 3.0.9)

@@ -13,5 +13,6 @@
 class TicketGroup < ActiveRecord::Base
 	has_many :tickets
 	belongs_to :event
+	belongs_to :custom_event
 	belongs_to :sale
 end

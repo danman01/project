@@ -35,6 +35,7 @@ gem 'omniauth'
 gem 'geocoder' #http://www.rubygeocoder.com/
 gem 'thinking-sphinx', '2.0.5'
 gem 'rails3-jquery-autocomplete'
+gem "paperclip", "~> 2.4"
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators

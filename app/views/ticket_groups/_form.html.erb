@@ -1,25 +1,20 @@
 
-<%=form_for(@ticket_group) do |ticket_group_form|%>
-<%=hidden_field_tag 'event_id', @event_id%>
-
-<div class="field">
-	<%#arr=[]
-	max=30
-	n=0
-	while n<max
-		arr<<n
-	n+=1
-	end
-	%>
-    <%#= ticket_group_form.label :quantity %><br />
-    <%#= ticket_group_form.select(:quantity, arr.each { |l| puts l}, options ={:prompt =>'Select a quantity'})%>
-  </div>
+<%=form_for(@ticket_group, :html=>{:id=>"form_contact"}) do |ticket_group_form|%>
+<%=hidden_field_tag 'custom_event_id', @custom_event_id%>
 	<div class="field">
-    <%= ticket_group_form.label :section %>
+  <%= ticket_group_form.label :level %><br />
+  <%= ticket_group_form.text_field :level %>
+</div>
+	<div class="field">
+    <%= ticket_group_form.label :section %><br />
     <%= ticket_group_form.text_field :section %>
   </div>
 	<div class="field">
-    <%= ticket_group_form.label :row %>
+  <%= ticket_group_form.label :aisle %><br />
+  <%= ticket_group_form.text_field :aisle %>
+</div>
+	<div class="field">
+    <%= ticket_group_form.label :row %><br />
     <%= ticket_group_form.text_field :row %>
   </div>
 <% unless ticket_group_form.object.nil? || ticket_group_form.object.new_record? %>
@@ -30,6 +25,7 @@
   <% end %>
 
 <div class="actions">
-    <%= ticket_group_form.submit%>
+    <%= ticket_group_form.submit "Create", :id=>'btn_submit'%>
   </div>
+<div>(You will fill in the seat numbers on the ticket details page)</div>
 <%end%>

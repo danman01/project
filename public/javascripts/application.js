@@ -4,7 +4,8 @@
 $(function(){ 
 		$("#flashy").click(function(event){
 			$(this).animate(
-				{right:-390},
+				{right:-5000},
+				/*was right -390*/
 				{duration: 600,
 				easing: "easeInBack"}
 				)
@@ -13,7 +14,7 @@ $(function(){
 			var c = $("#flashy");  
 			c.length&&setTimeout(function(event){
 			c.animate(
-			{right:-390},
+			{right:-5000},
 			{duration: 600,
 			easing: "easeInBack"}
 			)},6000);

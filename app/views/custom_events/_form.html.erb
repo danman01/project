@@ -1,0 +1,45 @@
+<%= form_for(@custom_event, :html=>{ :multipart => true}) do |f| %>
+  <% if @custom_event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@custom_event.errors.count, "error") %> prohibited this custom_event from being saved:</h2>
+
+      <ul>
+      <% @custom_event.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :date %><br />
+    <%= f.date_select :date %>
+  </div>
+  
+  
+    <%#= f.label :scope %><br />
+    <%#= f.text_field :scope %>
+
+  <div class="field">
+    <%= f.label :status, "0 = inactive 1 = active" %><br />
+    <%= f.number_field :status, :in=>0...2 %>
+  </div>
+  <div class="field">
+    <%= f.label :venue_id, "ID of venue" %><br />
+    <%= f.text_field :venue_id %>
+  </div>
+  <div class="field">
+	  Have an image? <%= f.file_field :image %>
+  </div>
+<div class="field">
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Create event" %>
+  </div>
+<% end %>

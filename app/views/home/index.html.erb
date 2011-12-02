@@ -1,8 +1,11 @@
 <div class="container_16">
 <div id="welcome" class="grid_16 top_60 center">
-<h1 id="logo"><%=link_to 'T I C K E T S T R E E T','/', :class=>'logo'%></h1>
+<h1 id="logo" class="future"><%=link_to 'T I C K E T S T R E E T','/', :class=>'logo'%></h1>
 <span>Buy and sell tickets up to and beyond event time!</span>
+<%if params[:check_out]=="events"%>
+<div class="alert-message alert" data-alert="alert">Hey, thanks for signing up! Why not check out our first event? It's right over <%=link_to 'here', "/custom_events/1"%>	
 </div>
+<%end%>
 <div class="grid_16 top_50 border_top_1">
 	<p class="top_30 helv">
 <b>Welcome</b> to Ticket Street!  We make it easy to buy and sell your tickets on the day of the event.  Listing tickets is a snap.  Finding buyers couldn't be easier with our GPS enabled map interface. <br /><br />  Looking to go to an event? Check out all the tickets available and contact the buyer directly to avoid any third party hassle.

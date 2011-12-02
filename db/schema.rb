@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111130225442) do
+ActiveRecord::Schema.define(:version => 20111202191131) do
 
   create_table "artists", :force => true do |t|
     t.text     "name"
@@ -83,6 +83,22 @@ ActiveRecord::Schema.define(:version => 20111130225442) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "status",       :default => 1
+  end
+
+  create_table "custom_events", :force => true do |t|
+    t.string   "name"
+    t.datetime "date"
+    t.text     "notes"
+    t.integer  "user_id"
+    t.integer  "scope"
+    t.integer  "status"
+    t.integer  "venue_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "customers", :force => true do |t|
@@ -186,6 +202,9 @@ ActiveRecord::Schema.define(:version => 20111130225442) do
     t.integer "quantity"
     t.integer "event_id"
     t.integer "sale_id"
+    t.integer "custom_event_id"
+    t.string  "level"
+    t.string  "aisle"
   end
 
   add_index "ticket_groups", ["event_id"], :name => "index_ticket_groups_on_event_id"
@@ -207,6 +226,7 @@ ActiveRecord::Schema.define(:version => 20111130225442) do
     t.integer  "sale_id"
     t.integer  "user_id"
     t.float    "list"
+    t.integer  "custom_event_id"
   end
 
   add_index "tickets", ["artist_id"], :name => "index_tickets_on_artist_id"
