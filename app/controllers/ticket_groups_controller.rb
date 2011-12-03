@@ -12,7 +12,7 @@ class TicketGroupsController < ApplicationController
     # TODO change for normal app
     #if params[:redirect]
     #session[:redirect]=true
-    end
+    #end
      respond_to do |format|
         format.html # new.html.erb
         format.xml  { render :xml => @ticket_group }
