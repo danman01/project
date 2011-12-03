@@ -16,7 +16,7 @@ class CustomTicketsController < ApplicationController
     if session[:buyer]
     buyer = Buyer.find(session[:buyer])
     hit_tropo_end_point({
-      'name'       => buyer.name,
+      'name'       => buyer.first_name,
       'event_name' => event_name,
       #'section'    => section,
       #'row'        => row,
@@ -27,7 +27,7 @@ class CustomTicketsController < ApplicationController
     else
       respond_to do |format|
         flash[:error] = "sign up or sign in as a buyer first!"
-        format.html => {:redirect_to "/buyers/new"}
+        format.html  { redirect_to("/buyers/new")}
       end
     end
   end

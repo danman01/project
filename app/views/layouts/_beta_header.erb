@@ -79,9 +79,15 @@ function showMenu(){
 			<%= link_to "sign out", destroy_user_session_path%>
 		<%elsif session[:seller]%>
 			Signed in as seller <%=Seller.find(session[:seller]).email%>
+			<% if session[:buyer]%>
+			and as a buyer
+			<%end%>
 		    | <%=link_to "sign out", "/sellers/signout"%>
 		<%elsif session[:buyer]%>
 		    Signed in as buyer <%=Buyer.find(session[:buyer]).email%>	
+		<%if session[:seller]%>
+		and as a seller
+		<%end%>
 			| <%=link_to "sign out", "/sellers/signout"%>
 		<%end%>
 	</div>
