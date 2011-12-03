@@ -48,7 +48,7 @@ $(function() {
 			<td><%=ticket.ticket_group.row%></td>
 			<td><%=ticket.ticket_group.quantity%></td>
 			<td><%=ticket.cost%></td>
-			<td><form id="call"><input type='tel' value='14048574679' readonly='true' /><input type="submit" value="call" /></form><%#=link_to "Contact", "/custom_tickets/call/#{ticket.ticket_group.id}"%></td>
+			<td><a href="tel:+14048574679">Call!</a<%#=link_to "Contact", "/custom_tickets/call/#{ticket.ticket_group.id}"%></td>
 		</tr>
 		<%end%>
 	</tbody>
