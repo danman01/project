@@ -79,7 +79,7 @@ $(function(){
 	<%= f.select :ticket_group_id, @ticket_groups.collect {|c| [ "section: " + c.section + " row: " + c.row, c.id ]} %>
 	 <br />
 	 or <%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :custom_event_id=>@custom_ticket.custom_event.id)%>
-	<%end%>
+	
 	<div class="field">
 	    <%= label_tag :quantity, "How many tickets are you selling?" %><%#TODO show current quantity in ticket group / add quantity to group after submit instead of in same form%><br />
 	    <%=text_field_tag 'quantity' %>
@@ -99,6 +99,7 @@ $(function(){
   <div class="actions">
     <%= f.submit "List on Ticket Street!", :id=>"btn_submit"%>
   </div>
+  <%end%>
 <% end %>
 
 
