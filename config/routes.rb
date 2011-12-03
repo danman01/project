@@ -1,4 +1,8 @@
 Tickets::Application.routes.draw do
+  
+  match "/messaging"=>"messagings#index"
+  post '/index.json'=>'messagings#index'
+  match "/custom_tickets/call(/:ticket_group_id)"=>'custom_tickets#call'
   resources :custom_tickets
 
   resources :looking_fors

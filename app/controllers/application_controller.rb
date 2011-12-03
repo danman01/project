@@ -36,6 +36,18 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def hit_tropo_end_point(params = {})
+    params.merge!('token' => AppSettings::TROPO_VOICE_TOKEN)
+    query_string = params.map {|k,v| [k,v].join('=')}.join('&')
+    param_list = "?#{query_string}" if query_string.present?
+
+    logger.error "*"*80
+    logger.error "curling #{AppSettings::TROPO_API}#{param_list}"
+    logger.error "*"*80
+
+    `curl "#{AppSettings::TROPO_API}#{param_list}"`
+  end
+  
   protected
   def set_globals
     @custom_events=CustomEvent.find(:all)

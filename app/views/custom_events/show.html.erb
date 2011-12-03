@@ -38,7 +38,7 @@ $(function() {
 			<th>Row</th>
 			<th>Quantity</th>
 			<th>Price</th>
-			<th>Buy</th>
+			<th>Contact</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -48,7 +48,7 @@ $(function() {
 			<td><%=ticket.ticket_group.row%></td>
 			<td><%=ticket.ticket_group.quantity%></td>
 			<td><%=ticket.cost%></td>
-			<td><%=ticket.seller.email%></td>
+			<td><%=link_to "Contact", "/custom_tickets/call/#{ticket.ticket_group.id}"%></td>
 		</tr>
 		<%end%>
 	</tbody>

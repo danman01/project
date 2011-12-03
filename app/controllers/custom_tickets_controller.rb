@@ -1,6 +1,36 @@
 class CustomTicketsController < ApplicationController
   # GET /custom_tickets
   # GET /custom_tickets.xml
+  
+  def call
+    tg = TicketGroup.find(params[:ticket_group_id])
+    event_name = 'testing name'
+    row = 'test row'
+    section = 'test section'
+    if tg
+      event = tg.custom_event
+      event_name = event.name
+      section = tg.section
+      row = tg.row
+    end
+    if session[:buyer]
+    buyer = Buyer.find(session[:buyer])
+    hit_tropo_end_point({
+      'name'        => session[:buyer].name,
+      'event_name' => event_name
+      'section' => section
+      'row' => row
+      'action'    => 'voice',
+      'call_type' => AppSettings::CALL_TYPE[:voice]
+    })
+    flash[:message] = "successfully called!"
+    else
+      respond_to do |format|
+        flash[:error] = "sign up or sign in as a buyer first!"
+        format.html => {:redirect_to "/buyers/new"}
+      end
+    end
+  end
   def index
     @custom_tickets = CustomTicket.all
 
