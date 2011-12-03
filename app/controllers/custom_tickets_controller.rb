@@ -16,12 +16,12 @@ class CustomTicketsController < ApplicationController
     if session[:buyer]
     buyer = Buyer.find(session[:buyer])
     hit_tropo_end_point({
-      'name'        => session[:buyer].name,
+      'name'       => buyer.name,
       'event_name' => event_name,
-      'section' => section,
-      'row' => row,
-      'action'    => 'voice',
-      'call_type' => AppSettings::CALL_TYPE[:voice]
+      'section'    => section,
+      'row'        => row,
+      'action'     => 'voice',
+      'call_type'  => AppSettings::CALL_TYPE[:voice]
     })
     flash[:message] = "successfully called!"
     else
