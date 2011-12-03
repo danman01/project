@@ -9,8 +9,9 @@ class TicketGroupsController < ApplicationController
     @ticket_group=TicketGroup.new
     @event_id=params[:event_id]
     @custom_event_id=params[:custom_event_id]
-    if params[:redirect]
-   session[:redirect]=true
+    # TODO change for normal app
+    #if params[:redirect]
+    #session[:redirect]=true
     end
      respond_to do |format|
         format.html # new.html.erb
@@ -56,7 +57,7 @@ class TicketGroupsController < ApplicationController
       event=CustomEvent.find(params[:custom_event_id])
        @group.custom_event=event
         if session[:redirect]
-          redirect="/tickets/beta_sell?custom_event_id=#{event.id}"
+          redirect="/custom_tickets/new?custom_event_id=#{event.id}"
         end
     end
     respond_to do |format|
