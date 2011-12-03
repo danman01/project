@@ -4,8 +4,8 @@ class AppSettings
   TROPO_API = 'http://api.tropo.com/1.0/sessions'
 
   CALL_TYPE = { 
-    :sms                => 'sms'
-    :voice              => 'voice'
+    :sms                => 'sms',
+    :voice              => 'voice',
     :conference         => 'conference',
     :greeter            => 'greeter',
     :greeter_conference => 'greeter_conference' 
