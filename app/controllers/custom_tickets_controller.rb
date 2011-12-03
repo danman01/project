@@ -17,9 +17,9 @@ class CustomTicketsController < ApplicationController
     buyer = Buyer.find(session[:buyer])
     hit_tropo_end_point({
       'name'        => session[:buyer].name,
-      'event_name' => event_name
-      'section' => section
-      'row' => row
+      'event_name' => event_name,
+      'section' => section,
+      'row' => row,
       'action'    => 'voice',
       'call_type' => AppSettings::CALL_TYPE[:voice]
     })
