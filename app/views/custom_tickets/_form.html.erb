@@ -72,9 +72,9 @@ $(function(){
 <%else%>
 
     <%= f.hidden_field :seller_id, :value=>session[:seller] %>
-  	<p>Ticket Group details<p>
+  	<p>Ticket location details<p>
 	<%if @ticket_groups.empty?%>
-	<%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :custom_event_id=>@custom_ticket.custom_event.id)%>
+	<h2>First add the ticket location details: </h2><%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :custom_event_id=>@custom_ticket.custom_event.id)%>
 	<%else%>
 	<%= f.select :ticket_group_id, @ticket_groups.collect {|c| [ "section: " + c.section + " row: " + c.row, c.id ]} %>
 	 <br />

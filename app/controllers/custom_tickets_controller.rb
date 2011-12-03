@@ -89,7 +89,7 @@ class CustomTicketsController < ApplicationController
 
     respond_to do |format|
       if @custom_ticket.save
-        format.html { redirect_to(@custom_ticket, :notice => 'Custom ticket was successfully created.') }
+        format.html { redirect_to("/custom_events/#{@custom_ticket.custom_event.id}", :notice => 'Your ticket was added!') }
         format.xml  { render :xml => @custom_ticket, :status => :created, :location => @custom_ticket }
       else
         format.html { render :action => "new" }
