@@ -43,13 +43,14 @@ class SellersController < ApplicationController
     @seller = Seller.new(params[:seller])
     respond_to do |format|
       if @seller.save
+        flash[:notice]="Success!"
         session[:seller]=@seller.id
-        format.html { redirect_to(@seller, :notice => 'Seller was successfully created.') }
-        format.xml  { render :xml => @seller, :status => :created, :location => @seller }
+        redirect="/home/index"
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @seller.errors, :status => :unprocessable_entity }
+        flash[:error]="No record found. Sign up for a new one"
+        redirect="/sellers/new"
       end
+        format.html {redirect_to redirect}
     end
   end
   
