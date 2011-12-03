@@ -18,8 +18,8 @@ class CustomTicketsController < ApplicationController
     hit_tropo_end_point({
       'name'       => buyer.name,
       'event_name' => event_name,
-      'section'    => section,
-      'row'        => row,
+      #'section'    => section,
+      #'row'        => row,
       'action'     => 'voice',
       'call_type'  => AppSettings::CALL_TYPE[:voice]
     })
