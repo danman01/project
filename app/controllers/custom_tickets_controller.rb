@@ -55,6 +55,7 @@ class CustomTicketsController < ApplicationController
   # GET /custom_tickets/new.xml
   def new
     @custom_ticket = CustomTicket.new
+    @ticket_groups = []
     #from custom_event
       if params[:custom_event_id]
         @custom_ticket.custom_event=CustomEvent.find(params[:custom_event_id]) 

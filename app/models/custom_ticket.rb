@@ -5,5 +5,5 @@ class CustomTicket < ActiveRecord::Base
   
   validates_presence_of :ticket_group_id
   validates_presence_of :cost
-  validates_presence_of :seat_number
+  #validates_presence_of :seat_number
 end
