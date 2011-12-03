@@ -1,0 +1,53 @@
+<%= form_for(@looking_for) do |f| %>
+  <% if @looking_for.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@looking_for.errors.count, "error") %> prohibited this looking_for from being saved:</h2>
+
+      <ul>
+      <% @looking_for.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :event_id %><br />
+    <%= f.text_field :event_id %>
+  </div>
+  <div class="field">
+    <%= f.label :custom_event_id %><br />
+    <%= f.text_field :custom_event_id %>
+  </div>
+  <div class="field">
+    <%= f.label :buyer_id %><br />
+    <%= f.text_field :buyer_id %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :quantity %><br />
+    <%= f.text_field :quantity %>
+  </div>
+  <div class="field">
+    <%= f.label :section %><br />
+    <%= f.text_field :section %>
+  </div>
+  <div class="field">
+    <%= f.label :row %><br />
+    <%= f.text_field :row %>
+  </div>
+  <div class="field">
+    <%= f.label :level %><br />
+    <%= f.text_field :level %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

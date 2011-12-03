@@ -41,7 +41,14 @@ $(function(){
 section: <%=TicketGroup.find(group).section%>
 row: <%=TicketGroup.find(group).row%>
 <%end%>
-
+<%if session[:seller].nil?%>
+<p>Hey, <%=link_to "sign up as a seller first", "/sellers/new?custom_event_id=#{@ticket.custom_event.id}"%> or if you already signed up, enter your email address: </p> <div><%=form_tag ("/sellers/signin?custom_event_id=#{@ticket.custom_event.id}") do %>
+	<%=label_tag :email%>
+	<%=text_field_tag :email%>
+	<%=submit_tag "Sign in"%>
+	<%end%> 
+	</div>
+<%else%>
 <%= form_for(@ticket, :html=>{:id=>"form_contact"}) do |f| %>
   <% if @ticket.errors.any? %>
     <div id="error_explanation">
@@ -69,8 +76,8 @@ row: <%=TicketGroup.find(group).row%>
 	 or <%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :custom_event_id=>@ticket.custom_event.id)%>
 	<%end%>
 	<div class="field">
-	    <%= label_tag :quantity %><%#TODO show current quantity in ticket group / add quantity to group after submit instead of in same form%><br />
-	    <%=number_field_tag 'quantity', nil, :in => 1...10, :id=>'quantity' %>
+	    <%= label_tag :quantity, "How many tickets are you selling?" %><%#TODO show current quantity in ticket group / add quantity to group after submit instead of in same form%><br />
+	    <%=text_field_tag 'quantity' %>
 	  </div>
 	  <div class="field">
 		<p id='seat_number_tag'></p>
@@ -98,10 +105,10 @@ row: <%=TicketGroup.find(group).row%>
 	    <%= f.label :kind %><br />
 	    <%= select(:ticket, :kind, options =['E Ticket', 'Hard Ticket', 'Will Call'])%>
 	  </div>
-	  <div class="field">
-	    <%= f.label :sold %><br />
-	    <%= f.check_box :sold%>
-	  </div>
+
+	    <%= f.hidden_field :seller_id, :value=>session[:seller]%>
+	    <%#= f.hidden_field :is_custom_event, :value=>true%>
+
 	  <div class="field">
 	    <%= f.label :notes %><br />
 	    <%= f.text_area :notes %>
@@ -110,12 +117,13 @@ row: <%=TicketGroup.find(group).row%>
 	  <div class="actions">
 	    <%= f.submit "List on Ticket Street!", :id=>"btn_submit"%>
 	  </div>
-
 	<%else%>
-	
+
 	<div id="add_instructions">First step is to click the 'Sell tickets' link on the event page.  <br /> To add tickets to an event, fill out the form and click 'List on Ticket Street!'<br /><br />
 	When we find a buyer, we'll contact you or simply direct the buyer to your locale.</div>
 	<%end%>
+<%end%>
 
-  	<%end%>
+
+<%end%>
 </div>

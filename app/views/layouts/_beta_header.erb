@@ -45,12 +45,15 @@ function showMenu(){
 	<div class="full fixed aboveall border_top_10">
 		<div class="container_16 relative">
 			<div class="grid_2 aboslute above top_-10 right_10 right align_center">
-				<a href="javascript:showMenu();" class="block" id="menu_link"><span class="center">Sign In</span></a>
+				<a href="javascript:showMenu();" class="block" id="menu_link"><span class="center">Buy / Sell</span></a>
 			</div>
 		</div>
 		<div id="menu_expanded" class="container_16 expanded" style="display:none;">
 			<div class="grid_15 padding_30 bg_red xlarge white align_right" id="menu_view">
-				<%= link_to "Sign up", '/users/sign_up' %> or <%=link_to 'Sign in', new_user_session_path %>
+				<%= link_to "Seller sign up", '/sellers/new' %> or <%=link_to 'Buyer sign up', "/buyers/new" %><br />
+				<%@custom_events.each do |event|%>
+				<%=link_to "View listings for #{event.name}", event%> <br />
+				<%end%>
 			</div>
 		</div>
 	</div>
@@ -70,12 +73,16 @@ function showMenu(){
 	</div>
 	<% end %>
 		
-	<div id="user_nav" class="right right_40">
+	<div id="user_nav" class="right right_40 top_30">
 		<% if user_signed_in? %>
 			Signed in as <%= link_to current_user.email, "/users/#{current_user.id}"%>. Not you?
 			<%= link_to "sign out", destroy_user_session_path%>
-		<%else%>
-	
+		<%elsif session[:seller]%>
+			Signed in as seller <%=Seller.find(session[:seller]).email%>
+		    | <%=link_to "sign out", "/sellers/signout"%>
+		<%elsif session[:buyer]%>
+		    Signed in as buyer <%=Buyer.find(session[:buyer]).email%>	
+			| <%=link_to "sign out", "/sellers/signout"%>
 		<%end%>
 	</div>
 	

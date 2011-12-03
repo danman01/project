@@ -1,0 +1,39 @@
+<h1>Listing looking_fors</h1>
+
+<table>
+  <tr>
+    <th>Event</th>
+    <th>Custom event</th>
+    <th>Buyer</th>
+    <th>User</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Section</th>
+    <th>Row</th>
+    <th>Level</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @looking_fors.each do |looking_for| %>
+  <tr>
+    <td><%= looking_for.event_id %></td>
+    <td><%= looking_for.custom_event_id %></td>
+    <td><%= looking_for.buyer_id %></td>
+    <td><%= looking_for.user_id %></td>
+    <td><%= looking_for.price %></td>
+    <td><%= looking_for.quantity %></td>
+    <td><%= looking_for.section %></td>
+    <td><%= looking_for.row %></td>
+    <td><%= looking_for.level %></td>
+    <td><%= link_to 'Show', looking_for %></td>
+    <td><%= link_to 'Edit', edit_looking_for_path(looking_for) %></td>
+    <td><%= link_to 'Destroy', looking_for, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Looking for', new_looking_for_path %>

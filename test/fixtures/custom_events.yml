@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: 
+  date: 
+  notes: 
+  user_id: 
+  scope: 
+  status: 
+  venue_id: 
+  image_file_name: 
+  image_content_type: 
+  image_file_size: 
+  image_updated_at: 2011-12-02 12:22:16
+
+two:
+  name: 
+  date: 
+  notes: 
+  user_id: 
+  scope: 
+  status: 
+  venue_id: 
+  image_file_name: 
+  image_content_type: 
+  image_file_size: 
+  image_updated_at: 2011-12-02 12:22:16

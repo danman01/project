@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Email:</b>
+  <%= @buyer.email %>
+</p>
+
+<p>
+  <b>Phone:</b>
+  <%= @buyer.phone %>
+</p>
+
+<p>
+  <b>First name:</b>
+  <%= @buyer.first_name %>
+</p>
+
+<p>
+  <b>Last name:</b>
+  <%= @buyer.last_name %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @buyer.location %>
+</p>
+
+<p>
+  <b>Lat:</b>
+  <%= @buyer.lat %>
+</p>
+
+<p>
+  <b>Lng:</b>
+  <%= @buyer.lng %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%= @buyer.notes %>
+</p>
+
+
+<%= link_to 'Edit', edit_buyer_path(@buyer) %> |
+<%= link_to 'Back', buyers_path %>

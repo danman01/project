@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  custom_event_id: 1
+  seller_id: 1
+  seat_number: MyString
+  cost: 1
+  ticket_group_id: 1
+  sold: false
+  list: false
+
+two:
+  custom_event_id: 1
+  seller_id: 1
+  seat_number: MyString
+  cost: 1
+  ticket_group_id: 1
+  sold: false
+  list: false

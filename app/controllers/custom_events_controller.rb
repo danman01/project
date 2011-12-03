@@ -14,7 +14,7 @@ class CustomEventsController < ApplicationController
   # GET /custom_events/1.xml
   def show
     @custom_event = CustomEvent.find(params[:id])
-    @tickets=@custom_event.tickets
+    @tickets=@custom_event.custom_tickets
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @custom_event }

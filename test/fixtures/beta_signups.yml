@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  email: MyString
+  name: MyString
+  ip_address: MyString
+  lat: 1.5
+  lng: 1.5
+  region_id: 1
+  city_id: 1
+
+two:
+  email: MyString
+  name: MyString
+  ip_address: MyString
+  lat: 1.5
+  lng: 1.5
+  region_id: 1
+  city_id: 1

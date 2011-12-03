@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111202191131) do
+ActiveRecord::Schema.define(:version => 20111203031048) do
 
   create_table "artists", :force => true do |t|
     t.text     "name"
@@ -42,6 +42,19 @@ ActiveRecord::Schema.define(:version => 20111202191131) do
   create_table "beta_signups_roles", :id => false, :force => true do |t|
     t.integer "beta_signup_id"
     t.integer "role_id"
+  end
+
+  create_table "buyers", :force => true do |t|
+    t.string   "email"
+    t.string   "phone"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "location"
+    t.float    "lat"
+    t.float    "lng"
+    t.string   "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "cities", :force => true do |t|
@@ -101,6 +114,18 @@ ActiveRecord::Schema.define(:version => 20111202191131) do
     t.datetime "updated_at"
   end
 
+  create_table "custom_tickets", :force => true do |t|
+    t.integer  "custom_event_id"
+    t.integer  "seller_id"
+    t.string   "seat_number"
+    t.integer  "cost"
+    t.integer  "ticket_group_id"
+    t.boolean  "sold"
+    t.boolean  "list"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "customers", :force => true do |t|
     t.string   "email"
     t.string   "client_type"
@@ -140,6 +165,20 @@ ActiveRecord::Schema.define(:version => 20111202191131) do
     t.integer  "total"
     t.integer  "user_id"
     t.integer  "on_site"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "looking_fors", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "custom_event_id"
+    t.integer  "buyer_id"
+    t.integer  "user_id"
+    t.integer  "price"
+    t.integer  "quantity"
+    t.string   "section"
+    t.string   "row"
+    t.string   "level"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -196,6 +235,19 @@ ActiveRecord::Schema.define(:version => 20111202191131) do
     t.string   "paypal_payment_id"
   end
 
+  create_table "sellers", :force => true do |t|
+    t.string   "email"
+    t.string   "phone"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "location"
+    t.float    "lat"
+    t.float    "lng"
+    t.string   "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "ticket_groups", :force => true do |t|
     t.text    "section"
     t.text    "row"
@@ -227,6 +279,7 @@ ActiveRecord::Schema.define(:version => 20111202191131) do
     t.integer  "user_id"
     t.float    "list"
     t.integer  "custom_event_id"
+    t.integer  "seller_id"
   end
 
   add_index "tickets", ["artist_id"], :name => "index_tickets_on_artist_id"

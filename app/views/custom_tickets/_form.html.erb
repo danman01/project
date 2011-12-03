@@ -1,0 +1,111 @@
+<script type="text/javascript">
+/*
+$(function(){
+	var mo=$("#ticket_bought_on_2i");
+	var day=$("#ticket_bought_on_3i");
+	var year=$("#ticket_bought_on_1i");
+	$("#duplicate").click(function(){
+		$("#ticket_in_hand_2i").val(mo.val());
+		$("#ticket_in_hand_3i").val(day.val());
+		$("#ticket_in_hand_1i").val(year.val());
+	});
+	
+	
+});
+*/
+$(function(){
+	$("#quantity").keyup(function(){
+		var string=" <p>Enter the seat numbers:</p>"
+		for (i=0;i < this.value;i++)
+		{
+			string+=i+1+". <input class='seats' id='ticket_"+i+"' type='text' /> ";
+			if ((i+1)%4==0){
+				string+="<br /><br />";
+			}
+		}
+		$("#seat_number_tag").html(string);
+	})
+})
+
+$(function(){
+	
+	$("#custom_ticket_list").click(function(){
+		$(".cost").toggle();
+	})
+
+	$("#custom_ticket_submit").click(function(){
+		var $value=[];
+		$(".seats").each(function(){
+			$value.push($(this).val());
+		})
+		$("#seats").val($value);
+		
+	})
+})
+</script>
+  
+
+<%= form_for(@custom_ticket, :html=>{:id=>"form_contact"}) do |f| %>
+  <% if @custom_ticket.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@custom_ticket.errors.count, "error") %> prohibited this custom_ticket from being saved:</h2>
+
+      <ul>
+      <% @custom_ticket.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<%if @custom_ticket.custom_event!=nil%>
+  <h2><%= f.label :custom_event, @custom_ticket.custom_event.name + " - List Your Tickets"%></h2><br />
+  <%= f.hidden_field :custom_event_id, :value=>@custom_ticket.custom_event.id%>
+
+<%if session[:seller].nil?%>
+<p>Hey, <%=link_to "sign up as a seller first", "/sellers/new?custom_event_id=#{@custom_ticket.custom_event.id}"%> or if you already signed up, enter your email address: </p> <div>
+<%=form_tag ("/sellers/signin?custom_event_id=#{@custom_ticket.custom_event.id}") do %>
+	<%=label_tag :email%>
+	<%=text_field_tag :email%>
+	<%=submit_tag "Sign in"%>
+	<%end%> 
+	</div>
+<%else%>
+
+    <%= f.hidden_field :seller_id, :value=>session[:seller] %>
+  	<p>Ticket Group details<p>
+	<%if @ticket_groups.empty?%>
+	<%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :custom_event_id=>@custom_ticket.custom_event.id)%>
+	<%else%>
+	<%= f.select :ticket_group_id, @ticket_groups.collect {|c| [ "section: " + c.section + " row: " + c.row, c.id ]} %>
+	 <br />
+	 or <%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :custom_event_id=>@custom_ticket.custom_event.id)%>
+	<%end%>
+	<div class="field">
+	    <%= label_tag :quantity, "How many tickets are you selling?" %><%#TODO show current quantity in ticket group / add quantity to group after submit instead of in same form%><br />
+	    <%=text_field_tag 'quantity' %>
+	  </div>
+	  <div class="field">
+		<p id='seat_number_tag'></p>
+		<%=hidden_field_tag 'seats', ""%>
+	</div>
+  <div class="field">
+    <br />
+    <%= f.check_box :list, :checked=>true %> <%= f.label :list, " Make available in the market?" %>
+  </div>
+  <div class="field cost" style="display:block;">
+    <%= f.label :cost, "How much are you selling each ticket for?" %><br />
+    <%= f.text_field :cost %>
+  </div>
+  <div class="actions">
+    <%= f.submit "List on Ticket Street!", :id=>"btn_submit"%>
+  </div>
+<% end %>
+
+
+	<%else%>
+
+	<div id="add_instructions">First step is to click the 'Sell tickets' link on the event page.  <br /> To add tickets to an event, fill out the form and click 'List on Ticket Street!'<br /><br />
+	When we find a buyer, we'll contact you or simply direct the buyer to your locale.</div>
+	<%end%>
+<%end%>
+

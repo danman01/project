@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   end
   
   layout :choose_layout
-
+  before_filter :set_globals
     def choose_layout
       if user_signed_in? && current_user.role?("admin")
         # action_name == 'index'
@@ -34,6 +34,11 @@ class ApplicationController < ActionController::Base
   !devise_controller?
       session[:"scope_return_to"] = request.request_uri
     end
+  end
+  
+  protected
+  def set_globals
+    @custom_events=CustomEvent.find(:all)
   end
   
   

@@ -1,4 +1,12 @@
 Tickets::Application.routes.draw do
+  resources :custom_tickets
+
+  resources :looking_fors
+
+  resources :buyers
+  match '/sellers/signout'=>'sellers#signout'
+  resources :sellers
+
   resources :custom_events
 
   resources :beta_signups do

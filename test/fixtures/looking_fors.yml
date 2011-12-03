@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  event_id: 1
+  custom_event_id: 1
+  buyer_id: 1
+  user_id: 1
+  price: 1
+  quantity: 1
+  section: MyString
+  row: MyString
+  level: MyString
+
+two:
+  event_id: 1
+  custom_event_id: 1
+  buyer_id: 1
+  user_id: 1
+  price: 1
+  quantity: 1
+  section: MyString
+  row: MyString
+  level: MyString

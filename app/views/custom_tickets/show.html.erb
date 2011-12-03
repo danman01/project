@@ -1,0 +1,43 @@
+<div class="container_16">
+	<div class="grid_16">
+
+<p>
+  <b>Custom event:</b>
+  <%= @custom_ticket.custom_event_id %>
+</p>
+
+<p>
+  <b>Seller:</b>
+  <%= @custom_ticket.seller_id %>
+</p>
+
+<p>
+  <b>Seat number:</b>
+  <%= @custom_ticket.seat_number %>
+</p>
+
+<p>
+  <b>Cost:</b>
+  <%= @custom_ticket.cost %>
+</p>
+
+<p>
+  <b>Section:</b>
+  <%= @custom_ticket.ticket_group.section %>
+</p>
+<p>
+  <b>Row:</b>
+  <%= @custom_ticket.ticket_group.row %>
+</p>
+<p>
+  <b>Sold:</b>
+  <%= @custom_ticket.sold %>
+</p>
+
+<p>
+  <b>List:</b>
+  <%= @custom_ticket.list %>
+</p>
+<%=link_to "View this event", "/custom_events/#{@custom_ticket.custom_event}"%>
+</div>
+</div>

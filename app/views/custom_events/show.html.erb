@@ -4,8 +4,9 @@ $(function() {
 })
 </script>
 <div class="container_16 top_30">
+	<div class="grid_8 top_60">
 <p>
-  <b>Name:</b>
+  <b>Event:</b>
   <%= @custom_event.name %>
 </p>
 
@@ -13,38 +14,23 @@ $(function() {
   <b>Date:</b>
   <%= @custom_event.date %>
 </p>
-
-<p>
-  <b>Notes:</b>
-  <%= @custom_event.notes %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @custom_event.user_id %>
-</p>
-
-<p>
-  <b>Scope:</b>
-  <%= @custom_event.scope %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%= @custom_event.status %>
-</p>
-
+<%if @custom_event.venue_id%>
 <p>
   <b>Venue:</b>
   <%= @custom_event.venue_id %>
 </p>
-
+<%end%>
+	</div>
+	<div class="grid_8">
 <p>
-	<%= image_tag @custom_event.image.url %>
+	<%#= image_tag @custom_event.image.url %>
 	<%= image_tag @custom_event.image.url(:medium) %>
-	<%= image_tag @custom_event.image.url(:thumb) %>
+	<%#= image_tag @custom_event.image.url(:thumb) %>
 </p>
-
+	</div>
+</div>
+<div class="container_16">
+	<div class="grid_16">
 <table class="zebra-striped">
 	<thead>
 		<tr>
@@ -58,14 +44,16 @@ $(function() {
 	<tbody>
 		<%for ticket in @tickets do %>
 		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td><%=ticket.ticket_group.section%></td>
+			<td><%=ticket.ticket_group.row%></td>
+			<td><%=ticket.ticket_group.quantity%></td>
+			<td><%=ticket.cost%></td>
+			<td><%=ticket.seller.email%></td>
 		</tr>
 		<%end%>
 	</tbody>
 </table>
-<%= link_to "Sell tickets for this event", "/tickets/beta_sell?custom_event_id=#{@custom_event.id}"%>
+<%= link_to "Sell tickets for this event", "/custom_tickets/new?custom_event_id=#{@custom_event.id}"%>
+
+	</div>
 </div>

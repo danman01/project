@@ -1,0 +1,35 @@
+<h1>Listing custom_tickets</h1>
+
+<table>
+  <tr>
+    <th>Custom event</th>
+    <th>Seller</th>
+    <th>Seat number</th>
+    <th>Cost</th>
+    <th>Ticket group</th>
+    <th>Sold</th>
+    <th>List</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @custom_tickets.each do |custom_ticket| %>
+  <tr>
+    <td><%= custom_ticket.custom_event_id %></td>
+    <td><%= custom_ticket.seller_id %></td>
+    <td><%= custom_ticket.seat_number %></td>
+    <td><%= custom_ticket.cost %></td>
+    <td><%= custom_ticket.ticket_group_id %></td>
+    <td><%= custom_ticket.sold %></td>
+    <td><%= custom_ticket.list %></td>
+    <td><%= link_to 'Show', custom_ticket %></td>
+    <td><%= link_to 'Edit', edit_custom_ticket_path(custom_ticket) %></td>
+    <td><%= link_to 'Destroy', custom_ticket, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Custom ticket', new_custom_ticket_path %>

@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Event:</b>
+  <%= @looking_for.event_id %>
+</p>
+
+<p>
+  <b>Custom event:</b>
+  <%= @looking_for.custom_event_id %>
+</p>
+
+<p>
+  <b>Buyer:</b>
+  <%= @looking_for.buyer_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @looking_for.user_id %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @looking_for.price %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @looking_for.quantity %>
+</p>
+
+<p>
+  <b>Section:</b>
+  <%= @looking_for.section %>
+</p>
+
+<p>
+  <b>Row:</b>
+  <%= @looking_for.row %>
+</p>
+
+<p>
+  <b>Level:</b>
+  <%= @looking_for.level %>
+</p>
+
+
+<%= link_to 'Edit', edit_looking_for_path(@looking_for) %> |
+<%= link_to 'Back', looking_fors_path %>

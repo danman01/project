@@ -12,6 +12,8 @@ class Ability
         can :create, BetaSignup
         can :beta_sell, Ticket
         can :beta_create, Ticket
+        can :create, Ticket
+        can :new, Ticket
       if user.role? :admin
         can :manage, :all
         can :see_timestamps, :all
