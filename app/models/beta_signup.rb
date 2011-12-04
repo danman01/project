@@ -11,6 +11,9 @@ class BetaSignup < ActiveRecord::Base
   belongs_to :region
   belongs_to :city
   has_and_belongs_to_many :roles
+  geocoded_by :ip_address,
+    :latitude => :lat, :longitude => :lng
+  after_validation :geocode
   
   validates :email, :name, :zip, :roles, :presence=>true
   validates :email, :uniqueness=>true, :email=>true
