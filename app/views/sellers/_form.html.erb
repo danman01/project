@@ -88,6 +88,7 @@ $('.helper_text a').popover()
 			// allow iPhone or Android to track movement
 			if ( useragent.indexOf('iPhone') !== -1 || useragent.indexOf('Android') !== -1 ) {
 				navigator.geolocation.watchPosition( 
+					// TODO update linked buyer / seller w new loc
 					displayLocation, 
 					handleError, 
 					{ 
@@ -103,6 +104,10 @@ $('.helper_text a').popover()
 			}
 		}
 	};
+	function unregister() {
+	      // Unregister when the user clicks a button
+	      navigator.geolocation.clearWatch(watchId);
+	    }
 	</script>
 <%end%>
 
