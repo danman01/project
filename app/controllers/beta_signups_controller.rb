@@ -51,7 +51,8 @@ class BetaSignupsController < ApplicationController
         logger.info "NEW BETA SIGNUP #{@beta_signup.to_yaml}"
         flash[:notice] = 'You\'ve successfully signed up for the Beta! We\'ll surely be in touch.'
         flash[:error] = nil
-        format.html { render "/home/index?check_out=events" }
+        format.html { render "/home/index" }
+        # pass ?check_out = events if we want tos how them current events link
         format.xml  { render :xml => @beta_signup, :status => :created, :location => @beta_signup }
       else
         flash[:error] = "There was an error."
