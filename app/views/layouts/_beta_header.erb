@@ -1,5 +1,7 @@
 <head>
   <title>Ticket Street - Beta</title>
+<link rel="apple-touch-icon" href="/images/customIcon.png"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <%= stylesheet_link_tag "reset.css", "text.css", "beta.css", "grid.css", "styles.css", "bootstrap.css" %>
   <%= javascript_include_tag 'jquery.min.js','jquery-ui.min.js','jquery_ujs.js','application.js', "autocomplete-rails.js", "bootstrap-all.js"%>
   <%= csrf_meta_tag %>
@@ -41,7 +43,7 @@ function showMenu(){
 
 </script>
 </head>
-<body>
+<body onload=<%= yield(:load_function) || ''  %>>
 	<div class="full fixed aboveall border_top_10">
 		<div class="container_16 relative">
 			<div class="grid_2 aboslute above top_-10 right_10 right align_center">
@@ -78,7 +80,7 @@ function showMenu(){
 			Signed in as <%= link_to current_user.email, "/users/#{current_user.id}"%>. Not you?
 			<%= link_to "sign out", destroy_user_session_path%>
 		<%elsif session[:seller]%>
-			Signed in as seller <%=Seller.find(session[:seller]).email%>
+			Signed in as <%= link_to "seller #{Seller.find(session[:seller]).email}", edit_seller_path(session[:seller])%>
 			<% if session[:buyer]%>
 			and as a buyer
 			<%end%>
@@ -86,7 +88,7 @@ function showMenu(){
 		<%elsif session[:buyer]%>
 		    Signed in as buyer <%=Buyer.find(session[:buyer]).email%>	
 		<%if session[:seller]%>
-		and as a seller
+		and as a <%=link_to 'seller', edit_seller_path(session[:seller]) %>
 		<%end%>
 			| <%=link_to "sign out", "/sellers/signout"%>
 		<%end%>

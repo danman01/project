@@ -49,6 +49,7 @@ $(function() {
 			<td><%=ticket.ticket_group.quantity%></td>
 			<td><%=ticket.cost%></td>
 			<td><a href="tel:+14048574679">Call!</a<%#=link_to "Contact", "/custom_tickets/call/#{ticket.ticket_group.id}"%></td>
+			<td><%=link_to "View on map!", seller_path(ticket.seller)%>
 		</tr>
 		<%end%>
 	</tbody>
