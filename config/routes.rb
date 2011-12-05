@@ -1,5 +1,7 @@
 Tickets::Application.routes.draw do
   
+  resources :ratings
+
   match "/messaging"=>"messagings#index"
   post '/index.json'=>'messagings#index'
   match "/custom_tickets/call(/:ticket_group_id)"=>'custom_tickets#call'
@@ -7,9 +9,13 @@ Tickets::Application.routes.draw do
 
   resources :looking_fors
 
-  resources :buyers
+  resources :buyers do
+    resources :ratings
+  end
   match '/sellers/signout'=>'sellers#signout'
-  resources :sellers
+  resources :sellers do
+    resources :ratings
+  end
 
   resources :custom_events
 

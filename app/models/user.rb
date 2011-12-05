@@ -45,7 +45,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :street, :city, :region, :phone, :country, :remember_me, :role_ids
   
   #before_create :set_role
-  
+  has_many :ratings
+  has_many :custom_tickets
   has_many :tickets
   has_many :invoices
   has_many :events, :through=> :tickets
@@ -54,6 +55,40 @@ class User < ActiveRecord::Base
   has_many :sales, :through=>:invoices
   has_many :commissions
   after_create :set_role
+  
+  def current_rating(buyerOrSeller)
+    ratings = self.ratings
+    if !ratings.empty?
+      buyer_ratings = []
+      seller_ratings = []
+      self.ratings.each do |r|
+        buyer_ratings << r.rating unless r.buyer_id!=self.id
+        seller_ratings << r.rating unless r.seller_id!=self.id
+      end
+      case buyerOrSeller
+      when "buyer"
+        output = buyer_ratings.inject{ |sum, el| sum + el }.to_f / buyer_ratings.size
+        output = output.to_f
+        
+      when "seller"
+        output = seller_ratings.inject{ |sum, el| sum + el }.to_f / seller_ratings.size
+        output = output.to_f
+      end
+    end
+    # TODO whats sprintf
+      return sprintf("%.1f", output)
+  end
+  
+  def rated_by_this_user?(user)
+    i = 0
+    self.ratings.each do |r|
+      if r.seller_id == user || r.buyer_id == user
+        i = 1
+      end
+    end
+    return true if i == 1
+  end
+  
   def role?(role)
     #takes role name or role id
     #if role.class==String

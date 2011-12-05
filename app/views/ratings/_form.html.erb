@@ -1,0 +1,49 @@
+<%= form_for(@rating) do |f| %>
+  <% if @rating.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@rating.errors.count, "error") %> prohibited this rating from being saved:</h2>
+
+      <ul>
+      <% @rating.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :trans_rating %><br />
+    <%= f.text_field :trans_rating %>
+  </div>
+  <div class="field">
+    <%= f.label :trans_notes %><br />
+    <%= f.text_field :trans_notes %>
+  </div>
+  <div class="field">
+    <%= f.label :accuracy %><br />
+    <%= f.text_field :accuracy %>
+  </div>
+  <div class="field">
+    <%= f.label :communication %><br />
+    <%= f.text_field :communication %>
+  </div>
+  <div class="field">
+    <%= f.label :cost %><br />
+    <%= f.text_field :cost %>
+  </div>
+  <div class="field">
+    <%= f.label :seller_id %><br />
+    <%= f.text_field :seller_id %>
+  </div>
+  <div class="field">
+    <%= f.label :buyer_id %><br />
+    <%= f.text_field :buyer_id %>
+  </div>
+  <div class="field">
+    <%= f.label :sale_id %><br />
+    <%= f.text_field :sale_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

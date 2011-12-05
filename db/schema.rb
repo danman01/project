@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111203031048) do
+ActiveRecord::Schema.define(:version => 20111205155238) do
 
   create_table "artists", :force => true do |t|
     t.text     "name"
@@ -187,6 +187,19 @@ ActiveRecord::Schema.define(:version => 20111203031048) do
     t.text     "name"
     t.float    "commission"
     t.text     "abbr"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ratings", :force => true do |t|
+    t.integer  "trans_rating"
+    t.string   "trans_notes"
+    t.integer  "accuracy"
+    t.integer  "communication"
+    t.integer  "cost"
+    t.integer  "seller_id"
+    t.integer  "buyer_id"
+    t.integer  "sale_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

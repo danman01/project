@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Trans rating:</b>
+  <%= @rating.trans_rating %>
+</p>
+
+<p>
+  <b>Trans notes:</b>
+  <%= @rating.trans_notes %>
+</p>
+
+<p>
+  <b>Accuracy:</b>
+  <%= @rating.accuracy %>
+</p>
+
+<p>
+  <b>Communication:</b>
+  <%= @rating.communication %>
+</p>
+
+<p>
+  <b>Cost:</b>
+  <%= @rating.cost %>
+</p>
+
+<p>
+  <b>Seller:</b>
+  <%= @rating.seller_id %>
+</p>
+
+<p>
+  <b>Buyer:</b>
+  <%= @rating.buyer_id %>
+</p>
+
+<p>
+  <b>Sale:</b>
+  <%= @rating.sale_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_rating_path(@rating) %> |
+<%= link_to 'Back', ratings_path %>

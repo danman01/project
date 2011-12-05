@@ -4,23 +4,35 @@
 
 
 <p>
-  <b>Location:</b>
+  <b>Where are they in words?</b>
   <%= @seller.location %>
 </p>
 
-<p>
-  <b>Lat:</b>
-  <%= @seller.lat %>
-</p>
 
-<p>
-  <b>Lng:</b>
-  <%= @seller.lng %>
-</p>
-
-<p>
-  <b>Notes:</b>
-  <%= @seller.notes %>
-</p>
+<table class="zebra-striped">
+	<thead>
+		<tr>
+			<th>Section</th>
+			<th>Row</th>
+			<th>Quantity</th>
+			<th>Price</th>
+			<th>Contact</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%for ticket in @tickets do %>
+		<tr>
+			<td><%=ticket.ticket_group.section%></td>
+			<td><%=ticket.ticket_group.row%></td>
+			<td><%=ticket.ticket_group.quantity%></td>
+			<td><%=ticket.cost%></td>
+			<td><a href="tel:+14048574679">Call!</a<%#=link_to "Contact", "/custom_tickets/call/#{ticket.ticket_group.id}"%></td>
+			<td><%=link_to "View on map!", seller_path(ticket.seller)%>
+		</tr>
+		<%end%>
+	</tbody>
+</table>
+<p><%= link_to "Sell tickets for this event", "/custom_tickets/new?custom_event_id=#{@custom_event.id}"%></p>
+<p>Bought from <%=@seller.first_name%> in the past? <%= link_to "Give them a rating!" "/sellers/#{@seller.id}/ratings/new"%></p>
 	</div>
 </div>

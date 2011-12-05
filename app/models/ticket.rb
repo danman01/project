@@ -29,8 +29,7 @@ class Ticket < ActiveRecord::Base
 	belongs_to :ticket_group
 	belongs_to :sale
 	belongs_to :user #seller
-	belongs_to :seller
-	belongs_to :venue
+	belongs_to :seller, :class_name=>"User", :foreign_key =>"seller_id"
 	accepts_nested_attributes_for :ticket_group, :allow_destroy => :true,
       :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
   #validates_presence_of :seat_number, :ticket_group, :cost

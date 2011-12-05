@@ -14,7 +14,7 @@ class SellersController < ApplicationController
   # GET /sellers/1.xml
   def show
     @seller = Seller.find(params[:id])
-
+    @tickets = @seller.tickets
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @seller }
