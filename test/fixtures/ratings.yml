@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  trans_rating: 1
+  trans_notes: MyString
+  accuracy: 1
+  communication: 1
+  cost: 1
+  seller_id: 1
+  buyer_id: 1
+  sale_id: 1
+
+two:
+  trans_rating: 1
+  trans_notes: MyString
+  accuracy: 1
+  communication: 1
+  cost: 1
+  seller_id: 1
+  buyer_id: 1
+  sale_id: 1

@@ -19,4 +19,6 @@ class Region < ActiveRecord::Base
   belongs_to :country
   has_many :cities
   has_many :venues
+  has_many :addresses
+  
 end

@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  location_id: 1
+  user_id: 1
+  check_in_time: 2011-12-09 15:40:36
+
+two:
+  location_id: 1
+  user_id: 1
+  check_in_time: 2011-12-09 15:40:36

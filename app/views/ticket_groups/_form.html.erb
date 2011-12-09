@@ -1,6 +1,8 @@
 
 <%=form_for(@ticket_group, :html=>{:id=>"form_contact"}) do |ticket_group_form|%>
 <%=hidden_field_tag 'custom_event_id', @custom_event_id%>
+<%=hidden_field_tag 'event_id', @event_id%>
+<%=hidden_field_tag 'redirect', params[:redirect]%>
 	<div class="field">
   <%= ticket_group_form.label :level %><br />
   <%= ticket_group_form.text_field :level %>

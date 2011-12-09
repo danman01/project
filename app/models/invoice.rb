@@ -14,6 +14,9 @@
 
 class Invoice < ActiveRecord::Base
 	has_many :sales, :dependent=>:destroy #is this right?
-	belongs_to :user #seller
-	has_one :customer #buyer
+	belongs_to :seller, :class=>User, :foreign_key=>:user_id #seller
+	has_one :buyer, :class=>User, :foreign_key=>:user_id #buyer
+	
+	validates :seller, :presence=>true
+	
 end

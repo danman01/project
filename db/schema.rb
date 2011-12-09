@@ -10,7 +10,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111205155238) do
+ActiveRecord::Schema.define(:version => 20111209204622) do
+
+  create_table "addresses", :force => true do |t|
+    t.integer  "city_id"
+    t.integer  "region_id"
+    t.integer  "country_id"
+    t.integer  "zip_id"
+    t.float    "lat"
+    t.float    "lng"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "addresses", ["city_id"], :name => "index_addresses_on_city_id"
+  add_index "addresses", ["country_id"], :name => "index_addresses_on_country_id"
+  add_index "addresses", ["region_id"], :name => "index_addresses_on_region_id"
+  add_index "addresses", ["zip_id"], :name => "index_addresses_on_zip_id"
+
+  create_table "addresses_users", :force => true do |t|
+    t.integer  "address_id"
+    t.integer  "user_id"
+    t.boolean  "current"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "addresses_users", ["address_id", "user_id"], :name => "index_addresses_users_on_address_id_and_user_id"
 
   create_table "artists", :force => true do |t|
     t.text     "name"
@@ -169,6 +195,28 @@ ActiveRecord::Schema.define(:version => 20111205155238) do
     t.datetime "updated_at"
   end
 
+  create_table "locations", :force => true do |t|
+    t.integer  "address_id"
+    t.string   "notes"
+    t.string   "name"
+    t.float    "lat"
+    t.float    "lng"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "locations", ["address_id"], :name => "index_locations_on_address_id"
+
+  create_table "locations_users", :force => true do |t|
+    t.integer  "location_id"
+    t.integer  "user_id"
+    t.datetime "check_in_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "locations_users", ["location_id", "user_id"], :name => "index_locations_users_on_location_id_and_user_id"
+
   create_table "looking_fors", :force => true do |t|
     t.integer  "event_id"
     t.integer  "custom_event_id"
@@ -190,6 +238,16 @@ ActiveRecord::Schema.define(:version => 20111205155238) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "my_ticket_groups", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "quantity"
+    t.integer  "ticket_group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "my_ticket_groups", ["ticket_group_id", "user_id"], :name => "index_my_ticket_groups_on_ticket_group_id_and_user_id"
 
   create_table "ratings", :force => true do |t|
     t.integer  "trans_rating"
@@ -325,10 +383,6 @@ ActiveRecord::Schema.define(:version => 20111205155238) do
     t.datetime "locked_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "street"
-    t.string   "city"
-    t.string   "region"
-    t.string   "country"
     t.string   "phone"
     t.string   "notes"
     t.string   "ticket_ids"

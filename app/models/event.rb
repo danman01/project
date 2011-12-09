@@ -37,9 +37,15 @@ class Event < ActiveRecord::Base
       "#{id}-#{name.gsub(/[^a-z1-9]+/i, '-')}"
    end
    
-   def upcoming
-     if self.date>Time.now
-       return self
-     end
+   def self.upcoming
+     events = Event.where("date >= ?", Time.now)
+   end
+   
+   def self.today
+     events = Event.where("date > ? AND date < ?", Date.yesterday, Date.tomorrow)
+   end
+   
+   def upcoming_and_has_tickets
+     return true if self.date > Time.now && !self.tickets.empty?
    end
 end

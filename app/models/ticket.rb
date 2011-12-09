@@ -35,12 +35,12 @@ class Ticket < ActiveRecord::Base
   #validates_presence_of :seat_number, :ticket_group, :cost
   #TODO fix for normal events
   #validates_presence_of :event_id, :artist_id, :venue_id, :user_id, :unless=> :is_custom_event
-  validates_presence_of :custom_event_id #, :unless => :is_normal_event
+  validates_presence_of :custom_event_id, :unless => :is_normal_event
   
-  attr_accessor :custom_event_id, :seller_id
+  attr_accessor :custom_event_id
   
   def is_custom_event
-    if self.custom_event
+    if self.custom_event_id
       true
     else
       false
@@ -48,7 +48,7 @@ class Ticket < ActiveRecord::Base
   end
   
   def is_normal_event
-    if self.event
+    if self.event_id
       true
     else
       false
@@ -58,5 +58,9 @@ class Ticket < ActiveRecord::Base
     if self.sold==1
     return self
     end
+  end
+  
+  def list
+    return true if self.cost > 0
   end
 end

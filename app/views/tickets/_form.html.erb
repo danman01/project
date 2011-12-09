@@ -12,7 +12,7 @@ $(function(){
 	
 });
 $(function(){
-	$("#quantity").keyup(function(){
+	$("#quantity").change(function(){
 		var string=" <p>Enter the seat numbers:</p>"
 		for (i=0;i < this.value;i++)
 		{
@@ -67,7 +67,7 @@ row: <%=TicketGroup.find(group).row%>
 	 or <%=link_to 'add a new group', new_ticket_group_path(:redirect=>true, :event_id=>@ticket.event.id)%>
 	<div class="field">
 	    <%= label_tag :quantity %><%#TODO show current quantity in ticket group / add quantity to group after submit instead of in same form%><br />
-	    <%=number_field_tag 'quantity', nil, :in => 1...10, :id=>'quantity' %>
+	    <%=text_field_tag 'quantity', nil, :in => 1...10, :id=>'quantity' %>
 	  </div>
 	  <div class="field">
 		<p id='seat_number_tag'></p>

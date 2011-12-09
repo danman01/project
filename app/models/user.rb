@@ -45,9 +45,17 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :street, :city, :region, :phone, :country, :remember_me, :role_ids
   
   #before_create :set_role
+  has_many :locations, :through => :locations_users
+  has_many :locations_users
+  
+  has_many :addresses, :through=> :addresses_users
+  has_many :addresses_users
+  
   has_many :ratings
   has_many :custom_tickets
   has_many :tickets
+  has_many :ticket_groups, :through =>:my_ticket_groups
+  has_many :my_ticket_groups
   has_many :invoices
   has_many :events, :through=> :tickets
   has_many :artists, :through=>:tickets

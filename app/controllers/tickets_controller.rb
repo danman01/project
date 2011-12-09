@@ -2,6 +2,7 @@ class TicketsController < ApplicationController
   respond_to :html, :js, :xml
   load_and_authorize_resource
   layout 'beta', :only=>['beta_sell']
+  layout 'application', :except=>['beta_sell']
   def beta_sell
     #from custom_event
       @ticket = Ticket.new
@@ -27,36 +28,50 @@ class TicketsController < ApplicationController
   end
   
   def create
-    @seller=Seller.find(params[:ticket][:seller_id])
+    
     #create new ticket for each seat - @ticket is ticket 0, so start with 1
     q=params[:quantity].to_i
     n=0
     seats=params[:seats].split(",")
-    @ticket_group=TicketGroup.find(params[:ticket][:ticket_group_id])
+    
+    session[:seller].blank? ? userid=current_user.id : userid = session[:seller]
+     @ticket_group=TicketGroup.find(params[:ticket][:ticket_group_id])
+    @mygroup = MyTicketGroup.find_or_create(userid, @ticket_group.id) 
     if @ticket_group.quantity.nil? #initialize quantity
       @ticket_group.quantity=0
     end
     #params[:ticket][:ticket_group]=@ticket_group
     while n < q 
+      @t=Ticket.new(params[:ticket])
+      if params[:custom_event_id]
+      @seller=Seller.find(params[:ticket][:seller_id])
       params[:ticket][:seller]=@seller
+              @t.custom_event_id=CustomEvent.find(params[:ticket][:custom_event_id])
       #params[:ticket][:custom_event_id]= params[:custom_event_id]
       logger.info "\n\n CUSTOM EVENT ID #{params[:ticket][:custom_event_id]} \n\n" 
-      @t=Ticket.new(params[:ticket])
-      @t.custom_event=CustomEvent.find(params[:ticket][:custom_event_id])
-      #@t.seller=Seller.find(params[:ticket][:seller])
-      #t.ticket_group=@ticket_group
+      redirect = "/custom_events/#{@t.custom_event_id}"
+      else
+        @t.user_id=current_user.id rescue 1 #so i dont have to log in during testing
+        @t.ticket_group=@ticket_group
+        
+        redirect = "/"
+        session[:tab]="ticket_tab"
+      end
       @t.seat_number=seats[n]
-      #t.user_id=current_user.id rescue 1 #so i dont have to log in during testing
-      @t.save
-      logger.info "\n\n TICKET SAVED! c event id: #{@t.custom_event.id}"
-      @tid=@t.id
-      n+=1
-      @ticket_group.quantity+=1
-      logger.info 'ticket created! ' +n.to_s
+      if @t.save
+        @tid=@t.id
+        n+=1
+        @ticket_group.quantity+=1
+        @mygroup.quantity+=1
+        logger.info 'ticket created! ' +n.to_s
+      else
+        logger.info "error for ticket #{n}: #{@t.errors.first.value}"
+      end
     end 
     @ticket_group.save
+    @mygroup.save
     respond_to do |format|
-      format.html { redirect_to "/custom_events/#{@t.custom_event_id}"}
+      format.html { redirect_to redirect}
       format.xml  { render :xml => @tickets }
     end
   end
@@ -279,6 +294,10 @@ class TicketsController < ApplicationController
       groups<<ticket.ticket_group
     end
     @ticket_groups=groups.sort_by{|g| g.tickets.first.event.date}.uniq!
+    #@mygroups = []
+    #@ticket_groups.each do |tg|
+    #  @mygroups << tg.my_ticket_groups.where("user_id = ?", current_user.id)
+    #end
     respond_with(@tickets)
   end
 end

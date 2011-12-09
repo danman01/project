@@ -23,11 +23,12 @@
 <%if @ticket_groups%>
 <% @ticket_groups.each do |group| %>
 <%info=group.tickets.first%>
+<%mygroup = group.my_ticket_groups.where("user_id = ?", current_user.id).first%>
 <tr>
     <td><%= info.event.date.strftime("%m/%d/%Y") rescue 'na' %></td>
     <td><%= info.artist.name %></td>
     <td><%= info.venue.name %></td>
-    <td><%= group.quantity %></td>
+    <td><%= mygroup.quantity rescue group.quantity%></td>
     <td><%= group.section %></td>
 
     <td><%= group.row %></td>

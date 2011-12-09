@@ -1,5 +1,9 @@
 Tickets::Application.routes.draw do
   
+  resources :locations
+
+  resources :addresses
+
   resources :ratings
 
   match "/messaging"=>"messagings#index"

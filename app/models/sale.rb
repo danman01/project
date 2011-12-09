@@ -23,7 +23,7 @@
 class Sale < ActiveRecord::Base
 	belongs_to :marketplace
 	has_many :tickets
-	has_one :ticket_group
+	has_one :my_ticket_group
 	belongs_to :invoice
   
   before_destroy :fix_tickets
@@ -35,14 +35,19 @@ class Sale < ActiveRecord::Base
   	# increment ticket gorup appropriately
   	# remove sale_id from ticket(s)
   	# change sold to 0 for tickets
-  	
-    size=self.tickets.size
-    group=self.tickets.first.ticket_group
+  	tickets=self.tickets
+    
+    size = tickets.size
+    group=tickets.first.ticket_group
+    mygroup = find_my_ticket_group(tickets.first.user_id, group.id)
     group.quantity+=size
-    tickets=self.tickets
+    mygroup.quantity+=size
+    mygroup.save
+    group.save
     tickets.each do |t|
       t.sale_id=nil
       t.sold=0
+      t.save
     end
   end
 	

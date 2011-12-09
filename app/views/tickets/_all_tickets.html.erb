@@ -23,16 +23,16 @@
 <%info=group.tickets.first%>
 <tr>
     <td><%= info.event.name rescue 'na' %></td>
-    <td><%= info.artist.name %></td>
-    <td><%= info.venue.name %></td>
+    <td><%= info.artist.name rescue 'na' %></td>
+    <td><%= info.venue.name rescue 'na'%></td>
     <td><%= group.quantity %></td>
     <td><%= group.section %></td>
 
     <td><%= group.row %></td>
     <td>$<%= info.cost %></td>
 	<td>$<%= info.list%></td>
-    <td><%= info.bought_on.strftime("%a, %b %e %Y") %></td>
-    <td><%= info.in_hand.strftime("%a, %b %e %Y") %></td>
+    <td><%= info.bought_on.strftime("%a, %b %e %Y") unless info.bought_on.nil?%></td>
+    <td><%= info.in_hand.strftime("%a, %b %e %Y") unless info.in_hand.nil? %></td>
     <td><%= info.kind %></td>
 	<td class="sold">
 		<%sold_count=0
